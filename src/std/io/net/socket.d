@@ -7,48 +7,19 @@
 */
 module std.io.net.socket;
 
-import std.io.net.addr;
-import std.io.exception : enforce;
+import std.io.driver;
+import std.io.exception : enforce, IOException;
 import std.io.internal.string;
+import std.io.net.addr;
 
 version (Posix)
 {
-    import core.sys.posix.fcntl;
     import core.sys.posix.netinet.in_;
     import core.sys.posix.sys.socket;
-    import core.sys.posix.sys.uio : readv, writev;
-    import core.sys.posix.unistd : close, read, write;
-    import std.io.internal.iovec : tempIOVecs;
 }
 else version (Windows)
 {
     import core.sys.windows.winsock2;
-    import core.sys.windows.windef;
-
-    extern (Windows)
-    {
-    nothrow @nogc:
-        struct WSABUF
-        {
-            ULONG len;
-            CHAR* buf;
-        }
-
-        alias WSABUF* LPWSABUF;
-
-        int WSASend(SOCKET s, LPWSABUF lpBuffers, DWORD dwBufferCount, LPDWORD lpNumberOfBytesSent, DWORD dwFlags,
-                LPWSAOVERLAPPED lpOverlapped, LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine);
-        int WSARecv(SOCKET s, LPWSABUF lpBuffers, DWORD dwBufferCount, LPDWORD lpNumberOfBytesRecvd, LPDWORD lpFlags,
-                LPWSAOVERLAPPED lpOverlapped, LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine);
-        int WSARecvFrom(SOCKET s, LPWSABUF lpBuffers, DWORD dwBufferCount,
-                LPDWORD lpNumberOfBytesRecvd, LPDWORD lpFlags, sockaddr* lpFrom,
-                LPINT lpFromlen, LPWSAOVERLAPPED lpOverlapped,
-                LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine);
-        int WSASendTo(SOCKET s, LPWSABUF lpBuffers, DWORD dwBufferCount,
-                LPDWORD lpNumberOfBytesSent, DWORD dwFlags, in sockaddr* lpTo,
-                int iTolen, LPWSAOVERLAPPED lpOverlapped,
-                LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine);
-    }
 }
 else
     static assert(0, "unimplemented");
@@ -132,22 +103,19 @@ struct Socket
      */
     this(ProtocolFamily family, SocketType type, Protocol protocol = Protocol.default_) @trusted
     {
-        version (Windows)
-            initWSA();
-        fd = socket(family, type, protocol);
-        enforce(fd != INVALID_SOCKET, "creating socket Failed".String);
+        s = driver.createSocket(family, type, protocol);
     }
 
     /// take ownership of an existing socket `handle`
     version (Posix)
-        this(int handle) pure nothrow
+        this(int handle)
     {
-        this.fd = handle;
+        s = driver.socketFromHandle(handle);
     }
     else version (Windows)
-        this(SOCKET handle) pure nothrow
+        this(SOCKET handle)
     {
-        this.fd = handle;
+        s = driver.socketFromHandle(handle);
     }
 
     ///
@@ -159,19 +127,16 @@ struct Socket
     /// close the socket
     void close() @trusted
     {
-        if (fd == INVALID_SOCKET)
+        if (s == Driver.INVALID_SOCKET)
             return;
-        version (Posix)
-            enforce(.close(fd) != -1, "close failed".String);
-        else
-            enforce(.closesocket(fd) != SOCKET_ERROR, "close failed".String);
-        fd = INVALID_SOCKET;
+        driver.closeSocket(s);
+        s = Driver.INVALID_SOCKET;
     }
 
     /// return whether the socket is open
     bool isOpen() const pure nothrow
     {
-        return fd != INVALID_SOCKET;
+        return s != Driver.INVALID_SOCKET;
     }
 
     /**
@@ -186,7 +151,7 @@ struct Socket
     void bind(SocketAddr)(in auto ref SocketAddr addr) @trusted
             if (isSocketAddr!SocketAddr)
     {
-        enforce(.bind(fd, addr.cargs[]) != -1, "bind failed".String);
+        driver.bind(s, addr.cargs[]);
     }
 
     /**
@@ -240,7 +205,7 @@ struct Socket
     void connect(SocketAddr)(in auto ref SocketAddr addr) @trusted
             if (isSocketAddr!SocketAddr)
     {
-        enforce(.connect(fd, addr.cargs[]) != -1, "connect failed".String);
+        driver.connect(s, addr.cargs[]);
     }
 
     /**
@@ -273,7 +238,7 @@ struct Socket
     */
     void listen(uint backlog = 128) @trusted
     {
-        enforce(.listen(fd, backlog) != -1, "listen failed".String);
+        driver.listen(s, backlog);
     }
 
     ///
@@ -293,10 +258,7 @@ struct Socket
     Socket accept(ref SocketAddr remoteAddr) @trusted
     {
         socklen_t addrlen = remoteAddr.sizeof;
-        immutable fd = .accept(fd, cast(sockaddr*)&remoteAddr, &addrlen);
-        assert(addrlen <= remoteAddr.sizeof);
-        enforce(fd != -1, "accept failed".String);
-        return Socket(fd);
+        return Socket(driver.accept(s, cast(sockaddr*)&remoteAddr, addrlen));
     }
 
     ///
@@ -322,13 +284,9 @@ struct Socket
     /// get local addr of socket
     SocketAddr localAddr() const @trusted
     {
-        assert(isOpen);
-        SocketAddr ret;
+        SocketAddr ret = void;
         socklen_t addrlen = ret.sizeof;
-        import core.stdc.stdio;
-
-        immutable rc = .getsockname(fd, cast(sockaddr*)&ret, &addrlen);
-        enforce(rc != -1, "getsockname failed".String);
+        driver.localAddr(s, cast(sockaddr*)&ret, addrlen);
         assert(addrlen <= ret.sizeof);
         return ret;
     }
@@ -342,8 +300,7 @@ struct Socket
     */
     void setOption(SocketOption option)(const scope SocketOptionType!option value) @trusted
     {
-        immutable res = .setsockopt(fd, SOL_SOCKET, option, &value, value.sizeof);
-        enforce(res != -1, "setsockopt failed".String);
+        driver.setSocketOption(s, option, &value, value.sizeof);
     }
 
     ///
@@ -359,13 +316,12 @@ struct Socket
        Params:
          option = option to get
     */
-    SocketOptionType!option getOption(SocketOption option)() @trusted
+    SocketOptionType!option getOption(SocketOption option)() const @trusted
     {
         SocketOptionType!option ret = void;
         socklen_t optlen = ret.sizeof;
-        immutable res = .getsockopt(fd, SOL_SOCKET, option, &ret, &optlen);
+        driver.getSocketOption(s, option, &ret, optlen);
         assert(optlen == ret.sizeof);
-        enforce(res != -1, "setsockopt failed".String);
         return ret;
     }
 
@@ -389,24 +345,9 @@ struct Socket
     Tuple!(size_t, "size", SocketAddr, "remoteAddr") recvFrom(scope ubyte[] buf) @trusted
     {
         typeof(return) ret = void;
-        version (Posix)
-        {
-            socklen_t addrlen = ret[1].sizeof;
-            immutable n = .recvfrom(fd, buf.ptr, buf.length, 0,
-                    cast(sockaddr*)&ret[1], &addrlen);
-            assert(addrlen <= ret[1].sizeof);
-            enforce(n != -1, "Failed to receive from socket.".String);
-            ret[0] = n;
-        }
-        else version (Windows)
-        {
-            DWORD n, flags;
-            socklen_t addrlen = ret[1].sizeof;
-            immutable res = .WSARecvFrom(fd, cast(WSABUF*)&buf, 1, &n,
-                    &flags, cast(sockaddr*)&ret[1], &addrlen, null, null);
-            enforce(res == 0, "recv failed".String);
-            ret[0] = n;
-        }
+        socklen_t addrlen = ret[1].sizeof;
+        ret[0] = driver.recvFrom(s, buf, cast(sockaddr*)&ret[1], addrlen);
+        assert(addrlen <= ret[1].sizeof);
         return ret;
     }
 
@@ -457,33 +398,9 @@ struct Socket
     Tuple!(size_t, "size", SocketAddr, "remoteAddr") recvFrom(scope ubyte[][] bufs...) @trusted
     {
         typeof(return) ret = void;
-        version (Posix)
-        {
-            auto vecs = tempIOVecs(bufs);
-            msghdr msg = void;
-            msg.msg_name = &ret[1];
-            msg.msg_namelen = ret[1].sizeof;
-            msg.msg_iov = vecs.ptr;
-            msg.msg_iovlen = vecs.length;
-            msg.msg_control = null;
-            msg.msg_controllen = 0;
-            msg.msg_flags = 0;
-            immutable flags = 0;
-            immutable n = .recvmsg(fd, &msg, flags);
-            assert(msg.msg_namelen <= ret[1].sizeof);
-            enforce(n != -1, "read failed".String);
-            ret[0] = n;
-        }
-        else version (Windows)
-        {
-            DWORD n, flags;
-            socklen_t addrlen = ret[1].sizeof;
-            immutable res = .WSARecvFrom(fd, cast(WSABUF*) bufs.ptr,
-                    cast(uint) bufs.length, &n, &flags,
-                    cast(sockaddr*)&ret[1], &addrlen, null, null);
-            enforce(res == 0, "recv failed".String);
-            ret[0] = n;
-        }
+        socklen_t addrlen = ret[1].sizeof;
+        ret[0] = driver.recvFrom(s, bufs, cast(sockaddr*)&ret[1], addrlen);
+        assert(addrlen <= ret[1].sizeof);
         return ret;
     }
 
@@ -517,21 +434,7 @@ struct Socket
     size_t sendTo(SocketAddr)(SocketAddr dest, const scope ubyte[] buf) @trusted
             if (isSocketAddr!SocketAddr)
     {
-        version (Posix)
-        {
-            immutable flags = 0;
-            immutable ret = .sendto(fd, buf.ptr, buf.length, flags, dest.cargs[]);
-            enforce(ret != -1, "sendTo failed".String);
-            return ret;
-        }
-        else version (Windows)
-        {
-            DWORD n, flags;
-            immutable res = .WSASendTo(fd, cast(WSABUF*)&buf, 1, &n, flags,
-                    dest.cargs[], null, null);
-            enforce(!res, "sendTo failed".String);
-            return n;
-        }
+        return driver.sendTo(s, buf, dest.cargs[]);
     }
 
     /**
@@ -547,31 +450,7 @@ struct Socket
     size_t sendTo(SocketAddr)(SocketAddr dest, const scope ubyte[][] bufs...) @trusted
             if (isSocketAddr!SocketAddr)
     {
-        version (Posix)
-        {
-            typeof(return) ret = void;
-            auto vecs = tempIOVecs(bufs);
-            msghdr msg = void;
-            msg.msg_name = &dest;
-            msg.msg_namelen = dest.cargs[1];
-            msg.msg_iov = vecs.ptr;
-            msg.msg_iovlen = vecs.length;
-            msg.msg_control = null;
-            msg.msg_controllen = 0;
-            msg.msg_flags = 0;
-            immutable flags = 0;
-            immutable n = .sendmsg(fd, &msg, flags);
-            enforce(n != -1, "sendTo failed".String);
-            return n;
-        }
-        else version (Windows)
-        {
-            DWORD n, flags;
-            immutable res = .WSASendTo(fd, cast(WSABUF*) bufs.ptr,
-                    cast(uint) bufs.length, &n, flags, dest.cargs[], null, null);
-            enforce(!res, "sendTo failed".String);
-            return n;
-        }
+        return driver.sendTo(s, bufs, dest.cargs[]);
     }
 
     ///
@@ -600,19 +479,7 @@ struct Socket
     */
     size_t recv(scope ubyte[] buf) @trusted
     {
-        version (Posix)
-        {
-            immutable ret = .recv(fd, &buf[0], buf.length, 0);
-            enforce(ret != -1, "recv failed".String);
-            return ret;
-        }
-        else version (Windows)
-        {
-            DWORD n, flags;
-            immutable ret = .WSARecv(fd, cast(WSABUF*)&buf, 1, &n, &flags, null, null);
-            enforce(ret == 0, "WSARecv failed".String);
-            return n;
-        }
+        return driver.recv(s, buf);
     }
 
     /**
@@ -626,21 +493,7 @@ struct Socket
     */
     size_t recv(scope ubyte[][] bufs...) @trusted
     {
-        version (Posix)
-        {
-            auto vecs = tempIOVecs(bufs);
-            immutable ret = .readv(fd, vecs.ptr, cast(int) bufs.length);
-            enforce(ret != -1, "recv failed".String);
-            return ret;
-        }
-        else version (Windows)
-        {
-            DWORD n, flags;
-            immutable ret = .WSARecv(fd, cast(WSABUF*) bufs.ptr,
-                    cast(uint) bufs.length, &n, &flags, null, null);
-            enforce(ret == 0, "WSARecv failed".String);
-            return n;
-        }
+        return driver.recv(s, bufs);
     }
 
     /**
@@ -660,19 +513,7 @@ struct Socket
     */
     size_t send(const scope ubyte[] buf) @trusted
     {
-        version (Posix)
-        {
-            immutable ret = .send(fd, &buf[0], buf.length, 0);
-            enforce(ret != -1, "send failed".String);
-            return ret;
-        }
-        else version (Windows)
-        {
-            DWORD n, flags;
-            immutable ret = .WSASend(fd, cast(WSABUF*)&buf, 1, &n, flags, null, null);
-            enforce(ret == 0, "send failed".String);
-            return n;
-        }
+        return driver.send(s, buf);
     }
 
     /**
@@ -686,21 +527,7 @@ struct Socket
     */
     size_t send(const scope ubyte[][] bufs...) @trusted
     {
-        version (Posix)
-        {
-            auto vecs = tempIOVecs(bufs);
-            immutable ret = .writev(fd, vecs.ptr, cast(int) vecs.length);
-            enforce(ret != -1, "send failed".String);
-            return ret;
-        }
-        else version (Windows)
-        {
-            DWORD n, flags;
-            immutable ret = .WSASend(fd, cast(WSABUF*) bufs.ptr,
-                    cast(uint) bufs.length, &n, flags, null, null);
-            enforce(ret == 0, "send failed".String);
-            return n;
-        }
+        return driver.send(s, bufs);
     }
 
     /**
@@ -711,41 +538,67 @@ struct Socket
     alias write = send;
 
     /// move operator for socket
-    Socket move()
+    Socket move() return scope  /*FIXME pure nothrow*/
     {
-        immutable fd = this.fd;
-        this.fd = Socket.init.fd;
-        return Socket(fd);
+        auto s = this.s;
+        this.s = Driver.INVALID_SOCKET;
+        return Socket(s);
     }
 
     /// not copyable
     @disable this(this);
 
 package(std.io.net):
-    version (Posix) enum INVALID_SOCKET = -1;
-    version (Posix) int fd = INVALID_SOCKET;
-    version (Windows) SOCKET fd = INVALID_SOCKET;
+
+    /// get socket bound to resolved `hostname` and `service`
+    static Socket resolveBind( /*in*/ const scope char[] hostname, /*in*/ const scope char[] service,
+            SocketType socketType) @trusted
+    {
+        Socket sock;
+        immutable res = driver.resolve(hostname, service,
+                AddrFamily.unspecified, socketType, Protocol.default_, (ref ai) {
+                    try
+                    {
+                        sock = Socket(ai.family, ai.socketType, ai.protocol);
+                        sock.setOption!(SocketOption.reuseAddr)(true);
+                        sock.bind(ai.addr);
+                    }
+                    catch (IOException)
+                        return 0;
+                    return 1;
+                });
+        enforce(res == 1, "bind failed".String);
+        return sock.move;
+    }
+
+    /// get socket connected to resolved `hostname` and `service`
+    static Socket resolveConnect( /*in*/ const scope char[] hostname, /*in*/ const scope char[] service,
+            SocketType socketType) @trusted
+    {
+        Socket sock;
+        immutable res = driver.resolve(hostname, service,
+                AddrFamily.unspecified, socketType, Protocol.default_, (ref ai) {
+                    try
+                    {
+                        sock = Socket(ai.family, ai.socketType, ai.protocol);
+                        sock.setOption!(SocketOption.reuseAddr)(true);
+                        sock.connect(ai.addr);
+                    }
+                    catch (IOException)
+                        return 0;
+                    return 1;
+                });
+        enforce(res == 1, "connect failed".String);
+        return sock.move;
+    }
 
 private:
     import std.typecons : Tuple;
-}
 
-version (Windows) package(std.io.net) void initWSA() @nogc
-{
-    import core.atomic;
-    import core.stdc.stdlib : atexit;
-
-    static shared bool initialized;
-    if (!atomicLoad!(MemoryOrder.raw)(initialized))
+    this(return scope Driver.SOCKET s) @trusted
     {
-        WSADATA wd;
-        enforce(!WSAStartup(0x2020, &wd), "WSAStartup failed".String);
-        static extern (C) void cleanup()
-        {
-            WSACleanup();
-        }
-
-        if (cas(&initialized, false, true))
-            atexit(&cleanup);
+        this.s = s;
     }
+
+    Driver.SOCKET s = Driver.INVALID_SOCKET;
 }

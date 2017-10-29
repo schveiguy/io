@@ -40,7 +40,7 @@ struct TempIOVecs
         _length = bufs.length;
     }
 
-    ~this()
+    ~this() scope
     {
         if (_ptr !is useStack)
             pureFree(_ptr);

@@ -11,7 +11,7 @@ import std.io.exception : enforce;
 import std.io.internal.string;
 import std.io.net.addr;
 import std.io.net.socket;
-import std.io.net.dns : resolve;
+import std.io.driver;
 
 version (Posix)
 {
@@ -43,11 +43,16 @@ struct TCP
        Returns:
          TCPServer to accept incoming connections
     */
-    static TCPServer server(S)(S hostname, ushort port = 0, uint backlog = 128) @trusted
+    static TCPServer server(S)(S hostname, ushort port = 0, uint backlog = 128)
             if (isStringLike!S)
     {
-        auto sock = listenAddrInfos(resolve(hostname, port,
-                AddrFamily.unspecified, SocketType.stream), backlog);
+        import std.internal.cstring : tempCString;
+        import core.internal.string : unsignedToTempString;
+
+        auto tp = () @trusted{
+            return tempCString(unsignedToTempString(port, 10)[]);
+        }();
+        auto sock = Socket.resolveBind(tempCString(hostname)[], tp[], SocketType.stream);
         sock.listen(backlog);
         return TCPServer(sock.move);
     }
@@ -67,8 +72,10 @@ struct TCP
     static TCPServer server(S1, S2)(S1 hostname, S2 service, uint backlog = 128) @trusted
             if (isStringLike!S1 && isStringLike!S2)
     {
-        auto sock = listenAddrInfos(resolve(hostname, service,
-                AddrFamily.unspecified, SocketType.stream), backlog);
+        import std.internal.cstring : tempCString;
+
+        auto sock = Socket.resolveBind(tempCString(hostname)[],
+                tempCString(service)[], SocketType.stream);
         sock.listen(backlog);
         return TCPServer(sock.move);
     }
@@ -107,21 +114,6 @@ struct TCP
         return server(addr.socketAddr(port), backlog);
     }
 
-    private static Socket listenAddrInfos(R)(R addrInfos, uint backlog) @trusted
-    {
-        bool bind, listen;
-        for (auto ai = addrInfos.front; !addrInfos.empty; addrInfos.popFront)
-        {
-            auto ret = Socket(ai.family, SocketType.stream, Protocol.default_);
-            ret.setOption!(SocketOption.reuseAddr)(true);
-            auto res = .bind(ret.fd, ai.addr.cargs[]);
-            if (res != -1)
-                return ret;
-        }
-        enforce(0, "bind failed".String);
-        assert(0);
-    }
-
     /**
        Connect to resolved `hostname` and `port`.
        Uses the first resolved address the socket can successfully connect to.
@@ -132,7 +124,14 @@ struct TCP
      */
     static TCP client(S)(S hostname, ushort port) if (isStringLike!S)
     {
-        return connectAddrInfos(resolve(hostname, port, AddrFamily.unspecified, SocketType.stream));
+        import std.internal.cstring : tempCString;
+        import core.internal.string : unsignedToTempString;
+
+        auto tp = () @trusted{
+            return tempCString(unsignedToTempString(port, 10)[]);
+        }();
+        auto sock = Socket.resolveConnect(tempCString(hostname)[], tp[], SocketType.stream);
+        return TCP(sock.move);
     }
 
     ///
@@ -166,8 +165,11 @@ struct TCP
     static TCP client(S1, S2)(S1 hostname, S2 service)
             if (isStringLike!S1 && isStringLike!S2)
     {
-        return connectAddrInfos(resolve(hostname, service,
-                AddrFamily.unspecified, SocketType.stream));
+        import std.internal.cstring : tempCString;
+
+        auto sock = Socket.resolveConnect(tempCString(hostname)[],
+                tempCString(service)[], SocketType.stream);
+        return TCP(sock.move);
     }
 
     ///
@@ -252,19 +254,6 @@ struct TCP
         ubyte[4] buf;
         assert(conn.recv(buf[]) == 4);
         assert(buf[] == ping[]);
-    }
-
-    private static TCP connectAddrInfos(R)(R addrInfos) @trusted
-    {
-        for (auto ai = addrInfos.front; !addrInfos.empty; addrInfos.popFront)
-        {
-            auto sock = Socket(ai.family, SocketType.stream, Protocol.default_);
-            immutable res = .connect(sock.fd, ai.addr.cargs[]);
-            if (res != -1)
-                return TCP(sock.move);
-        }
-        enforce(0, "connect failed".String);
-        assert(0);
     }
 
     /// underlying `Socket`

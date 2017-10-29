@@ -1,5 +1,8 @@
 /**
-   Domain Name Resolver
+   Types for Domain Name Resolution.
+
+   Use $(LINK2 ../driver/Driver.resolve.html, `Driver.resolve`) to
+   actually resolve a hostname and service.
 
    License: $(HTTP boost.org/LICENSE_1_0.txt, Boost License 1.0).
    Authors: Martin Nowak
@@ -14,11 +17,16 @@ import std.io.net.socket;
 import std.range, std.traits;
 
 /**
-   Resolved Address Info
+   A single resolved address entry
 */
 struct AddrInfo
 {
 pure nothrow @safe @nogc:
+    this(addrinfo ai)
+    {
+        this.ai = ai;
+    }
+
     /// resolved address family
     AddrFamily family() const scope
     {
@@ -38,11 +46,11 @@ pure nothrow @safe @nogc:
     }
 
     /// get resolved socket address
-    SocketAddr addr() @trusted scope
+    SocketAddr addr() const @trusted scope
     {
         import core.stdc.string : memcpy;
 
-        SocketAddr addr;
+        SocketAddr addr = void;
         memcpy( & addr, ai.ai_addr, ai.ai_addrlen);
         return addr;
     }
@@ -53,142 +61,7 @@ private:
     else
         import core.sys.windows.winsock2 : addrinfo;
 
-    const(addrinfo)* ai;
-}
-
-/**
-   Resolve `hostname` to a forward range of `AddrInfo` using `service`
-   or `port`, `family`, `socktype`, and `protocol` as hints.
-
-See_also: https://www.iana.org/assignments/service-names-port-numbers
- */
-auto resolve(S1, S2)(S1 hostname, S2 service, AddrFamily family = AddrFamily.unspecified,
-        SocketType socktype = SocketType.unspecified, Protocol protocol = Protocol.default_) @nogc @trusted
-        if (isSomeString!S1 && isSomeString!S2)
-{
-    return getAddrInfo(hostname, service, family, socktype, protocol, 0);
-}
-
-/// ditto
-auto resolve(S1)(S1 hostname, ushort port, AddrFamily family = AddrFamily.unspecified,
-        SocketType socktype = SocketType.unspecified, Protocol protocol = Protocol.default_) @nogc @trusted
-        if (isSomeString!S1)
-{
-    import core.internal.string : unsignedToTempString;
-
-    version (Posix)
-    {
-        import core.sys.posix.netdb : AI_NUMERICSERV;
-
-        enum flags = AI_NUMERICSERV;
-    }
-    else
-        enum flags = 0;
-
-    return getAddrInfo(hostname, unsignedToTempString(port, 10)[], family,
-            socktype, protocol, flags);
-}
-
-private auto getAddrInfo(S1, S2)(S1 hostname, S2 service, AddrFamily family = AddrFamily.unspecified,
-        SocketType socktype = SocketType.unspecified,
-        Protocol protocol = Protocol.default_, int flags = 0) @nogc @trusted
-        if (isSomeString!S1 && isSomeString!S2)
-{
-    version (Posix)
-        import core.sys.posix.netdb;
-    else version (Windows)
-        import core.sys.windows.winsock2;
-    else
-        static assert(0, "unimplemented");
-
-    version (Windows)
-    {
-        import std.io.net.socket : initWSA;
-
-        initWSA();
-    }
-
-    import std.internal.cstring : tempCString;
-
-    addrinfo hints;
-    with (hints)
-    {
-        version (Posix)
-            ai_flags = flags | AI_V4MAPPED | AI_ADDRCONFIG;
-        else
-            ai_flags = flags | AI_ADDRCONFIG;
-        ai_family = family;
-        ai_socktype = socktype;
-        ai_protocol = protocol;
-        ai_addrlen = 0;
-        ai_canonname = null;
-        ai_addr = null;
-        ai_next = null;
-    }
-    addrinfo* res;
-    immutable ret = getaddrinfo(tempCString(hostname), tempCString(service), &hints, &res);
-    enforce!DNSException(ret == 0, {
-        auto s = String("failed to resolve '");
-        s ~= hostname;
-        s ~= ':';
-        s ~= service;
-        s ~= '\'';
-        return s.move;
-    }, ret);
-    return GAIResult(res);
-}
-
-private struct GAIResult
-{
-nothrow @safe @nogc:
-    AddrInfo front() pure const return scope @trusted
-    {
-        return AddrInfo(ai);
-    }
-
-    bool empty() pure const scope
-    {
-        return ai is null;
-    }
-
-    void popFront() pure scope
-    {
-        import std.stdio;
-
-        assert(ai !is null);
-        ai = ai.ai_next;
-    }
-
-    ~this() @trusted scope
-    {
-        freeaddrinfo(cast(addrinfo * ) ai);
-        ai = null;
-    }
-
-    @disable this(this);
-
-    const(addrinfo)* ai;
-private:
-    version (Posix)
-        import core.sys.posix.netdb : addrinfo, freeaddrinfo;
-    else version (Windows)
-        import core.sys.windows.winsock2 : addrinfo, freeaddrinfo;
-}
-
-///
-@safe @nogc unittest
-{
-    auto rng = resolve("localhost", "http", AddrFamily.IPv4);
-    assert(!rng.empty);
-    auto addr4 = rng.front.addr.get!SocketAddrIPv4;
-    assert(addr4.ip == IPv4Addr(127, 0, 0, 1));
-    assert(addr4.port == 80);
-
-    rng = resolve("localhost", "http", AddrFamily.IPv6);
-    assert(!rng.empty);
-    auto addr6 = rng.front.addr.get!SocketAddrIPv6;
-    assert(addr6.ip == IPv6Addr(0, 0, 0, 0, 0, 0, 0, 1));
-    assert(addr6.port == 80);
+    addrinfo ai;
 }
 
 /// exception thrown on name resolution errors

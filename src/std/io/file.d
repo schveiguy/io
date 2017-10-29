@@ -9,6 +9,7 @@ module std.io.file;
 
 import std.io.exception : enforce;
 import std.io.internal.string;
+import std.io.driver;
 
 version (Posix)
 {
@@ -138,34 +139,27 @@ struct File
         {
             import std.internal.cstring : tempCString;
 
-            fd = .open(tempCString(path), mode);
+            f = driver.createFile(tempCString(path)[], mode);
         }
-        else
+        else version (Windows)
         {
-            import std.internal.cstring : tempCString;
+            // FIXME: import std.internal.cstring : tempCStringW;
+            import std.io.internal.string : tempCStringW;
 
-            // FIXME: tempCStringW produces corrupted string
-            fd = .CreateFileA(tempCString(path), accessMask(mode), shareMode(mode),
-                    null, creationDisposition(mode), FILE_ATTRIBUTE_NORMAL, null);
+            f = driver.createFile(tempCStringW(path)[], mode);
         }
-        enforce(fd != INVALID_HANDLE_VALUE, {
-            auto s = String("opening ");
-            s ~= path;
-            s ~= " failed";
-            return s.move;
-        });
     }
 
-    /// take ownership of an existing file handle
+    /// take ownership of an existing open file `handle`
     version (Posix)
-        this(int fd) pure nothrow
+        this(int handle)
     {
-        this.fd = fd;
+        f = driver.fileFromHandle(handle);
     }
     else version (Windows)
-        this(HANDLE h) pure nothrow
+        this(HANDLE handle)
     {
-        this.fd = h;
+        f = driver.fileFromHandle(handle);
     }
 
     ///
@@ -177,18 +171,16 @@ struct File
     /// close the file
     void close() scope @trusted
     {
-        if (fd == INVALID_HANDLE_VALUE)
+        if (f is Driver.INVALID_FILE)
             return;
-        version (Posix) enforce(!.close(fd), "close failed".String);
-        else
-            enforce(CloseHandle(fd), "close failed".String);
-        fd = INVALID_HANDLE_VALUE;
+        driver.closeFile(f);
+        f = Driver.INVALID_FILE;
     }
 
     /// return whether file is open
     bool isOpen() const scope
     {
-        return fd != INVALID_HANDLE_VALUE;
+        return f != Driver.INVALID_FILE;
     }
 
     ///
@@ -212,20 +204,7 @@ struct File
     */
     size_t read(scope ubyte[] buf) @trusted scope
     {
-        version (Posix)
-        {
-            immutable ret = .read(fd,  & buf[0], buf.length);
-            enforce(ret !=  - 1, "read failed".String);
-            return ret;
-        }
-        else version (Windows)
-        {
-            assert(buf.length <= uint.max);
-            DWORD n;
-            immutable ret = ReadFile(fd, &buf[0], cast(uint) buf.length, &n, null);
-            enforce(ret, "read failed".String);
-            return n;
-        }
+        return driver.read(f, buf);
     }
 
     ///
@@ -247,20 +226,7 @@ struct File
     */
     size_t read(scope ubyte[][] bufs...) @trusted scope
     {
-        version (Posix)
-        {
-            auto vecs = tempIOVecs(bufs);
-            immutable ret = .readv(fd, vecs.ptr, cast(int) vecs.length);
-            enforce(ret !=  - 1, "read failed".String);
-            return ret;
-        }
-        else
-        {
-            size_t total;
-            foreach (b; bufs)
-                total += read(b);
-            return total;
-        }
+        return driver.read(f, bufs);
     }
 
     ///
@@ -281,20 +247,7 @@ struct File
     */
     size_t write( /*in*/ const scope ubyte[] buf) @trusted scope
     {
-        version (Posix)
-        {
-            immutable ret = .write(fd,  & buf[0], buf.length);
-            enforce(ret !=  - 1, "write failed".String);
-            return ret;
-        }
-        else version (Windows)
-        {
-            assert(buf.length <= uint.max);
-            DWORD n;
-            immutable ret = WriteFile(fd, &buf[0], cast(uint) buf.length, &n, null);
-            enforce(ret, "write failed".String);
-            return n;
-        }
+        return driver.write(f, buf);
     }
 
     ///
@@ -318,20 +271,7 @@ struct File
     */
     size_t write( /*in*/ const scope ubyte[][] bufs...) @trusted scope
     {
-        version (Posix)
-        {
-            auto vecs = tempIOVecs(bufs);
-            immutable ret = .writev(fd, vecs.ptr, cast(int) vecs.length);
-            enforce(ret !=  - 1, "write failed".String);
-            return ret;
-        }
-        else
-        {
-            size_t total;
-            foreach (b; bufs)
-                total += write(b);
-            return total;
-        }
+        return driver.write(f, bufs);
     }
 
     ///
@@ -345,11 +285,11 @@ struct File
     }
 
     /// move operator for file
-    File move() /*FIXME pure nothrow*/
+    File move() return scope  /*FIXME pure nothrow*/
     {
-        auto fd = this.fd;
-        this.fd = INVALID_HANDLE_VALUE;
-        return File(fd);
+        auto f = this.f;
+        this.f = Driver.INVALID_FILE;
+        return File(f);
     }
 
     /// not copyable
@@ -357,15 +297,18 @@ struct File
 
 private:
 
-    version (Posix) enum int INVALID_HANDLE_VALUE = -1;
-    version (Posix) int fd = INVALID_HANDLE_VALUE;
-    version (Windows) HANDLE fd = INVALID_HANDLE_VALUE;
+    this(return scope Driver.FILE f) @trusted
+    {
+        this.f = f;
+    }
+
+    Driver.FILE f = Driver.INVALID_FILE;
 }
 
 ///
 unittest
 {
-    auto f = File("temp.txt", mode!"a+");
+    auto f = File("temp.txt", mode!"w");
     scope (exit)
         remove("temp.txt");
     f.write([0, 1]);
@@ -458,9 +401,9 @@ version (unittest) private void remove(in char[] path) @trusted @nogc
     }
     else version (Windows)
     {
-        import std.internal.cstring : tempCString;
+        // FIXME: import std.internal.cstring : tempCStringW;
+        import std.io.internal.string : tempCStringW;
 
-        // FIXME: tempCStringW produces corrupted string
-        enforce(DeleteFileA(tempCString(path)), "DeleteFile failed".String);
+        enforce(DeleteFileW(tempCStringW(path)), "DeleteFile failed".String);
     }
 }

@@ -11,7 +11,6 @@ import std.io.exception : enforce;
 import std.io.internal.string;
 import std.io.net.addr;
 import std.io.net.socket;
-import std.io.net.dns : resolve;
 
 version (Posix)
 {
@@ -41,7 +40,14 @@ struct UDP
     */
     static UDP server(S)(S hostname, ushort port = 0) if (isStringLike!S)
     {
-        return bindAddrInfos(resolve(hostname, port, AddrFamily.unspecified, SocketType.dgram));
+        import std.internal.cstring : tempCString;
+        import core.internal.string : unsignedToTempString;
+
+        auto tp = () @trusted{
+            return tempCString(unsignedToTempString(port, 10)[]);
+        }();
+        auto sock = Socket.resolveBind(tempCString(hostname)[], tp[], SocketType.dgram);
+        return UDP(sock.move);
     }
 
     ///
@@ -67,7 +73,11 @@ struct UDP
     static UDP server(S1, S2)(S1 hostname, S2 service)
             if (isStringLike!S1 && isStringLike!S2)
     {
-        return bindAddrInfos(resolve(hostname, service, AddrFamily.unspecified, SocketType.dgram));
+        import std.internal.cstring : tempCString;
+
+        auto sock = Socket.resolveBind(tempCString(hostname)[],
+                tempCString(service)[], SocketType.dgram);
+        return UDP(sock.move);
     }
 
     ///
@@ -129,20 +139,6 @@ struct UDP
         assert(server.localAddr.get!SocketAddrIPv4.port != 0);
     }
 
-    private static UDP bindAddrInfos(R)(R addrInfos) @trusted
-    {
-        for (auto ai = addrInfos.front; !addrInfos.empty; addrInfos.popFront)
-        {
-            auto ret = UDP(ai.family);
-            ret.setOption!(SocketOption.reuseAddr)(true);
-            immutable res = .bind(ret.socket.fd, ai.addr.cargs[]);
-            if (res != -1)
-                return ret.move;
-        }
-        enforce(0, "bind failed".String);
-        assert(0);
-    }
-
     /**
        Connect to resolved `hostname` and `port`.
        Uses the first resolved address the socket can successfully connect to.
@@ -158,7 +154,14 @@ struct UDP
      */
     static UDP client(S)(S hostname, ushort port) if (isStringLike!S)
     {
-        return connectAddrInfos(resolve(hostname, port, AddrFamily.unspecified, SocketType.dgram));
+        import std.internal.cstring : tempCString;
+        import core.internal.string : unsignedToTempString;
+
+        auto tp = () @trusted{
+            return tempCString(unsignedToTempString(port, 10)[]);
+        }();
+        auto sock = Socket.resolveConnect(tempCString(hostname)[], tp[], SocketType.dgram);
+        return UDP(sock.move);
     }
 
     ///
@@ -189,8 +192,11 @@ struct UDP
     static UDP client(S1, S2)(S1 hostname, S2 service)
             if (isStringLike!S1 && isStringLike!S2)
     {
-        return connectAddrInfos(resolve(hostname, service,
-                AddrFamily.unspecified, SocketType.dgram));
+        import std.internal.cstring : tempCString;
+
+        auto sock = Socket.resolveConnect(tempCString(hostname)[],
+                tempCString(service)[], SocketType.dgram);
+        return UDP(sock.move);
     }
 
     ///
@@ -278,19 +284,6 @@ struct UDP
         ubyte[4] buf;
         assert(server.recv(buf[]) == 4);
         assert(buf[] == ping[]);
-    }
-
-    private static UDP connectAddrInfos(R)(R addrInfos) @trusted
-    {
-        for (auto ai = addrInfos.front; !addrInfos.empty; addrInfos.popFront)
-        {
-            auto ret = UDP(ai.family);
-            immutable res = .connect(ret.socket.fd, ai.addr.cargs[]);
-            if (res != -1)
-                return ret.move;
-        }
-        enforce(0, "connect failed".String);
-        assert(0);
     }
 
     ///

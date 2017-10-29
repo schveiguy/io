@@ -183,3 +183,147 @@ nothrow @safe @nogc unittest
     // https://issues.dlang.org/show_bug.cgi?id=17927 :/
     // static assert(!__traits(compiles, escape(s2[])));
 }
+
+package(std.io):
+
+// FIXME: Using the imported std.internal.cstring.tempCStringW produces
+// corrupted strings for unknow reasons, copying the definition here works.
+
+auto _tempCString(To = char, From)(From str) if (isStringLike!From)
+{
+    import std.range : hasLength;
+    import std.traits : Unqual;
+
+    alias CF = Unqual!(ElementEncodingType!From);
+
+    auto res = TempCStringBuffer!To.trustedVoidInit(); // expensive to fill _buff[]
+
+    // Note: res._ptr can't point to res._buff as structs are movable.
+
+    To[] p;
+    bool p_is_onstack = true;
+    size_t i;
+
+    size_t strLength;
+    static if (hasLength!From)
+    {
+        strLength = str.length;
+    }
+    import std.utf : byUTF;
+
+    static if (isSomeString!From)
+    {
+        auto r = cast(const(CF)[]) str; // because inout(CF) causes problems with byUTF
+        if (r is null) // Bugzilla 14980
+        {
+            res._ptr = null;
+            return res;
+        }
+    }
+    else
+        alias r = str;
+    To[] q = res._buff;
+    foreach (const c; byUTF!(Unqual!To)(r))
+    {
+        if (i + 1 == q.length)
+        {
+            p = trustedRealloc(p, i, res._buff, strLength, p_is_onstack);
+            p_is_onstack = false;
+            q = p;
+        }
+        q[i++] = c;
+    }
+    q[i] = 0;
+    res._length = i;
+    res._ptr = p_is_onstack ? res.useStack : &p[0];
+    return res;
+}
+
+version (Windows) alias tempCStringW = _tempCString!(wchar, const(char)[]);
+
+private struct TempCStringBuffer(To = char)
+{
+@trusted pure nothrow @nogc:
+
+    @disable this();
+    @disable this(this);
+    alias ptr this; /// implicitly covert to raw pointer
+
+    @property inout(To)* buffPtr() inout
+    {
+        return _ptr == useStack ? _buff.ptr : _ptr;
+    }
+
+    @property const(To)* ptr() const
+    {
+        return buffPtr;
+    }
+
+    const(To)[] opIndex() const pure
+    {
+        return buffPtr[0 .. _length];
+    }
+
+    ~this()
+    {
+        if (_ptr != useStack)
+        {
+            import core.memory : pureFree;
+
+            pureFree(_ptr);
+        }
+    }
+
+private:
+    enum To* useStack = () @trusted{ return cast(To*) size_t.max; }();
+
+    To* _ptr;
+    size_t _length; // length of the string
+    version (unittest)
+    {
+        enum buffLength = 16 / To.sizeof; // smaller size to trigger reallocations
+    }
+    else
+    {
+        enum buffLength = 256 / To.sizeof; // production size
+    }
+
+    To[buffLength] _buff; // the 'small string optimization'
+
+    static TempCStringBuffer trustedVoidInit()
+    {
+        TempCStringBuffer res = void;
+        return res;
+    }
+}
+
+private To[] trustedRealloc(To)(To[] buf, size_t i, To[] res, size_t strLength, bool res_is_onstack) @trusted @nogc pure nothrow
+{
+    pragma(inline, false); // because it's rarely called
+
+    import core.exception : onOutOfMemoryError;
+    import core.memory : pureMalloc, pureRealloc;
+    import core.stdc.string : memcpy;
+
+    if (res_is_onstack)
+    {
+        size_t newlen = res.length * 3 / 2;
+        if (newlen <= strLength)
+            newlen = strLength + 1; // +1 for terminating 0
+        auto ptr = cast(To*) pureMalloc(newlen * To.sizeof);
+        if (!ptr)
+            onOutOfMemoryError();
+        memcpy(ptr, res.ptr, i * To.sizeof);
+        return ptr[0 .. newlen];
+    }
+    else
+    {
+        if (buf.length >= size_t.max / (2 * To.sizeof))
+            onOutOfMemoryError();
+        const newlen = buf.length * 3 / 2;
+        auto ptr = cast(To*) pureRealloc(buf.ptr, newlen * To.sizeof);
+        if (!ptr)
+            onOutOfMemoryError();
+        return ptr[0 .. newlen];
+    }
+}
