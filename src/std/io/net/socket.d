@@ -458,7 +458,7 @@ struct Socket
             msg.msg_name = &ret[1];
             msg.msg_namelen = ret[1].sizeof;
             msg.msg_iov = vecs.ptr;
-            msg.msg_iovlen = vecs.length;
+            msg.msg_iovlen = cast(int)vecs.length;
             msg.msg_control = null;
             msg.msg_controllen = 0;
             msg.msg_flags = 0;
