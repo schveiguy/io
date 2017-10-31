@@ -216,10 +216,16 @@ shared @safe @nogc:
     // SyncDriver is stateless, so we can share an immutable instance
     static immutable Driver _syncDriver = new SyncDriver;
 
-    if (auto d = atomicLoad!(MemoryOrder.raw)(_globalDriver))
+    auto d = atomicLoad!(MemoryOrder.raw)(_globalDriver);
+    if (d is null)
+    {
+        cas(&_globalDriver, null, *cast(shared(SyncDriver)*) &_syncDriver);
+        d = atomicLoad!(MemoryOrder.raw)(_globalDriver);
+    }
+    static if (__VERSION__ < 2077)
+        return cast(shared) d;
+    else
         return d;
-    cas(&_globalDriver, null, *cast(shared(SyncDriver)*) &_syncDriver);
-    return atomicLoad!(MemoryOrder.raw)(_globalDriver);
 }
 
 /**
