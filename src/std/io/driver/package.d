@@ -233,11 +233,11 @@ shared @safe @nogc:
 
    Note that this might invalidate any open File or Socket, hence it is not `@safe`.
  */
-@property void globalDriver(shared(Driver) driver) nothrow @system @nogc
+@property void globalDriver(shared(Driver) d) nothrow @system @nogc
 {
     import core.atomic;
 
-    _globalDriver = driver;
+    atomicStore!(MemoryOrder.raw)(_globalDriver, d);
 }
 
 private:
