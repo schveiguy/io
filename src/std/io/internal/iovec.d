@@ -1,4 +1,4 @@
-/**
+/*
    Temporary iovec array
 
    License: $(HTTP boost.org/LICENSE_1_0.txt, Boost License 1.0).
