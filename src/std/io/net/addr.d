@@ -613,7 +613,7 @@ private:
 
     sockaddr_un sa;
     static if (is(typeof(sa.sun_len)))
-        @property ref ubyte len() @nogc
+        @property ref ubyte len() @nogc return
         {
             return sa.sun_len;
         }
@@ -889,7 +889,7 @@ bool stringToIP(S)(S s, ref in6_addr addr) /*pure*/ nothrow @nogc @trusted
 version (Posix) ubyte SUN_LEN(in ref sockaddr_un sun) pure nothrow @nogc @trusted
 {
     static if (is(typeof(sun.sun_len)))
-        return sun.sun_path.offsetof + sun.sun_len;
+        return cast(ubyte)(sun.sun_path.offsetof + sun.sun_len);
     else
     {
         import core.stdc.string : strlen;
