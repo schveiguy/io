@@ -403,24 +403,9 @@ private:
 ///
 unittest
 {
-    immutable addr4 = SocketAddrIPv4(IPv4Addr(127, 0, 0, 1), 1234);
-    immutable addr6 = SocketAddrIPv6(IPv6Addr(0x2001, 0xdb8, 0, 0, 0, 0, 0, 1), 1234);
-    version (Posix) immutable addru = SocketAddrUnix("/var/run/unix.sock");
-
-    SocketAddr addr = addr4;
-    assert(addr.family == AddrFamily.IPv4);
-    assert(addr.get!SocketAddrIPv4 == addr4);
-
-    addr = addr6;
-    assert(addr.family == AddrFamily.IPv6);
-    assert(addr.get!SocketAddrIPv6 == addr6);
-
-    version (Posix)
-    {
-        addr = addru;
-        assert(addr.family == AddrFamily.UNIX);
-        assert(addr.get!SocketAddrUnix == addru);
-    }
+    auto addr = SocketAddrIPv4(IPv4Addr(127, 0, 0, 1), 8080);
+    assert(addr.toString == "127.0.0.1:8080");
+    // assert(SocketAddrIPv4.parse(addr.toString) == addr);
 }
 
 //==============================================================================
@@ -552,7 +537,7 @@ private:
 unittest
 {
     auto addr = SocketAddrIPv6(IPv6Addr(0x2001, 0xdb8, 0, 0, 0, 0, 0, 1), 8080);
-    assert(addr.toString == "[2001:db8::1]:8080", addr.toString);
+    assert(addr.toString == "[2001:db8::1]:8080");
     // assert(SocketAddrIPv6.parse(addr.toString) == addr);
 }
 
@@ -673,7 +658,7 @@ struct SocketAddr
     }
 
     /// Construct generic SocketAddr from specific type `SocketAddrX`.
-    this(SocketAddrX)(in auto ref SocketAddrX addr) pure nothrow @trusted @nogc 
+    this(SocketAddrX)(in auto ref SocketAddrX addr) pure nothrow @trusted @nogc
             if (isSocketAddr!SocketAddrX)
     {
         import core.stdc.string : memcpy;
@@ -769,6 +754,29 @@ struct SocketAddr
 
 private:
     sockaddr_storage storage;
+}
+
+///
+unittest
+{
+    immutable addr4 = SocketAddrIPv4(IPv4Addr(127, 0, 0, 1), 1234);
+    immutable addr6 = SocketAddrIPv6(IPv6Addr(0x2001, 0xdb8, 0, 0, 0, 0, 0, 1), 1234);
+    version (Posix) immutable addru = SocketAddrUnix("/var/run/unix.sock");
+
+    SocketAddr addr = addr4;
+    assert(addr.family == AddrFamily.IPv4);
+    assert(addr.get!SocketAddrIPv4 == addr4);
+
+    addr = addr6;
+    assert(addr.family == AddrFamily.IPv6);
+    assert(addr.get!SocketAddrIPv6 == addr6);
+
+    version (Posix)
+    {
+        addr = addru;
+        assert(addr.family == AddrFamily.UNIX);
+        assert(addr.get!SocketAddrUnix == addru);
+    }
 }
 
 //==============================================================================
