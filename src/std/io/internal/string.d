@@ -108,7 +108,7 @@ nothrow pure @safe @nogc:
     }
 
     ///
-    bool opEquals(in ref String s) const
+    bool opEquals(in ref String s) scope const
     {
         return this[] == s[];
     }
