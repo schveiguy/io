@@ -556,7 +556,7 @@ package(std.io.net):
     {
         Socket sock;
         immutable res = driver.resolve(hostname, service,
-                AddrFamily.unspecified, socketType, Protocol.default_, (ref ai) {
+                AddrFamily.unspecified, socketType, Protocol.default_, (ref scope ai) {
                     try
                     {
                         sock = Socket(ai.family, ai.socketType, ai.protocol);
@@ -577,7 +577,7 @@ package(std.io.net):
     {
         Socket sock;
         immutable res = driver.resolve(hostname, service,
-                AddrFamily.unspecified, socketType, Protocol.default_, (ref ai) {
+                AddrFamily.unspecified, socketType, Protocol.default_, (ref scope ai) {
                     try
                     {
                         sock = Socket(ai.family, ai.socketType, ai.protocol);

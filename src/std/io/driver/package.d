@@ -157,7 +157,7 @@ shared @safe @nogc:
         import std.internal.cstring : tempCString;
 
         auto res = driver.resolve("localhost", "http", AddrFamily.IPv4,
-                SocketType.stream, Protocol.default_, (ref ai) {
+                SocketType.stream, Protocol.default_, (ref scope ai) {
                     auto addr4 = ai.addr.get!SocketAddrIPv4;
                     assert(addr4.ip == IPv4Addr(127, 0, 0, 1));
                     assert(addr4.port == 80);
@@ -166,7 +166,7 @@ shared @safe @nogc:
         assert(res == 1);
 
         res = driver.resolve("localhost", "http", AddrFamily.IPv6,
-                SocketType.stream, Protocol.default_, (ref ai) {
+                SocketType.stream, Protocol.default_, (ref scope ai) {
                     auto addr6 = ai.addr.get!SocketAddrIPv6;
                     assert(addr6.ip == IPv6Addr(0, 0, 0, 0, 0, 0, 0, 1));
                     assert(addr6.port == 80);

@@ -4,6 +4,11 @@ authors "Martin Nowak"
 copyright "Copyright © 2017, Martin Nowak"
 license "BSL-1.0 (Boost)"
 x:ddoxTool "scod"
-dflags "-dip1000"
 versions "WindowsXP" platform="windows"
 libs "Ws2_32" platform="windows"
+configuration "library" {
+}
+configuration "dip1000" {
+       dflags "-dip1000"
+       versions "DIP1000"
+}

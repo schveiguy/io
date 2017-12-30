@@ -2,10 +2,12 @@
 
 set -ueo pipefail
 
+: ${CONFIG:=library} # env CONFIG=dip1000 ./travis.sh
+
 if [ ! -z "${COVERAGE:-}" ]; then
-    dub test -b unittest-cov
+    dub test -b unittest-cov -c $CONFIG
 else
-    dub test
+    dub test -c $CONFIG
 fi
 
 if [ ! -z "${GH_TOKEN:-}" ]; then

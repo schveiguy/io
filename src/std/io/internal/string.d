@@ -178,7 +178,8 @@ nothrow @safe @nogc unittest
     }
 
     scope s = String("Hello");
-    static assert(!__traits(compiles, escape(s[])));
+    version (DIP1000)
+        static assert(!__traits(compiles, escape(s[])));
     auto s2 = String("Hello");
     // https://issues.dlang.org/show_bug.cgi?id=17927 :/
     // static assert(!__traits(compiles, escape(s2[])));

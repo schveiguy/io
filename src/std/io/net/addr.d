@@ -715,7 +715,7 @@ struct SocketAddr
     }
 
     ///
-    bool opEquals(SocketAddrX)(in auto ref SocketAddrX rhs) pure nothrow const @nogc
+    bool opEquals(SocketAddrX)(in auto ref SocketAddrX rhs) pure nothrow const @trusted @nogc
     {
         if (family != rhs.family)
             return false;
