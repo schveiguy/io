@@ -2,9 +2,14 @@
 
 set -ueo pipefail
 
+IPv6_LOOPBACK_ADDR=$(ip -6 addr show dev lo)
+if [ -z "$IPv6_LOOPBACK_ADDR" ]; then
+    export SKIP_IPv6_LOOPBACK_TESTS=
+fi
+
 : ${CONFIG:=library} # env CONFIG=dip1000 ./travis.sh
 
-if [ ! -z "${COVERAGE:-}" ]; then
+if [ -n "${COVERAGE:-}" ]; then
     dub test -b unittest-cov -c $CONFIG
 else
     dub test -c $CONFIG

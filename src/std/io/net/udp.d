@@ -112,10 +112,6 @@ struct UDP
         auto addr4 = SocketAddrIPv4(IPv4Addr(127, 0, 0, 1), 1234);
         auto server = UDP.server(addr4);
         assert(server.localAddr == addr4);
-
-        auto addr6 = SocketAddrIPv6(IPv6Addr(0, 0, 0, 0, 0, 0, 0, 1), 1234);
-        server = UDP.server(addr6);
-        assert(server.localAddr == addr6);
     }
 
     /**
@@ -220,7 +216,7 @@ struct UDP
        Params:
          addr = remote socket address to connect to
      */
-    static UDP client(SocketAddr)(in auto ref SocketAddr addr) @trusted 
+    static UDP client(SocketAddr)(in auto ref SocketAddr addr) @trusted
             if (isSocketAddr!SocketAddr)
     {
         auto res = UDP(addr.family);
@@ -366,7 +362,7 @@ private:
 }
 
 ///
-unittest
+@safe @nogc unittest
 {
     auto server = UDP.server(IPv4Addr(127, 0, 0, 1));
     auto client = UDP(ProtocolFamily.IPv4);
@@ -384,4 +380,15 @@ unittest
 
     assert(client.recv(buf[]) == 4);
     assert(buf[] == pong[]);
+}
+
+@safe unittest
+{
+    import std.process : environment;
+
+    if (environment.get("SKIP_IPv6_LOOPBACK_TESTS") !is null)
+        return;
+    auto addr6 = SocketAddrIPv6(IPv6Addr(0, 0, 0, 0, 0, 0, 0, 1), 1234);
+    auto server = UDP.server(addr6);
+    assert(server.localAddr == addr6);
 }

@@ -164,16 +164,26 @@ shared @safe @nogc:
                     return 1;
                 });
         assert(res == 1);
-
-        res = driver.resolve("localhost", "http", AddrFamily.IPv6,
-                SocketType.stream, Protocol.default_, (ref scope ai) {
-                    auto addr6 = ai.addr.get!SocketAddrIPv6;
-                    assert(addr6.ip == IPv6Addr(0, 0, 0, 0, 0, 0, 0, 1));
-                    assert(addr6.port == 80);
-                    return 1;
-                });
-        assert(res == 1);
     }
+}
+
+@safe unittest
+{
+    import std.io.net.addr;
+    import std.internal.cstring : tempCString;
+    import std.process : environment;
+
+    if (environment.get("SKIP_IPv6_LOOPBACK_TESTS") !is null)
+        return;
+
+    auto res = driver.resolve("localhost", "http", AddrFamily.IPv6,
+            SocketType.stream, Protocol.default_, (ref scope ai) {
+                auto addr6 = ai.addr.get!SocketAddrIPv6;
+                assert(addr6.ip == IPv6Addr(0, 0, 0, 0, 0, 0, 0, 1));
+                assert(addr6.port == 80);
+                return 1;
+            });
+    assert(res == 1);
 }
 
 /**
