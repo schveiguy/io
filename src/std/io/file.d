@@ -315,53 +315,6 @@ unittest
 
 private:
 
-version (Windows)
-{
-@safe @nogc:
-    DWORD accessMask(Mode mode)
-    {
-        switch (mode & (Mode.read | Mode.write | Mode.readWrite | Mode.append))
-        {
-        case Mode.read:
-            return GENERIC_READ;
-        case Mode.write:
-            return GENERIC_WRITE;
-        case Mode.readWrite:
-            return GENERIC_READ | GENERIC_WRITE;
-        case Mode.write | Mode.append:
-            return FILE_GENERIC_WRITE & ~FILE_WRITE_DATA;
-        case Mode.readWrite | Mode.append:
-            return GENERIC_READ | (FILE_GENERIC_WRITE & ~FILE_WRITE_DATA);
-        default:
-            enforce(0, "invalid mode for access mask".String);
-            assert(0);
-        }
-    }
-
-    DWORD shareMode(Mode mode)
-    {
-        // do not lock files
-        return FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE;
-    }
-
-    DWORD creationDisposition(Mode mode)
-    {
-        switch (mode & (Mode.create | Mode.truncate))
-        {
-        case cast(Mode) 0:
-            return OPEN_EXISTING;
-        case Mode.create:
-            return OPEN_ALWAYS;
-        case Mode.truncate:
-            return TRUNCATE_EXISTING;
-        case Mode.create | Mode.truncate:
-            return CREATE_ALWAYS;
-        default:
-            assert(0);
-        }
-    }
-}
-
 @safe unittest
 {
     import std.io : isIO;
