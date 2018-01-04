@@ -143,8 +143,7 @@ struct File
         }
         else version (Windows)
         {
-            // FIXME: import std.internal.cstring : tempCStringW;
-            import std.io.internal.string : tempCStringW;
+            import std.internal.cstring : tempCStringW;
 
             f = driver.createFile(tempCStringW(path)[], mode);
         }
@@ -401,8 +400,7 @@ version (unittest) private void remove(in char[] path) @trusted @nogc
     }
     else version (Windows)
     {
-        // FIXME: import std.internal.cstring : tempCStringW;
-        import std.io.internal.string : tempCStringW;
+        import std.internal.cstring : tempCStringW;
 
         enforce(DeleteFileW(tempCStringW(path)), "DeleteFile failed".String);
     }
