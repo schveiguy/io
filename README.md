@@ -33,8 +33,7 @@ catch (IOException e)
 {}
 ```
 
-IOs use unique ownership and are [moveable](https://dlang.org/phobos/std_algorithm_mutation.html#.move) but not copyable.
-(Use [refCounted](https://dlang.org/phobos/std_typecons.html#refCounted) for shared ownership)
+IOs use unique ownership and are [moveable](https://dlang.org/phobos/std_algorithm_mutation.html#.move) but not copyable (Use [refCounted](https://dlang.org/phobos/std_typecons.html#refCounted) for shared ownership).
 ```d
 io2 = io.move;
 assert(!io2.isClosed);
