@@ -167,6 +167,15 @@ struct File
         close();
     }
 
+    // workaround Issue 18000
+    void opAssign(scope File rhs) scope
+    {
+        auto tmp = f;
+        () @trusted { f = rhs.f; }();
+        rhs.f = tmp;
+        rhs.close();
+    }
+
     /// close the file
     void close() scope @trusted
     {
