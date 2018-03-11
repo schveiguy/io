@@ -17,8 +17,8 @@ else version (Windows)
 {
     import core.sys.windows.winsock2;
 
-    // https://github.com/dlang/druntime/pull/1958
-    import core.sys.windows.winsock2 : sockaddr_storage = SOCKADDR_STORAGE;
+    static if (__VERSION__ < 2078) // https://github.com/dlang/druntime/pull/1958
+        import core.sys.windows.winsock2 : sockaddr_storage = SOCKADDR_STORAGE;
 }
 else
     static assert(0, "unimplemented");
