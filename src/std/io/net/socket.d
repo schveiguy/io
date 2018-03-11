@@ -139,6 +139,17 @@ struct Socket
         return s != Driver.INVALID_SOCKET;
     }
 
+    ///
+    unittest
+    {
+        Socket s;
+        assert(!s.isOpen);
+        s = Socket(ProtocolFamily.IPv4, SocketType.dgram);
+        assert(s.isOpen);
+        s.close;
+        assert(!s.isOpen);
+    }
+
     /**
        Bind socket to `addr`.
 
