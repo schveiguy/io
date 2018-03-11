@@ -538,7 +538,7 @@ struct Socket
     alias write = send;
 
     /// move operator for socket
-    Socket move() return scope  /*FIXME pure nothrow*/
+    Socket move() return scope nothrow /*pure Issue 18590*/
     {
         auto s = this.s;
         this.s = Driver.INVALID_SOCKET;
@@ -595,7 +595,7 @@ package(std.io.net):
 private:
     import std.typecons : Tuple;
 
-    this(return scope Driver.SOCKET s) @trusted
+    this(return scope Driver.SOCKET s) @trusted pure nothrow
     {
         this.s = s;
     }

@@ -339,7 +339,7 @@ struct File
     }
 
     /// move operator for file
-    File move() return scope  /*FIXME pure nothrow*/
+    File move() return scope nothrow /*pure Issue 18590*/
     {
         auto f = this.f;
         this.f = Driver.INVALID_FILE;
@@ -351,7 +351,7 @@ struct File
 
 private:
 
-    this(return scope Driver.FILE f) @trusted
+    this(return scope Driver.FILE f) @trusted pure nothrow
     {
         this.f = f;
     }
