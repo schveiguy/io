@@ -2,8 +2,7 @@
 
 set -ueo pipefail
 
-IPv6_LOOPBACK_ADDR=$(ip -6 addr show dev lo)
-if [ -z "$IPv6_LOOPBACK_ADDR" ]; then
+if ! { ifconfig | grep -qF ::1; }; then
     export SKIP_IPv6_LOOPBACK_TESTS=
 fi
 
