@@ -13,9 +13,10 @@ import std.io.driver;
 
 version (Posix)
 {
+    import core.sys.posix.fcntl;
+    import core.sys.posix.stdio : SEEK_SET, SEEK_CUR, SEEK_END;
     import core.sys.posix.sys.uio : readv, writev;
     import core.sys.posix.unistd : close, read, write;
-    import core.sys.posix.fcntl;
     import std.io.internal.iovec : tempIOVecs;
 
     enum O_BINARY = 0;
@@ -24,6 +25,7 @@ else version (Windows)
 {
     import core.sys.windows.windef;
     import core.sys.windows.winbase;
+    import core.sys.windows.winbase : SEEK_SET=FILE_BEGIN, SEEK_CUR=FILE_CURRENT, SEEK_END=FILE_END;
     import core.stdc.stdio : O_RDONLY, O_WRONLY, O_RDWR, O_APPEND, O_CREAT,
         O_TRUNC, O_BINARY;
 }
@@ -119,6 +121,14 @@ private Mode getMode(string m)
     default:
         assert(0, "Unknown open mode '" ~ m ~ "'.");
     }
+}
+
+/// File seek methods
+enum Seek
+{
+    set = SEEK_SET, /// file offset is set to `offset` bytes from the beginning
+    cur = SEEK_CUR, /// file offset is set to current position plus `offset` bytes
+    end = SEEK_END, /// file offset is set to the size of the file plus `offset` bytes
 }
 
 /**
@@ -290,6 +300,42 @@ struct File
             remove("temp.txt");
         ubyte[256] buf = 42;
         assert(f.write(buf[$ / 2 .. $], buf[0 .. $ / 2]) == buf.length);
+    }
+
+    /**
+       Reposition the current read and write offset in the file.
+
+       Params:
+         offset = positive or negative number of bytes to seek by
+         whence = position in the file to seek from
+       Returns:
+         resulting offset in file
+    */
+    ulong seek(long offset, Seek whence)
+    {
+        return driver.seek(f, offset, whence);
+    }
+
+    ///
+    unittest
+    {
+        auto f = File("LICENSE.txt");
+        ubyte[32] buf1 = void, buf2 = void;
+        assert(f.read(buf1[]) == buf1.length);
+
+        assert(f.seek(0, Seek.cur) == buf1.length);
+
+        assert(f.seek(-long(buf1.length), Seek.cur) == 0);
+        assert(f.read(buf2[]) == buf2.length);
+        assert(buf1[] == buf2[]);
+
+        assert(f.seek(0, Seek.set) == 0);
+        assert(f.read(buf2[]) == buf2.length);
+        assert(buf1[] == buf2[]);
+
+        f.seek(-8, Seek.end);
+        assert(f.read(buf2[]) == 8);
+        assert(buf1[] != buf2[]);
     }
 
     /// move operator for file

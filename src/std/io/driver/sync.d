@@ -17,7 +17,7 @@ version (Posix)
     import core.sys.posix.netinet.in_;
     import core.sys.posix.sys.socket;
     import core.sys.posix.sys.uio : readv, writev;
-    import core.sys.posix.unistd : close, read, write;
+    import core.sys.posix.unistd : close, read, write, lseek;
     import std.io.internal.iovec : tempIOVecs;
 
     enum O_BINARY = 0;
@@ -181,6 +181,25 @@ shared @safe @nogc:
             foreach (b; bufs)
                 total += write(f, b);
             return total;
+        }
+    }
+
+    override ulong seek(scope FILE f, long offset, int whence) @trusted
+    {
+        version (Posix)
+        {
+            immutable ret = .lseek(f2h(f), offset, whence);
+            enforce(ret != -1, "seek failed".String);
+            return ret;
+        }
+        else version (Windows)
+        {
+            LARGE_INTEGER off = void;
+            off.QuadPart = offset;
+            LARGE_INTEGER npos;
+            immutable ret = SetFilePointerEx(f2h(f), off, &npos, whence);
+            enforce(ret != 0, "seek failed".String);
+            return npos.QuadPart;
         }
     }
 
