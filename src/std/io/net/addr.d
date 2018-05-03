@@ -55,7 +55,14 @@ struct IPv4Addr
     ///
     this(ubyte[4] parts...) pure nothrow @nogc
     {
-        addr.s_addr = parts[0] | parts[1] << 8 | parts[2] << 16 | parts[3] << 24;
+        version(BigEndian)
+        {
+            addr.s_addr = parts[3] | parts[2] << 8 | parts[1] << 16 | parts[0] << 24;
+        }
+        else
+        {
+            addr.s_addr = parts[0] | parts[1] << 8 | parts[2] << 16 | parts[3] << 24;
+        }
     }
 
     ///
