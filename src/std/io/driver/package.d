@@ -10,16 +10,16 @@ module std.io.driver;
 package
 {
     import std.io.file : Mode;
-    import std.io.net.addr : AddrFamily, sockaddr;
+    import std.io.net.addr : AddrFamily;
     import std.io.net.socket : SocketType, Protocol, SocketOption;
     import std.io.net.dns : AddrInfo;
 
     version (Posix)
-        import core.sys.posix.sys.socket : socklen_t;
+        import core.sys.posix.sys.socket : sockaddr, socklen_t;
     else version (Windows)
     {
         import core.sys.windows.windef : HANDLE;
-        import ws2 = core.sys.windows.winsock2 : socklen_t;
+        import ws2 = core.sys.windows.winsock2 : sockaddr, socklen_t;
     }
     else
         static assert(0, "unimplemented");
