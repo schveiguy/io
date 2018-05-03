@@ -81,6 +81,8 @@ shared @safe @nogc:
     size_t write(scope FILE f, /*in*/ const scope ubyte[] buf);
     /// write multiple buffer contents to file
     size_t write(scope FILE f, /*in*/ const scope ubyte[][] bufs);
+    /// seek file to offset
+    ulong seek(scope FILE f, long offset, int whence);
 
     /**
        Opaque socket handle
