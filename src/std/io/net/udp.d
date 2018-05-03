@@ -238,11 +238,15 @@ struct UDP
         assert(server.recv(buf[]) == 4);
         assert(buf[] == ping[]);
 
-        // can still use sendTo with other addr
-        auto server2 = UDP.server("localhost");
-        client.sendTo(server2.localAddr, ping[]);
-        assert(server2.recv(buf[]) == 4);
-        assert(buf[] == ping[]);
+        // can still use sendTo with other addr (unless you're on BSD/OSX)
+        version (OSX) {}
+        else
+        {
+            auto server2 = UDP.server("localhost");
+            client.sendTo(server2.localAddr, ping[]);
+            assert(server2.recv(buf[]) == 4);
+            assert(buf[] == ping[]);
+        }
 
         // while keep sending to connected address
         client.send(ping[]);

@@ -347,7 +347,11 @@ struct SocketAddrIPv4
     ///
     bool opEquals()(in auto ref SocketAddrIPv4 rhs) const @nogc
     {
-        return sa == rhs.sa;
+        assert(sa.sin_family == AddrFamily.IPv4);
+        assert(rhs.sa.sin_family == AddrFamily.IPv4);
+
+        return sa.sin_port == rhs.sa.sin_port &&
+            sa.sin_addr.s_addr == rhs.sa.sin_addr.s_addr;
     }
 
     /// ip for address
@@ -456,7 +460,13 @@ struct SocketAddrIPv6
     ///
     bool opEquals()(in auto ref SocketAddrIPv6 rhs) const @nogc
     {
-        return sa == rhs.sa;
+        assert(sa.sin6_family == AddrFamily.IPv6);
+        assert(rhs.sa.sin6_family == AddrFamily.IPv6);
+
+        return sa.sin6_port == rhs.sa.sin6_port &&
+            sa.sin6_flowinfo == rhs.sa.sin6_flowinfo &&
+            sa.sin6_addr.s6_addr == rhs.sa.sin6_addr.s6_addr &&
+            sa.sin6_scope_id == rhs.sa.sin6_scope_id;
     }
 
     /// ip for address
@@ -580,6 +590,9 @@ version (Posix) struct SocketAddrUnix
     ///
     bool opEquals()(in auto ref SocketAddrUnix rhs) const @nogc
     {
+        assert(sa.sun_family == AddrFamily.UNIX);
+        assert(rhs.sa.sun_family == AddrFamily.UNIX);
+
         return path == rhs.path;
     }
 

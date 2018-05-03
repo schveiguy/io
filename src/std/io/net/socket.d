@@ -330,7 +330,7 @@ struct Socket
     {
         auto sock = Socket(ProtocolFamily.IPv4, SocketType.dgram);
         sock.setOption!(SocketOption.reuseAddr)(true);
-        assert(sock.getOption!(SocketOption.reuseAddr) == 1);
+        assert(!!sock.getOption!(SocketOption.reuseAddr));
         assert(sock.getOption!(SocketOption.type) == SocketType.dgram);
     }
 
