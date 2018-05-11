@@ -2,7 +2,7 @@
 
 ## Documentation [std.io](https://martinnowak.github.io/io/std/io)
 
-IOs are thin, OS-independent abstractions I/O devices.
+IOs are thin, OS-independent abstractions over I/O devices.
 ```d
 size_t write(const scope ubyte[] buffer);
 size_t read(scope ubyte[] buffer);
@@ -36,11 +36,13 @@ catch (IOException e)
 IOs use unique ownership and are [moveable](https://dlang.org/phobos/std_algorithm_mutation.html#.move) but not copyable (Use [refCounted](https://dlang.org/phobos/std_typecons.html#refCounted) for shared ownership).
 ```d
 io2 = io.move;
-assert(!io2.isClosed);
-assert(io.isClosed);
+assert(io2.isOpen);
+assert(!io.isOpen);
 
 auto rc = refCounted(io2.move);
 auto rc2 = rc;
+assert(rc.isOpen);
+assert(rc2.isOpen);
 ```
 
 IOs can be converted to polymorphic interfaces if necessary.
