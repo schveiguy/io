@@ -1,4 +1,6 @@
-## io [![Build Status](https://travis-ci.org/MartinNowak/io.svg?branch=master)](https://travis-ci.org/MartinNowak/io) [![Build Status](https://ci.appveyor.com/api/projects/status/affs03kt2k1y48o3/branch/master?svg=true)](https://ci.appveyor.com/project/MartinNowak/io) [![codecov](https://codecov.io/gh/MartinNowak/io/branch/master/graph/badge.svg)](https://codecov.io/gh/MartinNowak/io)
+<img src="logo.svg" width="200" alt="Logo">
+
+## [![Build Status](https://travis-ci.org/MartinNowak/io.svg?branch=master)](https://travis-ci.org/MartinNowak/io) [![Build Status](https://ci.appveyor.com/api/projects/status/affs03kt2k1y48o3/branch/master?svg=true)](https://ci.appveyor.com/project/MartinNowak/io) [![codecov](https://codecov.io/gh/MartinNowak/io/branch/master/graph/badge.svg)](https://codecov.io/gh/MartinNowak/io)
 
 ## Documentation [std.io](https://martinnowak.github.io/io/std/io)
 
