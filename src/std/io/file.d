@@ -255,6 +255,17 @@ struct File
         assert(f.read(buf[$ / 2 .. $], buf[0 .. $ / 2]) == buf.length);
     }
 
+    @("partial reads")
+    unittest
+    {
+        auto f = File("LICENSE.txt");
+        ubyte[256] buf = void;
+        auto len = f.read(buf[$ / 2 .. $], buf[0 .. $ / 2]);
+        while (len == buf.length)
+            len = f.read(buf[$ / 2 .. $], buf[0 .. $ / 2]);
+        assert(len < buf.length);
+    }
+
     /**
        Write buffer content to file.
 

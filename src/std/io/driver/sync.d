@@ -143,7 +143,12 @@ shared @safe @nogc:
         {
             size_t total;
             foreach (b; bufs)
-                total += read(f, b);
+            {
+                immutable len = read(f, b);
+                total += len;
+                if (len < b.length)
+                    break;
+            }
             return total;
         }
     }
@@ -179,7 +184,12 @@ shared @safe @nogc:
         {
             size_t total;
             foreach (b; bufs)
-                total += write(f, b);
+            {
+                immutable len = write(f, b);
+                total += len;
+                if (len < b.length)
+                    break;
+            }
             return total;
         }
     }
