@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>Function ioObject</title>
+		<link rel="stylesheet" href="../../css/style.min.css"/>
+		<script type="text/javascript" src="../../js/script.min.js"></script>
+	</head>
+	<body onload="setupDdox();">
+		<header></header>
+		<nav id="main-nav">
+			<div>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<form action="#" method="GET">
+						<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" autofocus/>
+					</form>
+					<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../../";
+document.getElementById('symbolSearchPane').style.display = 'block';</script>
+				</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">std
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package selected">
+							<a href="../../std/io.html">io</a>
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="../../std/io/driver.html">driver</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../std/io/driver/sync.html">sync</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">internal
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../std/io/internal/string.html">string</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="../../std/io/net.html">net</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../std/io/net/addr.html">addr</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../std/io/net/dns.html">dns</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../std/io/net/socket.html">socket</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../std/io/net/tcp.html">tcp</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../std/io/net/udp.html">udp</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../std/io/exception.html">exception</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../std/io/file.html">file</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+				</ul>
+					</li>
+				</ul>
+			</div>
+			<p id="main-nav-footer">
+				Built with
+				<a href="https://github.com/MartinNowak/scod">scod</a>
+			</p>
+		</nav>
+		<div id="main-contents">
+			<div>
+				<h1>Function ioObject</h1><p>IFTI construction helper for <code class="lang-d"><a href="../../std/io/IOObject.html"><span class="typ">IOObject</span></a></code>
+</p>
+				<div class="prototype">
+					<code class="lang-d">
+						<div class="single-prototype">
+				<a href="../../std/io/IOObject.html"><span class="typ">IOObject</span></a>!IO <span class="pln">ioObject</span>(IO)
+				<span class="pun">(</span>
+				<br/>
+				&nbsp;&nbsp;<span class="pln">IO</span> <span class="pln">io</span>
+				<br/>
+				<span class="pun">)</span><span class="pun">;</span>
+						</div>
+					</code>
+				</div>
+				
+				<section><h2>Example</h2>
+
+<pre class="code"><code class="lang-d"><span class="kwd">import </span><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">file </span><span class="pun">: </span><span class="pln">remove</span><span class="pun">;
+
+</span><span class="com">/// takes and interface
+</span><span class="kwd">static </span><span class="typ">ubyte</span><span class="pun">[] </span><span class="pln">consume</span><span class="pun">(</span><span class="kwd">scope <a href="../../std/io/Input.html"></span><span class="typ">Input</span></a><span class="pln"> input</span><span class="pun">, </span><span class="kwd">return </span><span class="typ">ubyte</span><span class="pun">[] </span><span class="pln">buf</span><span class="pun">) </span><span class="kwd">@safe
+</span><span class="pun">{
+    </span><span class="kwd">return </span><span class="pln">buf</span><span class="pun">[</span><span class="lit">0 </span><span class="pun">.. </span><span class="pln">input<wbr/></span><span class="pun">.</span><span class="pln">read</span><span class="pun">(</span><span class="pln">buf</span><span class="pun">)];
+}
+
+</span><span class="typ">ubyte</span><span class="pun">[</span><span class="lit">4</span><span class="pun">] </span><span class="pln">ping </span><span class="pun">= [</span><span class="str">'p'</span><span class="pun">, </span><span class="str">'i'</span><span class="pun">, </span><span class="str">'n'</span><span class="pun">, </span><span class="str">'g'</span><span class="pun">];
+
+</span><span class="typ">File</span><span class="pun">(</span><span class="str">"temp.txt"</span><span class="pun">, </span><span class="pln">mode</span><span class="pun">!</span><span class="str">"w"</span><span class="pun">)<wbr/>.</span><span class="pln">write</span><span class="pun">(</span><span class="pln">ping</span><span class="pun">[]);
+</span><span class="kwd">scope </span><span class="pun">(</span><span class="pln">exit</span><span class="pun">)
+    </span><span class="pln">remove</span><span class="pun">(</span><span class="str">"temp.txt"</span><span class="pun">);
+
+</span><span class="kwd">auto </span><span class="pln">file </span><span class="pun">= </span><span class="pln">ioObject</span><span class="pun">(</span><span class="typ">File</span><span class="pun">(</span><span class="str">"temp.txt"</span><span class="pun">));
+</span><span class="typ">ubyte</span><span class="pun">[</span><span class="lit">4</span><span class="pun">] </span><span class="pln">buf</span><span class="pun">;
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">consume</span><span class="pun">(</span><span class="pln">file</span><span class="pun">, </span><span class="pln">buf</span><span class="pun">[]) == </span><span class="pln">ping</span><span class="pun">[]);
+
+</span><span class="kwd">auto </span><span class="pln">server </span><span class="pun">= </span><span class="pln">UDP<wbr/></span><span class="pun">.</span><span class="pln">server</span><span class="pun">(</span><span class="str">"localhost"</span><span class="pun">, </span><span class="lit">1234</span><span class="pun">);
+</span><span class="pln">UDP<wbr/></span><span class="pun">.</span><span class="pln">client</span><span class="pun">(</span><span class="str">"localhost"</span><span class="pun">, </span><span class="lit">1234</span><span class="pun">)<wbr/>.</span><span class="pln">write</span><span class="pun">(</span><span class="pln">ping</span><span class="pun">[]);
+</span><span class="com">/// can be used as scope class
+</span><span class="kwd">scope </span><span class="pln">socket </span><span class="pun">= </span><span class="kwd">new <a href="../../std/io/IOObject.html"></span><span class="typ">IOObject</span></a><span class="pun">!</span><span class="pln">UDP</span><span class="pun">(</span><span class="pln">server<wbr/></span><span class="pun">.</span><span class="pln">move</span><span class="pun">);
+</span><span class="pln">buf</span><span class="pun">[] = </span><span class="lit">0</span><span class="pun">;
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">consume</span><span class="pun">(</span><span class="pln">socket</span><span class="pun">, </span><span class="pln">buf</span><span class="pun">[]) == </span><span class="pln">ping</span><span class="pun">[]);
+</span></code></pre>
+</section>
+
+			</div>
+			<footer>
+				<div id="license-info">
+					<p>Martin Nowak
+</p>
+
+					
+					<p>boost.org/LICENSE_1_0.txt, Boost License 1.0.
+</p>
+
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>

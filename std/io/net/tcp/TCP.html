@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>Struct TCP</title>
+		<link rel="stylesheet" href="../../../../css/style.min.css"/>
+		<script type="text/javascript" src="../../../../js/script.min.js"></script>
+	</head>
+	<body onload="setupDdox();">
+		<header></header>
+		<nav id="main-nav">
+			<div>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<form action="#" method="GET">
+						<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" autofocus/>
+					</form>
+					<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../../../../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../../../../";
+document.getElementById('symbolSearchPane').style.display = 'block';</script>
+				</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">std
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">
+							<a href="../../../../std/io.html">io</a>
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="../../../../std/io/driver.html">driver</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/driver/sync.html">sync</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">internal
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/internal/string.html">string</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view ">
+						<div class="package ">
+							<a href="../../../../std/io/net.html">net</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/addr.html">addr</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/dns.html">dns</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/socket.html">socket</a>
+						</div>
+					</li>
+					<li>
+						<div class="module selected">
+							<a href="../../../../std/io/net/tcp.html">tcp</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/udp.html">udp</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/exception.html">exception</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/file.html">file</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+				</ul>
+					</li>
+				</ul>
+			</div>
+			<p id="main-nav-footer">
+				Built with
+				<a href="https://github.com/MartinNowak/scod">scod</a>
+			</p>
+		</nav>
+		<div id="main-contents">
+			<div>
+				<h1>Struct TCP</h1><p>A TCP stream socket
+</p>
+				<div class="prototype">
+					<code class="lang-d">
+						<div class="single-prototype">
+				<span class="kwd">struct</span> <span class="typ">TCP</span>
+				<span class="pun">;</span>
+						</div>
+					</code>
+				</div>
+				
+				<section><h2>Fields</h2>
+					<table>
+						<col class="caption"/>
+						<tr>
+							<th>Name</th><th>Type</th><th>Description</th>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/tcp/TCP.socket.html" class="public"><code>socket</code></a>
+							</td>
+							<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../std/io/net/socket/Socket.html"><span class="typ">Socket</span></a></code></td><td>underlying <code class="lang-d"><span class="typ">Socket</span></code>
+</td>
+						</tr>
+					</table>
+				</section>
+				<section><h2>Methods</h2>
+					<table>
+						<col class="caption"/>
+						<tr>
+							<th>Name</th><th>Description</th>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/tcp/TCP.client.html" class="public">
+									<code>client</code>
+								</a>
+							</td>
+							<td>Connect to resolved <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.client.html#hostname"><span class="pln">hostname</span></a></code> and <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.client.html#port"><span class="pln">port</span></a></code>.
+       Uses the first resolved address the socket can successfully connect to.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/tcp/TCP.client.html" class="public">
+									<code>client</code>
+								</a>
+							</td>
+							<td>Connect to resolved <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.client.html#hostname"><span class="pln">hostname</span></a></code> and <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.client.html#service"><span class="pln">service</span></a></code>.
+       Uses the first resolved address the socket can successfully connect to.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/tcp/TCP.client.html" class="public">
+									<code>client</code>
+								</a>
+							</td>
+							<td>Connect to remote socket address.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/tcp/TCP.client.html" class="public">
+									<code>client</code>
+								</a>
+							</td>
+							<td>Connect to remote IP <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.client.html#addr"><span class="pln">addr</span></a></code> and <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.client.html#port"><span class="pln">port</span></a></code>.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/tcp/TCP.server.html" class="public">
+									<code>server</code>
+								</a>
+							</td>
+							<td>Create a TCP socket, bind it to the resolved <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.server.html#hostname"><span class="pln">hostname</span></a></code> and
+       <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.server.html#port"><span class="pln">port</span></a></code>, and listen for incoming connections.
+       Uses the first resolved address the socket can successfully bind.
+       A port number of zero will be bound to an ephemeral port.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/tcp/TCP.server.html" class="public">
+									<code>server</code>
+								</a>
+							</td>
+							<td>Create a TCP socket, bind it to the resolved <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.server.html#hostname"><span class="pln">hostname</span></a></code> and
+       <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.server.html#service"><span class="pln">service</span></a></code>, and listen for incoming connections.
+       Uses the first resolved address the socket can successfully bind.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/tcp/TCP.server.html" class="public">
+									<code>server</code>
+								</a>
+							</td>
+							<td>Create a TCP socket, bind it to socket <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.server.html#addr"><span class="pln">addr</span></a></code>, and listen for
+       incoming connections.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/tcp/TCP.server.html" class="public">
+									<code>server</code>
+								</a>
+							</td>
+							<td>Create a TCP socket, bind it to IP <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.server.html#addr"><span class="pln">addr</span></a></code> and <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.server.html#port"><span class="pln">port</span></a></code>, and
+       listen for incoming connections.  A port number of zero will be
+       bound to an ephemeral port.
+</td>
+						</tr>
+					</table>
+				</section>
+				<section><h2>Example</h2>
+
+<pre class="code"><code class="lang-d"><span class="kwd">auto <a href="../../../../std/io/net/tcp/TCP.server.html"></span><span class="pln">server</span></a><span class="pln"> </span><span class="pun">= <a href="../../../../std/io/net/tcp/TCP.server.html"></span><span class="pln">TCP<wbr/></span><span class="pun">.</span><span class="pln">server</span></a><span class="pun">(</span><span class="typ">IPv4Addr</span><span class="pun">(</span><span class="lit">127</span><span class="pun">, </span><span class="lit">0</span><span class="pun">, </span><span class="lit">0</span><span class="pun">, </span><span class="lit">1</span><span class="pun">));
+</span><span class="kwd">auto <a href="../../../../std/io/net/tcp/TCP.client.html"></span><span class="pln">client</span></a><span class="pln"> </span><span class="pun">= <a href="../../../../std/io/net/tcp/TCP.client.html"></span><span class="pln">TCP<wbr/></span><span class="pun">.</span><span class="pln">client</span></a><span class="pun">(</span><span class="pln">server<wbr/></span><span class="pun">.</span><span class="pln">localAddr</span><span class="pun">);
+
+</span><span class="typ">ubyte</span><span class="pun">[</span><span class="lit">4</span><span class="pun">] </span><span class="pln">ping </span><span class="pun">= [</span><span class="str">'p'</span><span class="pun">, </span><span class="str">'i'</span><span class="pun">, </span><span class="str">'n'</span><span class="pun">, </span><span class="str">'g'</span><span class="pun">];
+</span><span class="pln">client<wbr/></span><span class="pun">.</span><span class="pln">write</span><span class="pun">(</span><span class="pln">ping</span><span class="pun">[]);
+
+</span><span class="kwd">auto </span><span class="pln">conn </span><span class="pun">= </span><span class="pln">server<wbr/></span><span class="pun">.</span><span class="pln">accept</span><span class="pun">;
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">conn<wbr/></span><span class="pun">.</span><span class="pln">remoteAddr </span><span class="pun">== </span><span class="pln">client<wbr/></span><span class="pun">.</span><span class="pln">localAddr</span><span class="pun">);
+</span><span class="typ">ubyte</span><span class="pun">[</span><span class="lit">4</span><span class="pun">] </span><span class="pln">buf</span><span class="pun">;
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">conn<wbr/></span><span class="pun">.</span><span class="pln">read</span><span class="pun">(</span><span class="pln">buf</span><span class="pun">[]) == </span><span class="lit">4</span><span class="pun">);
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">buf</span><span class="pun">[] == </span><span class="pln">ping</span><span class="pun">[]);
+
+</span><span class="typ">ubyte</span><span class="pun">[</span><span class="lit">4</span><span class="pun">] </span><span class="pln">pong </span><span class="pun">= [</span><span class="str">'p'</span><span class="pun">, </span><span class="str">'o'</span><span class="pun">, </span><span class="str">'n'</span><span class="pun">, </span><span class="str">'g'</span><span class="pun">];
+</span><span class="pln">conn<wbr/></span><span class="pun">.</span><span class="pln">write</span><span class="pun">(</span><span class="pln">pong</span><span class="pun">[]);
+
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">client<wbr/></span><span class="pun">.</span><span class="pln">read</span><span class="pun">(</span><span class="pln">buf</span><span class="pun">[]) == </span><span class="lit">4</span><span class="pun">);
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">buf</span><span class="pun">[] == </span><span class="pln">pong</span><span class="pun">[]);
+</span></code></pre>
+</section>
+
+			</div>
+			<footer>
+				<div id="license-info">
+					<p>Martin Nowak
+</p>
+
+					
+					<p>boost.org/LICENSE_1_0.txt, Boost License 1.0.
+</p>
+
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>

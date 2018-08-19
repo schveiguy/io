@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>API documentation</title>
+		<link rel="stylesheet" href="./css/style.min.css"/>
+		<script type="text/javascript" src="./js/script.min.js"></script>
+	</head>
+	<body onload="setupDdox();">
+		<header></header>
+		<nav id="main-nav">
+			<div>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<form action="#" method="GET">
+						<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" autofocus/>
+					</form>
+					<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="./symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "./";
+document.getElementById('symbolSearchPane').style.display = 'block';</script>
+				</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">std
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="./std/io.html">io</a>
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="./std/io/driver.html">driver</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="./std/io/driver/sync.html">sync</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">internal
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="./std/io/internal/string.html">string</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="./std/io/net.html">net</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="./std/io/net/addr.html">addr</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="./std/io/net/dns.html">dns</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="./std/io/net/socket.html">socket</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="./std/io/net/tcp.html">tcp</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="./std/io/net/udp.html">udp</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="./std/io/exception.html">exception</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="./std/io/file.html">file</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+				</ul>
+					</li>
+				</ul>
+			</div>
+			<p id="main-nav-footer">
+				Built with
+				<a href="https://github.com/MartinNowak/scod">scod</a>
+			</p>
+		</nav>
+		<div id="main-contents">
+			<div>
+				<h1>API documentation</h1>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Module</th><th>Description</th>
+					</tr>
+				<tr>
+					<td>
+						<a href="./std/io/driver/sync.html">std.io.driver.sync</a>
+					</td>
+					<td>
+						Synchronous driver for std.io
+
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="./std/io/internal/string.html">std.io.internal.string</a>
+					</td>
+					<td>
+						Helper traits and functions to deal with strings
+
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="./std/io/net/addr.html">std.io.net.addr</a>
+					</td>
+					<td>
+						Network addesses
+
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="./std/io/net/dns.html">std.io.net.dns</a>
+					</td>
+					<td>
+						Types for Domain Name Resolution.
+
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="./std/io/net/socket.html">std.io.net.socket</a>
+					</td>
+					<td>
+						Low-level sockets
+
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="./std/io/net/tcp.html">std.io.net.tcp</a>
+					</td>
+					<td>
+						TCP stream sockets
+
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="./std/io/net/udp.html">std.io.net.udp</a>
+					</td>
+					<td>
+						UDP datagram sockets
+
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="./std/io/driver.html">std.io.driver</a>
+					</td>
+					<td>
+						Exchangeable driver for std.io
+
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="./std/io/exception.html">std.io.exception</a>
+					</td>
+					<td>
+						Exceptions used by std.io
+
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="./std/io/file.html">std.io.file</a>
+					</td>
+					<td>
+						Files
+
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="./std/io/net.html">std.io.net</a>
+					</td>
+					<td>
+						Network IO
+
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="./std/io.html">std.io</a>
+					</td>
+					<td>
+						IOs
+
+					</td>
+				</tr>
+				</table>
+			</div>
+			<footer>
+				<div id="license-info"></div>
+			</footer>
+		</div>
+	</body>
+</html>

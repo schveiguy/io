@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>socketAddr - multiple declarations</title>
+		<link rel="stylesheet" href="../../../../css/style.min.css"/>
+		<script type="text/javascript" src="../../../../js/script.min.js"></script>
+	</head>
+	<body onload="setupDdox();">
+		<header></header>
+		<nav id="main-nav">
+			<div>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<form action="#" method="GET">
+						<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" autofocus/>
+					</form>
+					<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../../../../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../../../../";
+document.getElementById('symbolSearchPane').style.display = 'block';</script>
+				</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">std
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">
+							<a href="../../../../std/io.html">io</a>
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="../../../../std/io/driver.html">driver</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/driver/sync.html">sync</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">internal
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/internal/string.html">string</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view ">
+						<div class="package ">
+							<a href="../../../../std/io/net.html">net</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module selected">
+							<a href="../../../../std/io/net/addr.html">addr</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/dns.html">dns</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/socket.html">socket</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/tcp.html">tcp</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/udp.html">udp</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/exception.html">exception</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/file.html">file</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+				</ul>
+					</li>
+				</ul>
+			</div>
+			<p id="main-nav-footer">
+				Built with
+				<a href="https://github.com/MartinNowak/scod">scod</a>
+			</p>
+		</nav>
+		<div id="main-contents">
+			<div>
+				<h1>socketAddr - multiple declarations</h1>
+				<nav class="page-nav">
+					<ul>
+						<li>
+							<a href="#0">
+								Function <code>socketAddr</code>
+							</a>
+						</li>
+						<li>
+							<a href="#1">
+								Function <code>socketAddr</code>
+							</a>
+						</li>
+						<li>
+							<a href="#2">
+								Function <code>socketAddr</code>
+							</a>
+						</li>
+					</ul>
+				</nav><h2 id="0">Function socketAddr</h2><p>Construct a <code class="lang-d"><a href="../../../../std/io/net/addr/SocketAddrIPv4.html"><span class="typ">SocketAddrIPv4</span></a></code> from an IPv4 <code class="lang-d"><a href="../../../../std/io/net/addr/socketAddr.html#addr"><span class="pln">addr</span></a></code> and <code class="lang-d"><a href="../../../../std/io/net/addr/socketAddr.html#port"><span class="pln">port</span></a></code>.
+</p>
+				<div class="prototype">
+					<code class="lang-d">
+						<div class="single-prototype">
+				<a href="../../../../std/io/net/addr/SocketAddrIPv4.html"><span class="typ">SocketAddrIPv4</span></a> <span class="pln">socketAddr</span>
+				<span class="pun">(</span>
+				<br/>
+				&nbsp;&nbsp;<a href="../../../../std/io/net/addr/IPv4Addr.html"><span class="typ">IPv4Addr</span></a> <span class="pln">addr</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<span class="typ">ushort</span> <span class="pln">port</span> <span class="pun">=</span> <span class="kwd">cast</span><span class="pun">(</span><span class="typ">ushort</span><span class="pun">)</span><span class="lit">0u</span>
+				<br/>
+				<span class="pun">)</span><span class="pln"> </span><span class="kwd">@nogc @safe</span><span class="pun">;</span>
+						</div>
+					</code>
+				</div>
+				
+				<h2 id="1">Function socketAddr</h2><p>Construct a <code class="lang-d"><a href="../../../../std/io/net/addr/SocketAddrIPv6.html"><span class="typ">SocketAddrIPv6</span></a></code> from an IPv6 <code class="lang-d"><a href="../../../../std/io/net/addr/socketAddr.html#addr"><span class="pln">addr</span></a></code>, <code class="lang-d"><a href="../../../../std/io/net/addr/socketAddr.html#port"><span class="pln">port</span></a></code>, and
+   optionally <code class="lang-d"><a href="../../../../std/io/net/addr/socketAddr.html#flowinfo"><span class="pln">flowinfo</span></a></code> and <code class="lang-d"><span class="pln">scopeid</span></code>.
+</p>
+				<div class="prototype">
+					<code class="lang-d">
+						<div class="single-prototype">
+				<a href="../../../../std/io/net/addr/SocketAddrIPv6.html"><span class="typ">SocketAddrIPv6</span></a> <span class="pln">socketAddr</span>
+				<span class="pun">(</span>
+				<br/>
+				&nbsp;&nbsp;<a href="../../../../std/io/net/addr/IPv6Addr.html"><span class="typ">IPv6Addr</span></a> <span class="pln">addr</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<span class="typ">ushort</span> <span class="pln">port</span> <span class="pun">=</span> <span class="kwd">cast</span><span class="pun">(</span><span class="typ">ushort</span><span class="pun">)</span><span class="lit">0u</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">flowinfo</span> <span class="pun">=</span> <span class="lit">0u</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">scopeId</span> <span class="pun">=</span> <span class="lit">0u</span>
+				<br/>
+				<span class="pun">)</span><span class="pln"> </span><span class="kwd">@nogc @safe</span><span class="pun">;</span>
+						</div>
+					</code>
+				</div>
+				
+				<h2 id="2">Function socketAddr</h2><p>Construct a <code class="lang-d"><a href="../../../../std/io/net/addr/SocketAddrUnix.html"><span class="typ">SocketAddrUnix</span></a></code> from.
+</p>
+				<div class="prototype">
+					<code class="lang-d">
+						<div class="single-prototype">
+				<a href="../../../../std/io/net/addr/SocketAddrUnix.html"><span class="typ">SocketAddrUnix</span></a> <span class="pln">socketAddr</span>(S)
+				<span class="pun">(</span>
+				<br/>
+				&nbsp;&nbsp;<span class="pln">S</span> <span class="pln">path</span>
+				<br/>
+				<span class="pun">)</span><span class="pln"> </span><span class="kwd">@nogc</span>
+				<br/>
+				<span class="kwd">if</span> <span class="pun">(</span><span class="pln">isStringLike</span><span class="pun">!</span><span class="pln">S</span><span class="pun">);</span>
+						</div>
+					</code>
+				</div>
+				
+				<section><h3>Example</h3>
+
+<pre class="code"><code class="lang-d"><span class="kwd">auto </span><span class="pln">sa4 </span><span class="pun">= <a href="../../../../std/io/net/addr/socketAddr.html"></span><span class="pln">socketAddr</span></a><span class="pun">(<a href="../../../../std/io/net/addr/IPv4Addr.html"></span><span class="typ">IPv4Addr</span></a><span class="pun">(</span><span class="lit">127</span><span class="pun">, </span><span class="lit">0</span><span class="pun">, </span><span class="lit">0</span><span class="pun">, </span><span class="lit">1</span><span class="pun">));
+</span><span class="kwd">static assert</span><span class="pun">(</span><span class="kwd">is</span><span class="pun">(</span><span class="kwd">typeof</span><span class="pun">(</span><span class="pln">sa4</span><span class="pun">) == <a href="../../../../std/io/net/addr/SocketAddrIPv4.html"></span><span class="typ">SocketAddrIPv4</span></a><span class="pun">));
+</span><span class="kwd">auto </span><span class="pln">sa6 </span><span class="pun">= <a href="../../../../std/io/net/addr/socketAddr.html"></span><span class="pln">socketAddr</span></a><span class="pun">(<a href="../../../../std/io/net/addr/IPv6Addr.html"></span><span class="typ">IPv6Addr</span></a><span class="pun">(</span><span class="lit">0x2001</span><span class="pun">, </span><span class="lit">0xdb8</span><span class="pun">, </span><span class="lit">0</span><span class="pun">, </span><span class="lit">0</span><span class="pun">, </span><span class="lit">0</span><span class="pun">, </span><span class="lit">0</span><span class="pun">, </span><span class="lit">0</span><span class="pun">, </span><span class="lit">1</span><span class="pun">));
+</span><span class="kwd">static assert</span><span class="pun">(</span><span class="kwd">is</span><span class="pun">(</span><span class="kwd">typeof</span><span class="pun">(</span><span class="pln">sa6</span><span class="pun">) == <a href="../../../../std/io/net/addr/SocketAddrIPv6.html"></span><span class="typ">SocketAddrIPv6</span></a><span class="pun">));
+</span></code></pre>
+</section>
+
+			</div>
+			<footer>
+				<div id="license-info">
+					<p>Martin Nowak
+</p>
+
+					
+					<p>boost.org/LICENSE_1_0.txt, Boost License 1.0.
+</p>
+
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>

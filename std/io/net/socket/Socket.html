@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>Struct Socket</title>
+		<link rel="stylesheet" href="../../../../css/style.min.css"/>
+		<script type="text/javascript" src="../../../../js/script.min.js"></script>
+	</head>
+	<body onload="setupDdox();">
+		<header></header>
+		<nav id="main-nav">
+			<div>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<form action="#" method="GET">
+						<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" autofocus/>
+					</form>
+					<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../../../../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../../../../";
+document.getElementById('symbolSearchPane').style.display = 'block';</script>
+				</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">std
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">
+							<a href="../../../../std/io.html">io</a>
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="../../../../std/io/driver.html">driver</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/driver/sync.html">sync</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">internal
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/internal/string.html">string</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view ">
+						<div class="package ">
+							<a href="../../../../std/io/net.html">net</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/addr.html">addr</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/dns.html">dns</a>
+						</div>
+					</li>
+					<li>
+						<div class="module selected">
+							<a href="../../../../std/io/net/socket.html">socket</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/tcp.html">tcp</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/udp.html">udp</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/exception.html">exception</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/file.html">file</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+				</ul>
+					</li>
+				</ul>
+			</div>
+			<p id="main-nav-footer">
+				Built with
+				<a href="https://github.com/MartinNowak/scod">scod</a>
+			</p>
+		</nav>
+		<div id="main-contents">
+			<div>
+				<h1>Struct Socket</h1><p>A socket
+</p>
+				<div class="prototype">
+					<code class="lang-d">
+						<div class="single-prototype">
+				<span class="kwd">struct</span> <span class="typ">Socket</span>
+				<span class="pun">;</span>
+						</div>
+					</code>
+				</div>
+				
+				<section><h2>Constructors</h2>
+					<table>
+						<col class="caption"/>
+						<tr>
+							<th>Name</th><th>Description</th>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.this.html" class="public">
+									<code>this</code>
+								</a>
+							</td>
+							<td>Construct socket for protocol <code class="lang-d"><a href="../../../../std/io/net/socket/Socket.this.html#family"><span class="pln">family</span></a></code>, socket <code class="lang-d"><a href="../../../../std/io/net/socket/Socket.this.html#type"><span class="pln">type</span></a></code>, and <code class="lang-d"><a href="../../../../std/io/net/socket/Socket.this.html#protocol"><span class="pln">protocol</span></a></code>.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.this.html" class="public">
+									<code>this</code>
+								</a>
+							</td>
+							<td>take ownership of an existing socket <code class="lang-d"><a href="../../../../std/io/net/socket/Socket.this.html#handle"><span class="pln">handle</span></a></code>
+</td>
+						</tr>
+					</table>
+				</section>
+				<section><h2>Methods</h2>
+					<table>
+						<col class="caption"/>
+						<tr>
+							<th>Name</th><th>Description</th>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.accept.html" class="public">
+									<code>accept</code>
+								</a>
+							</td>
+							<td>Accept an incoming client connection.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.bind.html" class="public">
+									<code>bind</code>
+								</a>
+							</td>
+							<td>Bind socket to <code class="lang-d"><a href="../../../../std/io/net/socket/Socket.bind.html#addr"><span class="pln">addr</span></a></code>.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.bind.html" class="public">
+									<code>bind</code>
+								</a>
+							</td>
+							<td>Bind UDP socket to IP <code class="lang-d"><a href="../../../../std/io/net/socket/Socket.bind.html#addr"><span class="pln">addr</span></a></code> and <code class="lang-d"><a href="../../../../std/io/net/socket/Socket.bind.html#port"><span class="pln">port</span></a></code>. A port number of zero will be
+       bound to an ephemeral port.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.close.html" class="public">
+									<code>close</code>
+								</a>
+							</td>
+							<td>close the socket
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.connect.html" class="public">
+									<code>connect</code>
+								</a>
+							</td>
+							<td>Connect socket to remote <code class="lang-d"><a href="../../../../std/io/net/socket/Socket.connect.html#addr"><span class="pln">addr</span></a></code>
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.connect.html" class="public">
+									<code>connect</code>
+								</a>
+							</td>
+							<td>Connect socket to remote IP <code class="lang-d"><a href="../../../../std/io/net/socket/Socket.connect.html#addr"><span class="pln">addr</span></a></code> and <code class="lang-d"><a href="../../../../std/io/net/socket/Socket.connect.html#port"><span class="pln">port</span></a></code>.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.getOption.html" class="public">
+									<code>getOption</code>
+								</a>
+							</td>
+							<td>Get socket option.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.isOpen.html" class="public">
+									<code>isOpen</code>
+								</a>
+							</td>
+							<td>return whether the socket is open
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.listen.html" class="public">
+									<code>listen</code>
+								</a>
+							</td>
+							<td>Listen for incoming connections.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.localAddr.html" class="public">
+									<code>localAddr</code>
+								</a>
+							</td>
+							<td>get local addr of socket
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.move.html" class="public">
+									<code>move</code>
+								</a>
+							</td>
+							<td>move operator for socket
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.recv.html" class="public">
+									<code>recv</code>
+								</a>
+							</td>
+							<td>Receive from socket into buffer.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.recv.html" class="public">
+									<code>recv</code>
+								</a>
+							</td>
+							<td>Receive from socket into multiple buffers.
+       The read will be atomic on Posix and Windows platforms.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.recvFrom.html" class="public">
+									<code>recvFrom</code>
+								</a>
+							</td>
+							<td>Receive data from any address and port into buffer.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.recvFrom.html" class="public">
+									<code>recvFrom</code>
+								</a>
+							</td>
+							<td>Receive data from any address and port into multiple buffers.
+       The read will be atomic on Posix and Windows platforms.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.send.html" class="public">
+									<code>send</code>
+								</a>
+							</td>
+							<td>Send multiple buffers to connected host.
+       The writes will be atomic on Posix platforms.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.send.html" class="public">
+									<code>send</code>
+								</a>
+							</td>
+							<td>Send buffer to connected host.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.sendTo.html" class="public">
+									<code>sendTo</code>
+								</a>
+							</td>
+							<td>Send buffer content to the specified <code class="lang-d"><span class="pln">addr</span></code>.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.sendTo.html" class="public">
+									<code>sendTo</code>
+								</a>
+							</td>
+							<td>Send multiple buffer contents to the specified <code class="lang-d"><span class="pln">addr</span></code> and <code class="lang-d"><span class="pln">port</span></code>.
+       The write will be atomic on Posix and Windows platforms.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.setOption.html" class="public">
+									<code>setOption</code>
+								</a>
+							</td>
+							<td>Set socket option.
+</td>
+						</tr>
+					</table>
+				</section>
+				<section><h2>Aliases</h2>
+					<table>
+						<col class="caption"/>
+						<tr>
+							<th>Name</th><th>Description</th>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.read.html" class="public">
+									<code>read</code>
+								</a>
+							</td>
+							<td>Alias to comply with input <code class="lang-d"><span class="pln">IO</span></code> API.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/socket/Socket.write.html" class="public">
+									<code>write</code>
+								</a>
+							</td>
+							<td>Alias to comply with output <code class="lang-d"><span class="pln">IO</span></code> API.
+</td>
+						</tr>
+					</table>
+				</section>
+				
+			</div>
+			<footer>
+				<div id="license-info">
+					<p>Martin Nowak
+</p>
+
+					
+					<p>boost.org/LICENSE_1_0.txt, Boost License 1.0.
+</p>
+
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>

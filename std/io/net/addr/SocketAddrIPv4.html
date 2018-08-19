@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>Struct SocketAddrIPv4</title>
+		<link rel="stylesheet" href="../../../../css/style.min.css"/>
+		<script type="text/javascript" src="../../../../js/script.min.js"></script>
+	</head>
+	<body onload="setupDdox();">
+		<header></header>
+		<nav id="main-nav">
+			<div>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<form action="#" method="GET">
+						<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" autofocus/>
+					</form>
+					<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../../../../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../../../../";
+document.getElementById('symbolSearchPane').style.display = 'block';</script>
+				</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">std
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">
+							<a href="../../../../std/io.html">io</a>
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="../../../../std/io/driver.html">driver</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/driver/sync.html">sync</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">internal
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/internal/string.html">string</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view ">
+						<div class="package ">
+							<a href="../../../../std/io/net.html">net</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module selected">
+							<a href="../../../../std/io/net/addr.html">addr</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/dns.html">dns</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/socket.html">socket</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/tcp.html">tcp</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/udp.html">udp</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/exception.html">exception</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/file.html">file</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+				</ul>
+					</li>
+				</ul>
+			</div>
+			<p id="main-nav-footer">
+				Built with
+				<a href="https://github.com/MartinNowak/scod">scod</a>
+			</p>
+		</nav>
+		<div id="main-contents">
+			<div>
+				<h1>Struct SocketAddrIPv4</h1><p>IPv4 socket address
+</p>
+				<div class="prototype">
+					<code class="lang-d">
+						<div class="single-prototype">
+				<span class="kwd">struct</span> <span class="typ">SocketAddrIPv4</span>
+				<span class="pun">;</span>
+						</div>
+					</code>
+				</div>
+				<section><p>The socket address consists of an IPv4Addr and a port number.
+</p>
+</section>
+
+				<section><h2>Constructors</h2>
+					<table>
+						<col class="caption"/>
+						<tr>
+							<th>Name</th><th>Description</th>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/addr/SocketAddrIPv4.this.html" class="public">
+									<code>this</code>
+								</a>
+							</td>
+							<td>construct socket address from <code class="lang-d"><a href="../../../../std/io/net/addr/SocketAddrIPv4.this.html#ip"><span class="pln">ip</span></a></code>, and <code class="lang-d"><a href="../../../../std/io/net/addr/SocketAddrIPv4.this.html#port"><span class="pln">port</span></a></code>.
+</td>
+						</tr>
+					</table>
+				</section>
+				<section><h2>Properties</h2>
+					<table>
+						<col class="caption"/>
+						<tr>
+							<th>Name</th><th>Type</th><th>Description</th>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/addr/SocketAddrIPv4.ip.html" class="public property"><code>ip</code></a><span class="tableEntryAnnotation">[get, set]</span>
+							</td>
+							<td class="typecol"><code class="prettyprint lang-d"><a href="../../../../std/io/net/addr/IPv4Addr.html"><span class="typ">IPv4Addr</span></a></code></td><td>ip for address
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/addr/SocketAddrIPv4.port.html" class="public property"><code>port</code></a><span class="tableEntryAnnotation">[get, set]</span>
+							</td>
+							<td class="typecol"><code class="prettyprint lang-d"><span class="typ">ushort</span></code></td><td>port number for address
+</td>
+						</tr>
+					</table>
+				</section>
+				<section><h2>Methods</h2>
+					<table>
+						<col class="caption"/>
+						<tr>
+							<th>Name</th><th>Description</th>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/addr/SocketAddrIPv4.opEquals.html" class="public">
+									<code>opEquals</code>
+								</a>
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/addr/SocketAddrIPv4.toString.html" class="public">
+									<code>toString</code>
+								</a>
+							</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../../std/io/net/addr/SocketAddrIPv4.toString.html" class="public">
+									<code>toString</code>
+								</a>
+							</td>
+							<td></td>
+						</tr>
+					</table>
+				</section>
+				<section><h2>See also</h2>
+<p>https://tools.ietf.org/html/rfc791
+</p>
+</section>
+<section><h2>Example</h2>
+
+<pre class="code"><code class="lang-d"><span class="kwd">auto </span><span class="pln">addr </span><span class="pun">= </span><span class="typ">SocketAddrIPv4</span><span class="pun">(<a href="../../../../std/io/net/addr/IPv4Addr.html"></span><span class="typ">IPv4Addr</span></a><span class="pun">(</span><span class="lit">127</span><span class="pun">, </span><span class="lit">0</span><span class="pun">, </span><span class="lit">0</span><span class="pun">, </span><span class="lit">1</span><span class="pun">), </span><span class="lit">8080</span><span class="pun">);
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">addr<wbr/></span><span class="pun">.</span><span class="pln">toString </span><span class="pun">== </span><span class="str">"127.0.0.1:8080"</span><span class="pun">);
+</span><span class="com">// assert(SocketAddrIPv4.parse(addr.toString) == addr);
+</span></code></pre>
+</section>
+
+			</div>
+			<footer>
+				<div id="license-info">
+					<p>Martin Nowak
+</p>
+
+					
+					<p>boost.org/LICENSE_1_0.txt, Boost License 1.0.
+</p>
+
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>

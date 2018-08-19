@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>File.read - multiple declarations</title>
+		<link rel="stylesheet" href="../../../css/style.min.css"/>
+		<script type="text/javascript" src="../../../js/script.min.js"></script>
+	</head>
+	<body onload="setupDdox();">
+		<header></header>
+		<nav id="main-nav">
+			<div>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<form action="#" method="GET">
+						<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" autofocus/>
+					</form>
+					<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../../../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../../../";
+document.getElementById('symbolSearchPane').style.display = 'block';</script>
+				</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">std
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">
+							<a href="../../../std/io.html">io</a>
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="../../../std/io/driver.html">driver</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/driver/sync.html">sync</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">internal
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/internal/string.html">string</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="../../../std/io/net.html">net</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/addr.html">addr</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/dns.html">dns</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/socket.html">socket</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/tcp.html">tcp</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/udp.html">udp</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/exception.html">exception</a>
+						</div>
+					</li>
+					<li>
+						<div class="module selected">
+							<a href="../../../std/io/file.html">file</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+				</ul>
+					</li>
+				</ul>
+			</div>
+			<p id="main-nav-footer">
+				Built with
+				<a href="https://github.com/MartinNowak/scod">scod</a>
+			</p>
+		</nav>
+		<div id="main-contents">
+			<div>
+				<h1>File.read - multiple declarations</h1>
+				<nav class="page-nav">
+					<ul>
+						<li>
+							<a href="#0">
+								Function <code>File.read</code>
+							</a>
+						</li>
+						<li>
+							<a href="#1">
+								Function <code>File.read</code>
+							</a>
+						</li>
+					</ul>
+				</nav><h2 id="0">Function File.read</h2><p>Read from file into buffer.
+</p>
+				<div class="prototype">
+					<code class="lang-d">
+						<div class="single-prototype">
+				<span class="typ">ulong</span> <span class="pln">read</span>
+				<span class="pun">(</span>
+				<br/>
+				&nbsp;&nbsp;<span class="kwd">scope </span><span class="typ">ubyte</span><span class="pun">[]</span> <span class="pln">buf</span>
+				<br/>
+				<span class="pun">)</span><span class="pln"> </span><span class="kwd">@nogc scope @trusted</span><span class="pun">;</span>
+						</div>
+					</code>
+				</div>
+				<section></section>
+
+				<section><h3>Parameters</h3>
+<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
+<tr><td id="buf">buf</td><td> buffer to read into</td></tr>
+</table>
+</section>
+<section><h3>Returns</h3>
+<p>number of bytes read
+</p>
+</section>
+<section><h3>Example</h3>
+
+<pre class="code"><code class="lang-d"><span class="kwd">auto </span><span class="pln">f </span><span class="pun">= <a href="../../../std/io/file/File.html"></span><span class="typ">File</span></a><span class="pun">(</span><span class="str">"LICENSE.txt"</span><span class="pun">);
+</span><span class="typ">ubyte</span><span class="pun">[</span><span class="lit">256</span><span class="pun">] <a href="../../../std/io/file/File.read.html#buf"></span><span class="pln">buf</span></a><span class="pln"> </span><span class="pun">= </span><span class="typ">void</span><span class="pun">;
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">f<wbr/></span><span class="pun">.</span><span class="pln">read</span><span class="pun">(<a href="../../../std/io/file/File.read.html#buf"></span><span class="pln">buf</span></a><span class="pun">[]) == </span><span class="pln">buf<wbr/></span><span class="pun">.</span><span class="pln">length</span><span class="pun">);
+
+</span></code></pre>
+</section>
+<h2 id="1">Function File.read</h2><p>Read from file into multiple buffers.
+       The read will be atomic on Posix platforms.
+</p>
+				<div class="prototype">
+					<code class="lang-d">
+						<div class="single-prototype">
+				<span class="typ">ulong</span> <span class="pln">read</span>
+				<span class="pun">(</span>
+				<br/>
+				&nbsp;&nbsp;<span class="kwd">scope </span><span class="typ">ubyte</span><span class="pun">[]</span><span class="pun">[]</span> <span class="pln">bufs</span><span class="pun">...</span>
+				<br/>
+				<span class="pun">)</span><span class="pln"> </span><span class="kwd">@nogc scope @trusted</span><span class="pun">;</span>
+						</div>
+					</code>
+				</div>
+				<section></section>
+
+				<section><h3>Parameters</h3>
+<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
+<tr><td id="bufs">bufs</td><td> buffers to read into</td></tr>
+</table>
+</section>
+<section><h3>Returns</h3>
+<p>total number of bytes read
+</p>
+</section>
+<section><h3>Example</h3>
+
+<pre class="code"><code class="lang-d"><span class="kwd">auto </span><span class="pln">f </span><span class="pun">= <a href="../../../std/io/file/File.html"></span><span class="typ">File</span></a><span class="pun">(</span><span class="str">"LICENSE.txt"</span><span class="pun">);
+</span><span class="typ">ubyte</span><span class="pun">[</span><span class="lit">256</span><span class="pun">] </span><span class="pln">buf </span><span class="pun">= </span><span class="typ">void</span><span class="pun">;
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">f<wbr/></span><span class="pun">.</span><span class="pln">read</span><span class="pun">(</span><span class="pln">buf</span><span class="pun">[$ / </span><span class="lit">2 </span><span class="pun">.. $], </span><span class="pln">buf</span><span class="pun">[</span><span class="lit">0 </span><span class="pun">.. $ / </span><span class="lit">2</span><span class="pun">]) == </span><span class="pln">buf<wbr/></span><span class="pun">.</span><span class="pln">length</span><span class="pun">);
+
+</span></code></pre>
+</section>
+
+			</div>
+			<footer>
+				<div id="license-info">
+					<p>Martin Nowak
+</p>
+
+					
+					<p>boost.org/LICENSE_1_0.txt, Boost License 1.0.
+</p>
+
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>

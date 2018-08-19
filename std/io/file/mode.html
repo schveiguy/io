@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>Enum member mode</title>
+		<link rel="stylesheet" href="../../../css/style.min.css"/>
+		<script type="text/javascript" src="../../../js/script.min.js"></script>
+	</head>
+	<body onload="setupDdox();">
+		<header></header>
+		<nav id="main-nav">
+			<div>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<form action="#" method="GET">
+						<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" autofocus/>
+					</form>
+					<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../../../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../../../";
+document.getElementById('symbolSearchPane').style.display = 'block';</script>
+				</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">std
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">
+							<a href="../../../std/io.html">io</a>
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="../../../std/io/driver.html">driver</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/driver/sync.html">sync</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">internal
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/internal/string.html">string</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="../../../std/io/net.html">net</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/addr.html">addr</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/dns.html">dns</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/socket.html">socket</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/tcp.html">tcp</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/udp.html">udp</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/exception.html">exception</a>
+						</div>
+					</li>
+					<li>
+						<div class="module selected">
+							<a href="../../../std/io/file.html">file</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+				</ul>
+					</li>
+				</ul>
+			</div>
+			<p id="main-nav-footer">
+				Built with
+				<a href="https://github.com/MartinNowak/scod">scod</a>
+			</p>
+		</nav>
+		<div id="main-contents">
+			<div>
+				<h1>Enum member mode</h1><p>Convert <code class="lang-d"><span class="pln">fopen</span></code> string modes to <code class="lang-d"><a href="../../../std/io/file/Mode.html"><span class="typ">Mode</span></a></code> enum values.
+   The mode <code class="lang-d"><span class="pln">m</span></code> can be one of the following strings.
+</p>
+				<div class="prototype">
+					<code class="lang-d">
+						<div class="single-prototype">
+				<span class="kwd">enum</span> <span class="pln">mode</span>(<span class="typ">string</span> m)
+				 <span class="pun">=</span> <span class="pln">getMode</span><span class="pun">(</span><span class="pln">m</span><span class="pun">)</span><span class="pun">;</span>
+						</div>
+					</code>
+				</div>
+				<section><p><table>     <tr><th>mode</th><th>meaning</th></tr>
+     <tr><td><code class="lang-d"><span class="str">"r"</span></code></td><td>open for reading</td></tr>
+     <tr><td><code class="lang-d"><span class="str">"r+"</span></code></td><td>open for reading</td></tr>
+     <tr><td><code class="lang-d"><span class="str">"w"</span></code></td><td>create or truncate and open for writing</td></tr>
+     <tr><td><code class="lang-d"><span class="str">"w+"</span></code></td><td>create or truncate and open for reading and writing</td></tr>
+     <tr><td><code class="lang-d"><span class="str">"a"</span></code></td><td>create or truncate and open for appending</td></tr>
+     <tr><td><code class="lang-d"><span class="str">"a+"</span></code></td><td>create or truncate and open for reading and appending</td></tr>
+   </table>
+</p>
+
+<p>   The mode string can be followed by a <code class="lang-d"><span class="str">"b"</span></code> flag to open files in
+   binary mode. This only has an effect on Windows.
+</p>
+</section>
+
+				<section><h2>Parameters</h2>
+<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
+<tr><td id="m">m</td><td> fopen mode to convert to <code class="lang-d"><a href="../../../std/io/file/Mode.html"><span class="typ">Mode</span></a></code> enum</td></tr>
+</table>
+</section>
+<section><h2>Example</h2>
+
+<pre class="code"><code class="lang-d"><span class="kwd">assert</span><span class="pun">(</span><span class="pln">mode</span><span class="pun">!</span><span class="str">"r" </span><span class="pun">== <a href="../../../std/io/file/Mode.html#read"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">read</span></a><span class="pun">);
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">mode</span><span class="pun">!</span><span class="str">"r+" </span><span class="pun">== <a href="../../../std/io/file/Mode.html#readWrite"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">readWrite</span></a><span class="pun">);
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">mode</span><span class="pun">!</span><span class="str">"w" </span><span class="pun">== (<a href="../../../std/io/file/Mode.html#create"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">create</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#truncate"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">truncate</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#write"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">write</span></a><span class="pun">));
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">mode</span><span class="pun">!</span><span class="str">"w+" </span><span class="pun">== (<a href="../../../std/io/file/Mode.html#create"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">create</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#truncate"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">truncate</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#readWrite"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">readWrite</span></a><span class="pun">));
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">mode</span><span class="pun">!</span><span class="str">"a" </span><span class="pun">== (<a href="../../../std/io/file/Mode.html#create"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">create</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#write"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">write</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#append"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">append</span></a><span class="pun">));
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">mode</span><span class="pun">!</span><span class="str">"a+" </span><span class="pun">== (<a href="../../../std/io/file/Mode.html#create"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">create</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#readWrite"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">readWrite</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#append"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">append</span></a><span class="pun">));
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">mode</span><span class="pun">!</span><span class="str">"rb" </span><span class="pun">== (<a href="../../../std/io/file/Mode.html#read"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">read</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#binary"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">binary</span></a><span class="pun">));
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">mode</span><span class="pun">!</span><span class="str">"r+b" </span><span class="pun">== (<a href="../../../std/io/file/Mode.html#readWrite"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">readWrite</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#binary"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">binary</span></a><span class="pun">));
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">mode</span><span class="pun">!</span><span class="str">"wb" </span><span class="pun">== (<a href="../../../std/io/file/Mode.html#create"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">create</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#truncate"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">truncate</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#write"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">write</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#binary"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">binary</span></a><span class="pun">));
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">mode</span><span class="pun">!</span><span class="str">"w+b" </span><span class="pun">== (<a href="../../../std/io/file/Mode.html#create"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">create</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#truncate"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">truncate</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#readWrite"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">readWrite</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#binary"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">binary</span></a><span class="pun">));
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">mode</span><span class="pun">!</span><span class="str">"ab" </span><span class="pun">== (<a href="../../../std/io/file/Mode.html#create"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">create</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#write"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">write</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#append"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">append</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#binary"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">binary</span></a><span class="pun">));
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">mode</span><span class="pun">!</span><span class="str">"a+b" </span><span class="pun">== (<a href="../../../std/io/file/Mode.html#create"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">create</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#readWrite"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">readWrite</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#append"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">append</span></a><span class="pln"> </span><span class="pun">| <a href="../../../std/io/file/Mode.html#binary"></span><span class="typ">Mode<wbr/></span><span class="pun">.</span><span class="pln">binary</span></a><span class="pun">));
+</span><span class="kwd">static assert</span><span class="pun">(!</span><span class="kwd">__traits</span><span class="pun">(</span><span class="pln">compiles</span><span class="pun">, </span><span class="pln">mode</span><span class="pun">!</span><span class="str">"xyz"</span><span class="pun">));
+</span></code></pre>
+</section>
+
+			</div>
+			<footer>
+				<div id="license-info">
+					<p>Martin Nowak
+</p>
+
+					
+					<p>boost.org/LICENSE_1_0.txt, Boost License 1.0.
+</p>
+
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>

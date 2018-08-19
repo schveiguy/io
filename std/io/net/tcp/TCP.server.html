@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>TCP.server - multiple declarations</title>
+		<link rel="stylesheet" href="../../../../css/style.min.css"/>
+		<script type="text/javascript" src="../../../../js/script.min.js"></script>
+	</head>
+	<body onload="setupDdox();">
+		<header></header>
+		<nav id="main-nav">
+			<div>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<form action="#" method="GET">
+						<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" autofocus/>
+					</form>
+					<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../../../../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../../../../";
+document.getElementById('symbolSearchPane').style.display = 'block';</script>
+				</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">std
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">
+							<a href="../../../../std/io.html">io</a>
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="../../../../std/io/driver.html">driver</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/driver/sync.html">sync</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">internal
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/internal/string.html">string</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view ">
+						<div class="package ">
+							<a href="../../../../std/io/net.html">net</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/addr.html">addr</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/dns.html">dns</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/socket.html">socket</a>
+						</div>
+					</li>
+					<li>
+						<div class="module selected">
+							<a href="../../../../std/io/net/tcp.html">tcp</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/udp.html">udp</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/exception.html">exception</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/file.html">file</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+				</ul>
+					</li>
+				</ul>
+			</div>
+			<p id="main-nav-footer">
+				Built with
+				<a href="https://github.com/MartinNowak/scod">scod</a>
+			</p>
+		</nav>
+		<div id="main-contents">
+			<div>
+				<h1>TCP.server - multiple declarations</h1>
+				<nav class="page-nav">
+					<ul>
+						<li>
+							<a href="#0">
+								Function <code>TCP.server</code>
+							</a>
+						</li>
+						<li>
+							<a href="#1">
+								Function <code>TCP.server</code>
+							</a>
+						</li>
+						<li>
+							<a href="#2">
+								Function <code>TCP.server</code>
+							</a>
+						</li>
+						<li>
+							<a href="#3">
+								Function <code>TCP.server</code>
+							</a>
+						</li>
+					</ul>
+				</nav><h2 id="0">Function TCP.server</h2><p>Create a TCP socket, bind it to the resolved <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.server.html#hostname"><span class="pln">hostname</span></a></code> and
+       <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.server.html#port"><span class="pln">port</span></a></code>, and listen for incoming connections.
+       Uses the first resolved address the socket can successfully bind.
+       A port number of zero will be bound to an ephemeral port.
+</p>
+				<div class="prototype">
+					<code class="lang-d">
+						<div class="single-prototype">
+				<a href="../../../../std/io/net/tcp/TCPServer.html"><span class="typ">TCPServer</span></a> <span class="pln">server</span>(S)
+				<span class="pun">(</span>
+				<br/>
+				&nbsp;&nbsp;<span class="pln">S</span> <span class="pln">hostname</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<span class="typ">ushort</span> <span class="pln">port</span> <span class="pun">=</span> <span class="lit">0</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">backlog</span> <span class="pun">=</span> <span class="lit">128</span>
+				<br/>
+				<span class="pun">)</span>
+				<br/>
+				<span class="kwd">if</span> <span class="pun">(</span><span class="pln">isStringLike</span><span class="pun">!</span><span class="pln">S</span><span class="pun">);</span>
+						</div>
+					</code>
+				</div>
+				<section></section>
+
+				<section><h3>Parameters</h3>
+<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
+<tr><td id="hostname">hostname</td><td> hostname to resolve and bind</td></tr>
+<tr><td id="port">port</td><td> port number to bind</td></tr>
+<tr><td id="backlog">backlog</td><td> maximum number of pending connections</td></tr>
+</table>
+</section>
+<section><h3>Returns</h3>
+<p>TCPServer to accept incoming connections
+</p>
+</section>
+<h2 id="1">Function TCP.server</h2><p>Create a TCP socket, bind it to the resolved <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.server.html#hostname"><span class="pln">hostname</span></a></code> and
+       <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.server.html#service"><span class="pln">service</span></a></code>, and listen for incoming connections.
+       Uses the first resolved address the socket can successfully bind.
+</p>
+				<div class="prototype">
+					<code class="lang-d">
+						<div class="single-prototype">
+				<a href="../../../../std/io/net/tcp/TCPServer.html"><span class="typ">TCPServer</span></a> <span class="pln">server</span>(S1, S2)
+				<span class="pun">(</span>
+				<br/>
+				&nbsp;&nbsp;<span class="pln">S1</span> <span class="pln">hostname</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<span class="pln">S2</span> <span class="pln">service</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">backlog</span> <span class="pun">=</span> <span class="lit">128</span>
+				<br/>
+				<span class="pun">)</span><span class="pln"> </span><span class="kwd">@trusted</span>
+				<br/>
+				<span class="kwd">if</span> <span class="pun">(</span><span class="pln">isStringLike</span><span class="pun">!</span><span class="pln">S1 </span><span class="pun">&amp;&amp; </span><span class="pln">isStringLike</span><span class="pun">!</span><span class="pln">S2</span><span class="pun">);</span>
+						</div>
+					</code>
+				</div>
+				<section></section>
+
+				<section><h3>Parameters</h3>
+<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
+<tr><td id="hostname">hostname</td><td> hostname to resolve and bind</td></tr>
+<tr><td id="service">service</td><td> service bind</td></tr>
+<tr><td id="backlog">backlog</td><td> maximum number of pending connections</td></tr>
+</table>
+</section>
+<section><h3>Returns</h3>
+<p>TCPServer to accept incoming connections
+</p>
+</section>
+<h2 id="2">Function TCP.server</h2><p>Create a TCP socket, bind it to socket <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.server.html#addr"><span class="pln">addr</span></a></code>, and listen for
+       incoming connections.
+</p>
+				<div class="prototype">
+					<code class="lang-d">
+						<div class="single-prototype">
+				<a href="../../../../std/io/net/tcp/TCPServer.html"><span class="typ">TCPServer</span></a> <span class="pln">server</span>(SocketAddr)
+				<span class="pun">(</span>
+				<br/>
+				&nbsp;&nbsp;<span class="kwd">auto in ref </span><span class="typ">SocketAddr</span> <span class="pln">addr</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">backlog</span> <span class="pun">=</span> <span class="lit">128</span>
+				<br/>
+				<span class="pun">)</span>
+				<br/>
+				<span class="kwd">if</span> <span class="pun">(</span><span class="pln">isSocketAddr</span><span class="pun">!</span><span class="typ">SocketAddr</span><span class="pun">);</span>
+						</div>
+					</code>
+				</div>
+				<section></section>
+
+				<section><h3>Parameters</h3>
+<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
+<tr><td id="addr">addr</td><td> socket address to bind</td></tr>
+<tr><td id="backlog">backlog</td><td> maximum number of pending connections</td></tr>
+</table>
+</section>
+<h2 id="3">Function TCP.server</h2><p>Create a TCP socket, bind it to IP <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.server.html#addr"><span class="pln">addr</span></a></code> and <code class="lang-d"><a href="../../../../std/io/net/tcp/TCP.server.html#port"><span class="pln">port</span></a></code>, and
+       listen for incoming connections.  A port number of zero will be
+       bound to an ephemeral port.
+</p>
+				<div class="prototype">
+					<code class="lang-d">
+						<div class="single-prototype">
+				<a href="../../../../std/io/net/tcp/TCPServer.html"><span class="typ">TCPServer</span></a> <span class="pln">server</span>(IPAddr)
+				<span class="pun">(</span>
+				<br/>
+				&nbsp;&nbsp;<span class="typ">IPAddr</span> <span class="pln">addr</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<span class="typ">ushort</span> <span class="pln">port</span> <span class="pun">=</span> <span class="lit">0</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">backlog</span> <span class="pun">=</span> <span class="lit">128</span>
+				<br/>
+				<span class="pun">)</span>
+				<br/>
+				<span class="kwd">if</span> <span class="pun">(</span><span class="pln">isIPAddr</span><span class="pun">!</span><span class="typ">IPAddr</span><span class="pun">);</span>
+						</div>
+					</code>
+				</div>
+				<section></section>
+
+				<section><h3>Parameters</h3>
+<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
+<tr><td id="addr">addr</td><td> IP address to bind</td></tr>
+<tr><td id="port">port</td><td> port to bind</td></tr>
+<tr><td id="backlog">backlog</td><td> maximum number of pending connections</td></tr>
+</table>
+</section>
+
+			</div>
+			<footer>
+				<div id="license-info">
+					<p>Martin Nowak
+</p>
+
+					
+					<p>boost.org/LICENSE_1_0.txt, Boost License 1.0.
+</p>
+
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>

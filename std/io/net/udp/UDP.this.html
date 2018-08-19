@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>Function UDP.this</title>
+		<link rel="stylesheet" href="../../../../css/style.min.css"/>
+		<script type="text/javascript" src="../../../../js/script.min.js"></script>
+	</head>
+	<body onload="setupDdox();">
+		<header></header>
+		<nav id="main-nav">
+			<div>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<form action="#" method="GET">
+						<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" autofocus/>
+					</form>
+					<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../../../../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../../../../";
+document.getElementById('symbolSearchPane').style.display = 'block';</script>
+				</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">std
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">
+							<a href="../../../../std/io.html">io</a>
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="../../../../std/io/driver.html">driver</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/driver/sync.html">sync</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">internal
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/internal/string.html">string</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view ">
+						<div class="package ">
+							<a href="../../../../std/io/net.html">net</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/addr.html">addr</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/dns.html">dns</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/socket.html">socket</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/net/tcp.html">tcp</a>
+						</div>
+					</li>
+					<li>
+						<div class="module selected">
+							<a href="../../../../std/io/net/udp.html">udp</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/exception.html">exception</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../../std/io/file.html">file</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+				</ul>
+					</li>
+				</ul>
+			</div>
+			<p id="main-nav-footer">
+				Built with
+				<a href="https://github.com/MartinNowak/scod">scod</a>
+			</p>
+		</nav>
+		<div id="main-contents">
+			<div>
+				<h1>Function UDP.this</h1><p>Construct an unbound UDP socket for the given protocol <code class="lang-d"><a href="../../../../std/io/net/udp/UDP.this.html#family"><span class="pln">family</span></a></code>. It will
+       be automatically bound to an address on the first call to <code class="lang-d"><span class="pln">sendto</span></code>.
+</p>
+				<div class="prototype">
+					<code class="lang-d">
+						<div class="single-prototype">
+				<span class="kwd">ref </span><span class="pln">this</span>
+				<span class="pun">(</span>
+				<br/>
+				&nbsp;&nbsp;<a href="../../../../std/io/net/addr/AddrFamily.html"><span class="typ">AddrFamily</span></a> <span class="pln">family</span>
+				<br/>
+				<span class="pun">)</span><span class="pln"> </span><span class="kwd">@nogc @safe</span><span class="pun">;</span>
+						</div>
+					</code>
+				</div>
+				<section></section>
+
+				<section><h2>Parameters</h2>
+<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
+<tr><td id="family">family</td><td> protocol family for socket</td></tr>
+</table>
+</section>
+<section><h2>Example</h2>
+
+<pre class="code"><code class="lang-d"><span class="kwd">auto <a href="../../../../std/io/net/udp/UDP.server.html"></span><span class="pln">server</span></a><span class="pln"> </span><span class="pun">= <a href="../../../../std/io/net/udp/UDP.server.html"></span><span class="pln">UDP<wbr/></span><span class="pun">.</span><span class="pln">server</span></a><span class="pun">(</span><span class="typ">IPv4Addr</span><span class="pun">(</span><span class="lit">127</span><span class="pun">, </span><span class="lit">0</span><span class="pun">, </span><span class="lit">0</span><span class="pun">, </span><span class="lit">1</span><span class="pun">));
+</span><span class="kwd">auto <a href="../../../../std/io/net/udp/UDP.client.html"></span><span class="pln">client</span></a><span class="pln"> </span><span class="pun">= <a href="../../../../std/io/net/udp/UDP.html"></span><span class="pln">UDP</span></a><span class="pun">(</span><span class="typ">ProtocolFamily<wbr/></span><span class="pun">.</span><span class="typ">IPv4</span><span class="pun">);
+</span><span class="com">// unbound
+</span><span class="typ">SocketAddrIPv4 </span><span class="pln">addr</span><span class="pun">;
+</span><span class="com">// cannot get unbound localAddr on Windows
+</span><span class="kwd">version </span><span class="pun">(</span><span class="typ">Posix</span><span class="pun">)
+{
+    </span><span class="pln">addr </span><span class="pun">= </span><span class="pln">client<wbr/></span><span class="pun">.</span><span class="pln">localAddr<wbr/></span><span class="pun">.</span><span class="pln">get</span><span class="pun">!</span><span class="typ">SocketAddrIPv4</span><span class="pun">;
+    </span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">addr<wbr/></span><span class="pun">.</span><span class="pln">ip </span><span class="pun">== </span><span class="typ">IPv4Addr<wbr/></span><span class="pun">.</span><span class="pln">any</span><span class="pun">); </span><span class="com">// 0.0.0.0
+    </span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">addr<wbr/></span><span class="pun">.</span><span class="pln">port </span><span class="pun">== </span><span class="lit">0</span><span class="pun">);
+}
+</span><span class="typ">ubyte</span><span class="pun">[</span><span class="lit">4</span><span class="pun">] </span><span class="pln">ping </span><span class="pun">= [</span><span class="str">'p'</span><span class="pun">, </span><span class="str">'i'</span><span class="pun">, </span><span class="str">'n'</span><span class="pun">, </span><span class="str">'g'</span><span class="pun">];
+</span><span class="pln">client<wbr/></span><span class="pun">.</span><span class="pln">sendTo</span><span class="pun">(</span><span class="pln">server<wbr/></span><span class="pun">.</span><span class="pln">localAddr</span><span class="pun">, </span><span class="pln">ping</span><span class="pun">[]);
+</span><span class="com">// now bound
+</span><span class="pln">addr </span><span class="pun">= </span><span class="pln">client<wbr/></span><span class="pun">.</span><span class="pln">localAddr<wbr/></span><span class="pun">.</span><span class="pln">get</span><span class="pun">!</span><span class="typ">SocketAddrIPv4</span><span class="pun">;
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">addr<wbr/></span><span class="pun">.</span><span class="pln">ip </span><span class="pun">== </span><span class="typ">IPv4Addr<wbr/></span><span class="pun">.</span><span class="pln">any</span><span class="pun">);
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">addr<wbr/></span><span class="pun">.</span><span class="pln">port </span><span class="pun">!= </span><span class="lit">0</span><span class="pun">);
+
+</span><span class="com">// client can receive data from any peer
+</span><span class="kwd">auto </span><span class="pln">peer </span><span class="pun">= <a href="../../../../std/io/net/udp/UDP.html"></span><span class="pln">UDP</span></a><span class="pun">(</span><span class="typ">ProtocolFamily<wbr/></span><span class="pun">.</span><span class="typ">IPv4</span><span class="pun">);
+</span><span class="com">// cannot sendTo 0.0.0.0 on Windows
+</span><span class="kwd">version </span><span class="pun">(</span><span class="typ">Windows</span><span class="pun">)
+    </span><span class="pln">addr<wbr/></span><span class="pun">.</span><span class="pln">ip </span><span class="pun">= </span><span class="typ">IPv4Addr</span><span class="pun">(</span><span class="lit">127</span><span class="pun">, </span><span class="lit">0</span><span class="pun">, </span><span class="lit">0</span><span class="pun">, </span><span class="lit">1</span><span class="pun">);
+</span><span class="pln">peer<wbr/></span><span class="pun">.</span><span class="pln">sendTo</span><span class="pun">(</span><span class="pln">addr</span><span class="pun">, </span><span class="pln">ping</span><span class="pun">[]);
+</span><span class="typ">ubyte</span><span class="pun">[</span><span class="lit">4</span><span class="pun">] </span><span class="pln">buf</span><span class="pun">;
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">client<wbr/></span><span class="pun">.</span><span class="pln">recv</span><span class="pun">(</span><span class="pln">buf</span><span class="pun">[]) == </span><span class="lit">4</span><span class="pun">);
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">buf</span><span class="pun">[] == </span><span class="pln">ping</span><span class="pun">[]);
+
+</span></code></pre>
+</section>
+
+			</div>
+			<footer>
+				<div id="license-info">
+					<p>Martin Nowak
+</p>
+
+					
+					<p>boost.org/LICENSE_1_0.txt, Boost License 1.0.
+</p>
+
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>

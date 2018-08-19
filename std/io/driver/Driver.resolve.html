@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>Function Driver.resolve</title>
+		<link rel="stylesheet" href="../../../css/style.min.css"/>
+		<script type="text/javascript" src="../../../js/script.min.js"></script>
+	</head>
+	<body onload="setupDdox();">
+		<header></header>
+		<nav id="main-nav">
+			<div>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<form action="#" method="GET">
+						<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" autofocus/>
+					</form>
+					<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../../../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../../../";
+document.getElementById('symbolSearchPane').style.display = 'block';</script>
+				</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">std
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">
+							<a href="../../../std/io.html">io</a>
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package selected">
+							<a href="../../../std/io/driver.html">driver</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/driver/sync.html">sync</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">internal
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/internal/string.html">string</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="../../../std/io/net.html">net</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/addr.html">addr</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/dns.html">dns</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/socket.html">socket</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/tcp.html">tcp</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/udp.html">udp</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/exception.html">exception</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/file.html">file</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+				</ul>
+					</li>
+				</ul>
+			</div>
+			<p id="main-nav-footer">
+				Built with
+				<a href="https://github.com/MartinNowak/scod">scod</a>
+			</p>
+		</nav>
+		<div id="main-contents">
+			<div>
+				<h1>Function Driver.resolve</h1><p>Resolve <code class="lang-d"><a href="../../../std/io/driver/Driver.resolve.html#hostname"><span class="pln">hostname</span></a></code> using <code class="lang-d"><a href="../../../std/io/driver/Driver.resolve.html#service"><span class="pln">service</span></a></code>, <code class="lang-d"><a href="../../../std/io/driver/Driver.resolve.html#family"><span class="pln">family</span></a></code>, <code class="lang-d"><a href="../../../std/io/driver/Driver.resolve.html#socktype"><span class="pln">socktype</span></a></code>, and <code class="lang-d"><a href="../../../std/io/driver/Driver.resolve.html#protocol"><span class="pln">protocol</span></a></code>
+       as hints.  Calls <code class="lang-d"><a href="../../../std/io/driver/Driver.resolve.html#cb"><span class="pln">cb</span></a></code> for each resolved <code class="lang-d"><span class="typ">AddrInfo</span></code>. Iteration is
+       terminated early when <code class="lang-d"><a href="../../../std/io/driver/Driver.resolve.html#cb"><span class="pln">cb</span></a></code> returns a non-zero value.
+</p>
+				<div class="prototype">
+					<code class="lang-d">
+						<div class="single-prototype">
+				<span class="kwd">abstract </span><span class="typ">int</span> <span class="pln">resolve</span>
+				<span class="pun">(</span>
+				<br/>
+				&nbsp;&nbsp;<span class="kwd">scope </span><span class="kwd">const</span><span class="pun">(</span><span class="typ">char</span><span class="pun">[]</span><span class="pun">)</span> <span class="pln">hostname</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<span class="kwd">scope </span><span class="kwd">const</span><span class="pun">(</span><span class="typ">char</span><span class="pun">[]</span><span class="pun">)</span> <span class="pln">service</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<a href="../../../std/io/net/addr/AddrFamily.html"><span class="typ">AddrFamily</span></a> <span class="pln">family</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<a href="../../../std/io/net/socket/SocketType.html"><span class="typ">SocketType</span></a> <span class="pln">socktype</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<a href="../../../std/io/net/socket/Protocol.html"><span class="typ">Protocol</span></a> <span class="pln">protocol</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<span class="kwd">scope </span><span class="kwd">@nogc</span> <span class="kwd">@safe</span> <span class="typ">int</span> <span class="kwd">delegate</span><span class="pun">(</span><span class="kwd">scope</span> <span class="kwd">ref</span> <span class="kwd">const</span><span class="pun">(</span><a href="../../../std/io/net/dns/AddrInfo.html"><span class="typ">AddrInfo</span></a><span class="pun">)</span><span class="pun">)</span> <span class="pln">cb</span>
+				<br/>
+				<span class="pun">)</span><span class="pln"> </span><span class="kwd">@nogc @safe shared</span><span class="pun">;</span>
+						</div>
+					</code>
+				</div>
+				<section><p>Both <code class="lang-d"><a href="../../../std/io/driver/Driver.resolve.html#hostname"><span class="pln">hostname</span></a></code> and <code class="lang-d"><a href="../../../std/io/driver/Driver.resolve.html#service"><span class="pln">service</span></a></code> are already null-terminated for usage with C APIs.
+</p>
+</section>
+
+				<section><h2>Returns</h2>
+<p>the non-zero value that terminated the iteration or 0 otherwise
+</p>
+</section>
+<section><h2>Example</h2>
+
+<pre class="code"><code class="lang-d"><span class="kwd">import <a href="../../../std/io/net/addr.html"></span><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">io<wbr/></span><span class="pun">.</span><span class="pln">net<wbr/></span><span class="pun">.</span><span class="pln">addr</span></a><span class="pun">;
+</span><span class="kwd">import </span><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">internal<wbr/></span><span class="pun">.</span><span class="pln">cstring </span><span class="pun">: </span><span class="pln">tempCString</span><span class="pun">;
+
+</span><span class="kwd">auto </span><span class="pln">res </span><span class="pun">= </span><span class="pln">driver<wbr/></span><span class="pun">.</span><span class="pln">resolve</span><span class="pun">(</span><span class="str">"localhost"</span><span class="pun">, </span><span class="str">"http"</span><span class="pun">, </span><span class="typ">AddrFamily<wbr/></span><span class="pun">.</span><span class="typ">IPv4</span><span class="pun">,
+        </span><span class="typ">SocketType<wbr/></span><span class="pun">.</span><span class="pln">stream</span><span class="pun">, </span><span class="typ">Protocol<wbr/></span><span class="pun">.</span><span class="pln">default_</span><span class="pun">, (</span><span class="kwd">ref scope </span><span class="pln">ai</span><span class="pun">) {
+            </span><span class="kwd">auto </span><span class="pln">addr4 </span><span class="pun">= </span><span class="pln">ai<wbr/></span><span class="pun">.</span><span class="pln">addr<wbr/></span><span class="pun">.</span><span class="pln">get</span><span class="pun">!</span><span class="typ">SocketAddrIPv4</span><span class="pun">;
+            </span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">addr4<wbr/></span><span class="pun">.</span><span class="pln">ip </span><span class="pun">== </span><span class="typ">IPv4Addr</span><span class="pun">(</span><span class="lit">127</span><span class="pun">, </span><span class="lit">0</span><span class="pun">, </span><span class="lit">0</span><span class="pun">, </span><span class="lit">1</span><span class="pun">));
+            </span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">addr4<wbr/></span><span class="pun">.</span><span class="pln">port </span><span class="pun">== </span><span class="lit">80</span><span class="pun">);
+            </span><span class="kwd">return </span><span class="lit">1</span><span class="pun">;
+        });
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">res </span><span class="pun">== </span><span class="lit">1</span><span class="pun">);
+}
+</span></code></pre>
+</section>
+
+			</div>
+			<footer>
+				<div id="license-info">
+					<p>Martin Nowak
+</p>
+
+					
+					<p>boost.org/LICENSE_1_0.txt, Boost License 1.0.
+</p>
+
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>

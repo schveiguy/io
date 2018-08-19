@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>Interface Driver</title>
+		<link rel="stylesheet" href="../../../css/style.min.css"/>
+		<script type="text/javascript" src="../../../js/script.min.js"></script>
+	</head>
+	<body onload="setupDdox();">
+		<header></header>
+		<nav id="main-nav">
+			<div>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<form action="#" method="GET">
+						<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" autofocus/>
+					</form>
+					<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../../../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../../../";
+document.getElementById('symbolSearchPane').style.display = 'block';</script>
+				</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">std
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">
+							<a href="../../../std/io.html">io</a>
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package selected">
+							<a href="../../../std/io/driver.html">driver</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/driver/sync.html">sync</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">internal
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/internal/string.html">string</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="../../../std/io/net.html">net</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/addr.html">addr</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/dns.html">dns</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/socket.html">socket</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/tcp.html">tcp</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/udp.html">udp</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/exception.html">exception</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/file.html">file</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+				</ul>
+					</li>
+				</ul>
+			</div>
+			<p id="main-nav-footer">
+				Built with
+				<a href="https://github.com/MartinNowak/scod">scod</a>
+			</p>
+		</nav>
+		<div id="main-contents">
+			<div>
+				<h1>Interface Driver</h1><p>The driver interface used by std.io.
+</p>
+				<div class="prototype">
+					<code class="lang-d">
+						<div class="single-prototype">
+				<span class="kwd">interface</span> <span class="typ">Driver</span>
+				<span class="pun">;</span>
+						</div>
+					</code>
+				</div>
+				<section><p>Swapping this by setting <code class="lang-d"><a href="../../../std/io/driver/driver.html"><span class="pln">driver</span></a></code> or <code class="lang-d"><a href="../../../std/io/driver/globalDriver.html"><span class="pln">globalDriver</span></a></code> allows to
+   exchange the underlying I/O implementation, e.g. for unit-testing
+   or to integrate with an asynchronous event loop.
+</p>
+
+<p>   Note that switching drivers while Files and Sockets are still open is not
+   <code class="lang-d"><span class="kwd">@safe</span></code> and might lead to memory corruption.
+</p>
+</section>
+
+				<section><h2>Methods</h2>
+					<table>
+						<col class="caption"/>
+						<tr>
+							<th>Name</th><th>Description</th>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.accept.html" class="public">
+									<code>accept</code>
+								</a>
+							</td>
+							<td>accept an incoming connection, storing remote <code class="lang-d"><a href="../../../std/io/driver/Driver.accept.html#addr"><span class="pln">addr</span></a></code>
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.bind.html" class="public">
+									<code>bind</code>
+								</a>
+							</td>
+							<td>bind socket to <code class="lang-d"><a href="../../../std/io/driver/Driver.bind.html#addr"><span class="pln">addr</span></a></code>
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.closeFile.html" class="public">
+									<code>closeFile</code>
+								</a>
+							</td>
+							<td>create/open file at <code class="lang-d"><span class="pln">path</span></code> in <code class="lang-d"><span class="pln">mode</span></code>
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.closeSocket.html" class="public">
+									<code>closeSocket</code>
+								</a>
+							</td>
+							<td>close socket
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.connect.html" class="public">
+									<code>connect</code>
+								</a>
+							</td>
+							<td>connect socket to <code class="lang-d"><a href="../../../std/io/driver/Driver.connect.html#addr"><span class="pln">addr</span></a></code>
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.createFile.html" class="public">
+									<code>createFile</code>
+								</a>
+							</td>
+							<td>Create/open file at <code class="lang-d"><a href="../../../std/io/driver/Driver.createFile.html#path"><span class="pln">path</span></a></code> in <code class="lang-d"><a href="../../../std/io/driver/Driver.createFile.html#mode"><span class="pln">mode</span></a></code>.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.createSocket.html" class="public">
+									<code>createSocket</code>
+								</a>
+							</td>
+							<td>create socket
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.fileFromHandle.html" class="public">
+									<code>fileFromHandle</code>
+								</a>
+							</td>
+							<td>Covert platform-specific file handle to <code class="lang-d"><a href="../../../std/io/driver/Driver.FILE.html"><span class="pln">FILE</span></a></code>.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.getSocketOption.html" class="public">
+									<code>getSocketOption</code>
+								</a>
+							</td>
+							<td>get socket option, type in <code class="lang-d"><a href="../../../std/io/driver/Driver.getSocketOption.html#opt"><span class="pln">opt</span></a></code> and <code class="lang-d"><a href="../../../std/io/driver/Driver.getSocketOption.html#optlen"><span class="pln">optlen</span></a></code> is SocketOptionType!option
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.listen.html" class="public">
+									<code>listen</code>
+								</a>
+							</td>
+							<td>listen for incoming connections
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.localAddr.html" class="public">
+									<code>localAddr</code>
+								</a>
+							</td>
+							<td>get local (bound) <code class="lang-d"><a href="../../../std/io/driver/Driver.localAddr.html#addr"><span class="pln">addr</span></a></code> of socket
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.read.html" class="public">
+									<code>read</code>
+								</a>
+							</td>
+							<td>read from file into buffer
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.read.html" class="public">
+									<code>read</code>
+								</a>
+							</td>
+							<td>read from file into multiple buffers
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.recv.html" class="public">
+									<code>recv</code>
+								</a>
+							</td>
+							<td>read from socket into buffer
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.recv.html" class="public">
+									<code>recv</code>
+								</a>
+							</td>
+							<td>read from socket into multiple buffers
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.recvFrom.html" class="public">
+									<code>recvFrom</code>
+								</a>
+							</td>
+							<td>read from socket into buffer, storing source <code class="lang-d"><a href="../../../std/io/driver/Driver.recvFrom.html#addr"><span class="pln">addr</span></a></code>
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.recvFrom.html" class="public">
+									<code>recvFrom</code>
+								</a>
+							</td>
+							<td>read from socket into multiple buffers, storing source <code class="lang-d"><a href="../../../std/io/driver/Driver.recvFrom.html#addr"><span class="pln">addr</span></a></code>
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.resolve.html" class="public">
+									<code>resolve</code>
+								</a>
+							</td>
+							<td>Resolve <code class="lang-d"><a href="../../../std/io/driver/Driver.resolve.html#hostname"><span class="pln">hostname</span></a></code> using <code class="lang-d"><a href="../../../std/io/driver/Driver.resolve.html#service"><span class="pln">service</span></a></code>, <code class="lang-d"><a href="../../../std/io/driver/Driver.resolve.html#family"><span class="pln">family</span></a></code>, <code class="lang-d"><a href="../../../std/io/driver/Driver.resolve.html#socktype"><span class="pln">socktype</span></a></code>, and <code class="lang-d"><a href="../../../std/io/driver/Driver.resolve.html#protocol"><span class="pln">protocol</span></a></code>
+       as hints.  Calls <code class="lang-d"><a href="../../../std/io/driver/Driver.resolve.html#cb"><span class="pln">cb</span></a></code> for each resolved <code class="lang-d"><span class="typ">AddrInfo</span></code>. Iteration is
+       terminated early when <code class="lang-d"><a href="../../../std/io/driver/Driver.resolve.html#cb"><span class="pln">cb</span></a></code> returns a non-zero value.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.seek.html" class="public">
+									<code>seek</code>
+								</a>
+							</td>
+							<td>seek file to offset
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.send.html" class="public">
+									<code>send</code>
+								</a>
+							</td>
+							<td>send buffer content to socket
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.send.html" class="public">
+									<code>send</code>
+								</a>
+							</td>
+							<td>send multiple buffer contents to socket
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.sendTo.html" class="public">
+									<code>sendTo</code>
+								</a>
+							</td>
+							<td>send buffer content to socket and <code class="lang-d"><a href="../../../std/io/driver/Driver.sendTo.html#addr"><span class="pln">addr</span></a></code>
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.sendTo.html" class="public">
+									<code>sendTo</code>
+								</a>
+							</td>
+							<td>send multiple buffer contents to socket and <code class="lang-d"><a href="../../../std/io/driver/Driver.sendTo.html#addr"><span class="pln">addr</span></a></code>
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.setSocketOption.html" class="public">
+									<code>setSocketOption</code>
+								</a>
+							</td>
+							<td>set socket option, type in <code class="lang-d"><a href="../../../std/io/driver/Driver.setSocketOption.html#opt"><span class="pln">opt</span></a></code> and <code class="lang-d"><a href="../../../std/io/driver/Driver.setSocketOption.html#optlen"><span class="pln">optlen</span></a></code> is SocketOptionType!option
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.socketFromHandle.html" class="public">
+									<code>socketFromHandle</code>
+								</a>
+							</td>
+							<td>Covert platform-specific socket handle to <code class="lang-d"><a href="../../../std/io/driver/Driver.SOCKET.html"><span class="pln">SOCKET</span></a></code>.
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.write.html" class="public">
+									<code>write</code>
+								</a>
+							</td>
+							<td>write buffer content to file
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.write.html" class="public">
+									<code>write</code>
+								</a>
+							</td>
+							<td>write multiple buffer contents to file
+</td>
+						</tr>
+					</table>
+				</section>
+				<section><h2>Aliases</h2>
+					<table>
+						<col class="caption"/>
+						<tr>
+							<th>Name</th><th>Description</th>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.FILE.html" class="public">
+									<code>FILE</code>
+								</a>
+							</td>
+							<td>Opaque file handle
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.SOCKET.html" class="public">
+									<code>SOCKET</code>
+								</a>
+							</td>
+							<td>Opaque socket handle
+</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="../../../std/io/driver/Driver.tchar.html" class="public">
+									<code>tchar</code>
+								</a>
+							</td>
+							<td>UTF-8 path on Posix, UTF-16 path on Windows
+</td>
+						</tr>
+					</table>
+				</section>
+				
+			</div>
+			<footer>
+				<div id="license-info">
+					<p>Martin Nowak
+</p>
+
+					
+					<p>boost.org/LICENSE_1_0.txt, Boost License 1.0.
+</p>
+
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>

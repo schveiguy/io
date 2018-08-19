@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>Function File.seek</title>
+		<link rel="stylesheet" href="../../../css/style.min.css"/>
+		<script type="text/javascript" src="../../../js/script.min.js"></script>
+	</head>
+	<body onload="setupDdox();">
+		<header></header>
+		<nav id="main-nav">
+			<div>
+				<noscript>
+					<p style="color: red">The search functionality needs JavaScript enabled</p>
+				</noscript>
+				<div id="symbolSearchPane" style="display: none">
+					<form action="#" method="GET">
+						<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(24);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" autofocus/>
+					</form>
+					<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../../../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../../../";
+document.getElementById('symbolSearchPane').style.display = 'block';</script>
+				</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">std
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view ">
+						<div class="package ">
+							<a href="../../../std/io.html">io</a>
+						</div>
+				<ul class="tree-view">
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="../../../std/io/driver.html">driver</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/driver/sync.html">sync</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">internal
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/internal/string.html">string</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li class="tree-view collapsed">
+						<div class="package ">
+							<a href="../../../std/io/net.html">net</a>
+						</div>
+				<ul class="tree-view">
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/addr.html">addr</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/dns.html">dns</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/socket.html">socket</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/tcp.html">tcp</a>
+						</div>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/net/udp.html">udp</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+					<li>
+						<div class="module ">
+							<a href="../../../std/io/exception.html">exception</a>
+						</div>
+					</li>
+					<li>
+						<div class="module selected">
+							<a href="../../../std/io/file.html">file</a>
+						</div>
+					</li>
+				</ul>
+					</li>
+				</ul>
+					</li>
+				</ul>
+			</div>
+			<p id="main-nav-footer">
+				Built with
+				<a href="https://github.com/MartinNowak/scod">scod</a>
+			</p>
+		</nav>
+		<div id="main-contents">
+			<div>
+				<h1>Function File.seek</h1><p>Reposition the current read and write offset in the file.
+</p>
+				<div class="prototype">
+					<code class="lang-d">
+						<div class="single-prototype">
+				<span class="typ">ulong</span> <span class="pln">seek</span>
+				<span class="pun">(</span>
+				<br/>
+				&nbsp;&nbsp;<span class="typ">long</span> <span class="pln">offset</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<a href="../../../std/io/file/Seek.html"><span class="typ">Seek</span></a> <span class="pln">whence</span>
+				<br/>
+				<span class="pun">)</span><span class="pln"> </span><span class="kwd">@nogc @safe</span><span class="pun">;</span>
+						</div>
+					</code>
+				</div>
+				<section></section>
+
+				<section><h2>Parameters</h2>
+<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
+<tr><td id="offset">offset</td><td> positive or negative number of bytes to seek by</td></tr>
+<tr><td id="whence">whence</td><td> position in the file to seek from</td></tr>
+</table>
+</section>
+<section><h2>Returns</h2>
+<p>resulting offset in file
+</p>
+</section>
+<section><h2>Example</h2>
+
+<pre class="code"><code class="lang-d"><span class="kwd">auto </span><span class="pln">f </span><span class="pun">= <a href="../../../std/io/file/File.html"></span><span class="typ">File</span></a><span class="pun">(</span><span class="str">"LICENSE.txt"</span><span class="pun">);
+</span><span class="typ">ubyte</span><span class="pun">[</span><span class="lit">32</span><span class="pun">] </span><span class="pln">buf1 </span><span class="pun">= </span><span class="typ">void</span><span class="pun">, </span><span class="pln">buf2 </span><span class="pun">= </span><span class="typ">void</span><span class="pun">;
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">f<wbr/></span><span class="pun">.</span><span class="pln">read</span><span class="pun">(</span><span class="pln">buf1</span><span class="pun">[]) == </span><span class="pln">buf1<wbr/></span><span class="pun">.</span><span class="pln">length</span><span class="pun">);
+
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">f<wbr/></span><span class="pun">.</span><span class="pln">seek</span><span class="pun">(</span><span class="lit">0</span><span class="pun">, <a href="../../../std/io/file/Seek.html#cur"></span><span class="typ">Seek<wbr/></span><span class="pun">.</span><span class="pln">cur</span></a><span class="pun">) == </span><span class="pln">buf1<wbr/></span><span class="pun">.</span><span class="pln">length</span><span class="pun">);
+
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">f<wbr/></span><span class="pun">.</span><span class="pln">seek</span><span class="pun">(-</span><span class="typ">long</span><span class="pun">(</span><span class="pln">buf1<wbr/></span><span class="pun">.</span><span class="pln">length</span><span class="pun">), <a href="../../../std/io/file/Seek.html#cur"></span><span class="typ">Seek<wbr/></span><span class="pun">.</span><span class="pln">cur</span></a><span class="pun">) == </span><span class="lit">0</span><span class="pun">);
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">f<wbr/></span><span class="pun">.</span><span class="pln">read</span><span class="pun">(</span><span class="pln">buf2</span><span class="pun">[]) == </span><span class="pln">buf2<wbr/></span><span class="pun">.</span><span class="pln">length</span><span class="pun">);
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">buf1</span><span class="pun">[] == </span><span class="pln">buf2</span><span class="pun">[]);
+
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">f<wbr/></span><span class="pun">.</span><span class="pln">seek</span><span class="pun">(</span><span class="lit">0</span><span class="pun">, <a href="../../../std/io/file/Seek.html#set"></span><span class="typ">Seek<wbr/></span><span class="pun">.</span><span class="pln">set</span></a><span class="pun">) == </span><span class="lit">0</span><span class="pun">);
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">f<wbr/></span><span class="pun">.</span><span class="pln">read</span><span class="pun">(</span><span class="pln">buf2</span><span class="pun">[]) == </span><span class="pln">buf2<wbr/></span><span class="pun">.</span><span class="pln">length</span><span class="pun">);
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">buf1</span><span class="pun">[] == </span><span class="pln">buf2</span><span class="pun">[]);
+
+</span><span class="pln">f<wbr/></span><span class="pun">.</span><span class="pln">seek</span><span class="pun">(-</span><span class="lit">8</span><span class="pun">, <a href="../../../std/io/file/Seek.html#end"></span><span class="typ">Seek<wbr/></span><span class="pun">.</span><span class="pln">end</span></a><span class="pun">);
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">f<wbr/></span><span class="pun">.</span><span class="pln">read</span><span class="pun">(</span><span class="pln">buf2</span><span class="pun">[]) == </span><span class="lit">8</span><span class="pun">);
+</span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">buf1</span><span class="pun">[] != </span><span class="pln">buf2</span><span class="pun">[]);
+
+</span></code></pre>
+</section>
+
+			</div>
+			<footer>
+				<div id="license-info">
+					<p>Martin Nowak
+</p>
+
+					
+					<p>boost.org/LICENSE_1_0.txt, Boost License 1.0.
+</p>
+
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>
