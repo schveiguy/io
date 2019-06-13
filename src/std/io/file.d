@@ -166,7 +166,7 @@ struct File
         f = driver.fileFromHandle(handle);
     }
     else version (Windows)
-        this(HANDLE handle)
+        this(WinHandle handle)
     {
         f = driver.fileFromHandle(handle);
     }

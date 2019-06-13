@@ -78,7 +78,7 @@ shared @safe @nogc:
             auto fd = .open(path.ptr, mode, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
         }
         else version (Windows)
-            auto fd = .CreateFileW(path.ptr, accessMask(mode), shareMode(mode),
+            WinHandle fd = .CreateFileW(path.ptr, accessMask(mode), shareMode(mode),
                     null, creationDisposition(mode), FILE_ATTRIBUTE_NORMAL, null);
         else
             static assert(0, "unimplemented");
@@ -97,7 +97,7 @@ shared @safe @nogc:
         return h2f(fd);
     }
     else version (Windows)
-        override FILE fileFromHandle(HANDLE fd)
+        override FILE fileFromHandle(WinHandle fd)
     {
         return h2f(fd);
     }
@@ -109,7 +109,7 @@ shared @safe @nogc:
         version (Posix)
             enforce(!.close(f2h(f)), "close failed".String);
         else
-            enforce(CloseHandle(f2h(f)), "close failed".String);
+            enforce(CloseHandle(cast(HANDLE)f2h(f)), "close failed".String);
     }
 
     override size_t read(scope FILE f, scope ubyte[] buf) @trusted
@@ -124,7 +124,7 @@ shared @safe @nogc:
         {
             assert(buf.length <= uint.max);
             DWORD n;
-            immutable ret = ReadFile(f2h(f), buf.ptr, cast(uint) buf.length, &n, null);
+            immutable ret = ReadFile(cast(HANDLE)f2h(f), buf.ptr, cast(uint) buf.length, &n, null);
             enforce(ret, "read failed".String);
             return n;
         }
@@ -165,7 +165,7 @@ shared @safe @nogc:
         {
             assert(buf.length <= uint.max);
             DWORD n;
-            immutable ret = WriteFile(f2h(f), buf.ptr, cast(uint) buf.length, &n, null);
+            immutable ret = WriteFile(cast(HANDLE)f2h(f), buf.ptr, cast(uint) buf.length, &n, null);
             enforce(ret, "write failed".String);
             return n;
         }
@@ -207,7 +207,7 @@ shared @safe @nogc:
             LARGE_INTEGER off = void;
             off.QuadPart = offset;
             LARGE_INTEGER npos;
-            immutable ret = SetFilePointerEx(f2h(f), off, &npos, whence);
+            immutable ret = SetFilePointerEx(cast(HANDLE)f2h(f), off, &npos, whence);
             enforce(ret != 0, "seek failed".String);
             return npos.QuadPart;
         }
@@ -555,15 +555,15 @@ else version (Windows)
     static assert(HANDLE.sizeof <= Driver.FILE.sizeof);
 
     /// handle to file
-    Driver.FILE h2f(return scope HANDLE fd) pure nothrow @trusted @nogc
+    Driver.FILE h2f(return scope WinHandle fd) pure nothrow @trusted @nogc
     {
         return cast(Driver.FILE) fd;
     }
 
     /// file to handle
-    HANDLE f2h(return scope Driver.FILE f) pure nothrow @trusted @nogc
+    WinHandle f2h(return scope Driver.FILE f) pure nothrow @trusted @nogc
     {
-        return cast(HANDLE) f;
+        return cast(WinHandle) f;
     }
 
     static assert(ws2.SOCKET.sizeof <= Driver.SOCKET.sizeof);

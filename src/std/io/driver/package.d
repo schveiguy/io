@@ -17,12 +17,16 @@ package
     version (Posix)
         import core.sys.posix.sys.socket : sockaddr, socklen_t;
     else version (Windows)
-    {
-        import core.sys.windows.windef : HANDLE;
         import ws2 = core.sys.windows.winsock2 : sockaddr, socklen_t;
-    }
     else
         static assert(0, "unimplemented");
+}
+
+version (Windows)
+{
+    import core.sys.windows.windef : HANDLE;
+    import std.typecons : Typedef;
+    alias WinHandle = Typedef!HANDLE;
 }
 
 /**
@@ -70,7 +74,7 @@ shared @safe @nogc:
     version (Posix)
         FILE fileFromHandle(int handle);
     else version (Windows)
-        FILE fileFromHandle(HANDLE handle);
+        FILE fileFromHandle(WinHandle handle);
     /// create/open file at `path` in `mode`
     void closeFile(scope FILE f);
     /// read from file into buffer
