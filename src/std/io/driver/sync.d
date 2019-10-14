@@ -525,13 +525,13 @@ version (Posix)
     /// handle to file
     Driver.FILE h2f(return scope int fd) pure nothrow @trusted @nogc
     {
-        return cast(void*) fd;
+        return Driver.FILE(cast(void*) fd);
     }
 
     /// file to handle
     int f2h(scope Driver.FILE f) pure nothrow @trusted @nogc
     {
-        return cast(int) f;
+        return cast(int) f.handle;
     }
 
     static assert(int.sizeof <= Driver.SOCKET.sizeof);
@@ -539,13 +539,13 @@ version (Posix)
     /// handle to socket
     Driver.SOCKET h2s(return scope int fd) pure nothrow @trusted @nogc
     {
-        return cast(Driver.SOCKET) fd;
+        return Driver.SOCKET(cast(void *)fd);
     }
 
     /// socket to handle
     inout(int) s2h(scope inout Driver.SOCKET s) pure nothrow @trusted @nogc
     {
-        return cast(int) s;
+        return cast(int) s.handle;
     }
 }
 else version (Windows)
@@ -557,13 +557,13 @@ else version (Windows)
     /// handle to file
     Driver.FILE h2f(return scope HANDLE fd) pure nothrow @trusted @nogc
     {
-        return cast(Driver.FILE) fd;
+        return Driver.FILE(cast(void*)fd);
     }
 
     /// file to handle
     HANDLE f2h(return scope Driver.FILE f) pure nothrow @trusted @nogc
     {
-        return cast(HANDLE) f;
+        return cast(HANDLE) f.handle;
     }
 
     static assert(ws2.SOCKET.sizeof <= Driver.SOCKET.sizeof);
@@ -571,13 +571,13 @@ else version (Windows)
     /// handle to socket
     Driver.SOCKET h2s(return scope ws2.SOCKET fd) pure nothrow @trusted @nogc
     {
-        return cast(Driver.SOCKET) fd;
+        return Driver.SOCKET(cast(void *)fd);
     }
 
     /// socket to handle
     inout(ws2.SOCKET) s2h(scope inout Driver.SOCKET s) pure nothrow @trusted @nogc
     {
-        return cast(ws2.SOCKET) s;
+        return cast(ws2.SOCKET) s.handle;
     }
 }
 

@@ -127,16 +127,16 @@ struct Socket
     /// close the socket
     void close() @trusted
     {
-        if (s == Driver.INVALID_SOCKET)
+        if (s == Driver.SOCKET.INVALID)
             return;
         driver.closeSocket(s);
-        s = Driver.INVALID_SOCKET;
+        s = Driver.SOCKET.INVALID;
     }
 
     /// return whether the socket is open
     bool isOpen() const pure nothrow
     {
-        return s != Driver.INVALID_SOCKET;
+        return s != Driver.SOCKET.INVALID;
     }
 
     ///
@@ -552,7 +552,7 @@ struct Socket
     Socket move() return scope nothrow /*pure Issue 18590*/
     {
         auto s = this.s;
-        this.s = Driver.INVALID_SOCKET;
+        this.s = Driver.SOCKET.INVALID;
         return Socket(s);
     }
 
@@ -611,5 +611,5 @@ private:
         this.s = s;
     }
 
-    Driver.SOCKET s = Driver.INVALID_SOCKET;
+    Driver.SOCKET s = Driver.SOCKET.INVALID;
 }
