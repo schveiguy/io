@@ -189,16 +189,16 @@ struct File
     /// close the file
     void close() scope @trusted
     {
-        if (f is Driver.INVALID_FILE)
+        if (f is Driver.FILE.INVALID)
             return;
         driver.closeFile(f);
-        f = Driver.INVALID_FILE;
+        f = Driver.FILE.INVALID;
     }
 
     /// return whether file is open
     bool isOpen() const scope
     {
-        return f != Driver.INVALID_FILE;
+        return f != Driver.FILE.INVALID;
     }
 
     ///
@@ -353,7 +353,7 @@ struct File
     File move() return scope nothrow /*pure Issue 18590*/
     {
         auto f = this.f;
-        this.f = Driver.INVALID_FILE;
+        this.f = Driver.FILE.INVALID;
         return File(f);
     }
 
@@ -367,7 +367,7 @@ private:
         this.f = f;
     }
 
-    Driver.FILE f = Driver.INVALID_FILE;
+    Driver.FILE f = Driver.FILE.INVALID;
 }
 
 ///

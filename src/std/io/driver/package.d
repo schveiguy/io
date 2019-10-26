@@ -25,6 +25,13 @@ package
         static assert(0, "unimplemented");
 }
 
+/// All handles in std.io are based on this type. The implementation defines how it is used.
+struct OpaqueHandle
+{
+    enum OpaqueHandle INVALID = OpaqueHandle(cast(void*)-1);
+    void *handle;
+}
+
 /**
    The driver interface used by std.io.
 
@@ -39,16 +46,14 @@ interface Driver
 {
     // FILE and SOCKET handles cannot be manipulated in @safe code, so most of
     // the Driver's API is @safe.
-shared @safe @nogc:
+@safe @nogc:
     /**
        Opaque file handle
 
        Interpretation left to driver, typically `int` file descriptor
        on Posix systems and `HANDLE` on Windows.
     */
-    alias FILE = void*;
-    /// value used for invalid/closed files
-    enum INVALID_FILE = cast(void*)-1;
+    alias FILE = OpaqueHandle;
 
     version (Posix)
         alias tchar = char; /// UTF-8 path on Posix, UTF-16 path on Windows
@@ -57,6 +62,7 @@ shared @safe @nogc:
     else
         static assert(0, "unimplemented");
 
+    shared {
     /**
        Create/open file at `path` in `mode`.
 
@@ -83,6 +89,7 @@ shared @safe @nogc:
     size_t write(scope FILE f, /*in*/ const scope ubyte[][] bufs);
     /// seek file to offset
     ulong seek(scope FILE f, long offset, int whence);
+    }
 
     /**
        Opaque socket handle
@@ -90,9 +97,10 @@ shared @safe @nogc:
        Interpretation left to driver, typically `int` file descriptor
        on Posix systems and `SOCKET` on Windows.
     */
-    alias SOCKET = void*;
-    /// value used for invalid/closed sockets
-    enum INVALID_SOCKET = cast(void*)-1;
+    alias SOCKET = OpaqueHandle;
+
+
+    shared {
     /// create socket
     SOCKET createSocket(AddrFamily family, SocketType type, Protocol protocol);
     /**
@@ -151,6 +159,7 @@ shared @safe @nogc:
     int resolve( /*in*/ const scope char[] hostname, /*in*/ const scope char[] service, AddrFamily family,
             SocketType socktype, Protocol protocol,
             scope int delegate(const scope ref AddrInfo ai) @safe @nogc cb);
+    }
 
     ///
     @safe @nogc unittest
