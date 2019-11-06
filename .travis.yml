@@ -20,6 +20,15 @@ matrix:
         - COVERAGE=true
       script: ./travis.sh
       after_success: bash <(curl -s https://codecov.io/bash)
+install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update && brew install python3; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then apt-get update && apt-get install meson ninja; fi
+
+script:
+  - meson builddir
+  - ninja -C builddir
+  - ninja -C builddir test
+
 branches:
   only:
     - master
