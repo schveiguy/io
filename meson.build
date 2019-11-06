@@ -54,6 +54,7 @@ io_lib = library(meson.project_name(),
     link_args : common_ldflags,
     install: true,
     version: meson.project_version(),
+    d_unittest: false
 )
 
 
