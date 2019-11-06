@@ -8,13 +8,13 @@ fi
 
 : ${CONFIG:=library} # env CONFIG=dip1000 ./travis.sh
 
-if [ -n "${COVERAGE:-}" ]; then
+if [[ -n "${COVERAGE:-}" ]]; then
     dub test -b unittest-cov -c $CONFIG
 else
     dub test -c $CONFIG
 fi
 
-if [ ! -z "${GH_TOKEN:-}" ]; then
+if [[ ! -z "${GH_TOKEN:-}" ]]; then
     dub build -b ddox
 
     # push docs to gh-pages branch
