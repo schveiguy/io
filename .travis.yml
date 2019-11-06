@@ -9,12 +9,16 @@ addons:
       - pkg-config
       - zlib1g-dev
       - ninja-build
-      - meson
+      - python3
+      - python3-pip
+      - python3-setuptools
+#      - meson # is too old
   homebrew:
     update: true
     packages:
       - ninja
-      - meson
+      - python
+#      - meson # is too old
 jobs:
   include:
     - name: "ldc D compiler on Xenial Linux using dub"
@@ -89,6 +93,8 @@ script:
   - |
     case "${BUILD_TOOL}" in
     meson)
+      pip3 install --user --upgrade pip
+      pip install --user --upgrade meson
       meson builddir
       ninja -C builddir
       ;;
