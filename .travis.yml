@@ -42,10 +42,24 @@ jobs:
       env:
         - COVERAGE=true
         - BUILD_TOOL='dub'
+    - name: "dmd-2.088.1 D compiler on Xenial Linux using dub"
+      os: linux
+      dist: xenial
+      d: dmd-2.088.1
+      env:
+        - COVERAGE=true
+        - BUILD_TOOL='dub'
     - name: "dmd D compiler on Xenial Linux using meson"
       os: linux
       dist: xenial
       d: dmd
+      env:
+        - COVERAGE=false
+        - BUILD_TOOL='meson'
+    - name: "dmd-2.088.1 D compiler on Xenial Linux using meson"
+      os: linux
+      dist: xenial
+      d: dmd-2.088.1
       env:
         - COVERAGE=false
         - BUILD_TOOL='meson'
@@ -64,7 +78,8 @@ jobs:
         - COVERAGE=false
         - BUILD_TOOL='dub'
   allow_failures:
-    - d: dmd-nightly
+    - d: 
+	- dmd-nightly
 
 before_deploy:
   - |
