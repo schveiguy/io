@@ -65,6 +65,7 @@ io_dep = declare_dependency(
 )
 
 if get_option('run_test')
+    configure_file(input: 'LICENSE.txt', output:'LICENSE.txt', copy: true)
     io_test_exe = executable(meson.project_name() + '-test', 
             sources, include_directories: inc_dir, 
             d_unittest: true, 
