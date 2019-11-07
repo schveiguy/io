@@ -1,5 +1,4 @@
 language: d
-sudo: required
 addons:
   apt:
     update: true
@@ -78,8 +77,7 @@ jobs:
         - COVERAGE=false
         - BUILD_TOOL='dub'
   allow_failures:
-    - d: 
-	- dmd-nightly
+    - d: dmd-nightly
 
 before_deploy:
   - |
@@ -97,7 +95,7 @@ deploy:
   provider: pages
   api_key:
     secure: O4OECnzSKN2Jf5su/wnxVQGx4iIVcE8DmZLT/WN4KDcHg+jQovwvxRizZEGDB9guX/3bZb321kIi4iXP8G/Z2D9rakdzFlG70Drf60w9kveg0QQEMdavAFKsjokNHuYBNhf7QaGZt8O4IvqMmckZ7NJQyiCY7bq9gV5eWz9QWUB2kMy9fHVS3nsR957ZvmDPqyVjcqCx1y9eUda6IeiD1XD/g7cBuOaN3Zg8ozhGTTr6dbFFdVZLqUbGf2tE/Mq1poqcys3qntClpe8iM2f9Ac2d7hCMjiE9HHT/Q5+ZpHh5dnMa1A8lbJT1lRCYokgxwrL7umjXOf7MA0v4SmtNlfU+GX6C7CjoGNghgDxACCsmKBKbYSICmZLxPFYJ/lmoqU8uzxXaXFFFBBL8xsmJznTKgM0TMTUoxJy06L71T37Bf5Yi3OxAisN9tBftffIHRv+UBoEn2+7I6WmKDkobGNIIj46mM0IKpzxUlF4je10yJlzPGm0PzSDm/ogH8JY3ednEvPFYBwlooWvBEAZpNbMl0tuezaAuYn8/qfpu5aTwvEe7tA0ugBVwBrH676DJQoAZFIji0k43pQfHc/2LIV+n5s5gkLYdFDuuUKbtijzqD4dDdn/pBB6gpzv2ZxBjOoIhCGwJoPMVpE/RLf+HJzdfHRRxdhvRbDon7vbnMz0=
-  skip_cleanup: true
+  cleanup: true
   keep_history: true
   on:
     branch: master
