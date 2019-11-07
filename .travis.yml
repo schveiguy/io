@@ -20,26 +20,26 @@ addons:
 #      - meson # is too old
 jobs:
   include:
-    - name: "ldc D compiler on Xenial Linux using dub"
+    - name: "ldc-latest D compiler on Xenial Linux using dub"
       os: linux
       dist: xenial
       d: ldc
       env: 
         - COVERAGE=false
         - BUILD_TOOL='dub'
-    - name: "ldc D compiler on Xenial Linux using meson"
+    - name: "ldc-latest D compiler on Xenial Linux using meson"
       os: linux
       dist: xenial
       d: ldc
       env: 
         - COVERAGE=false
         - BUILD_TOOL='meson'
-    - name: "dmd D compiler on Xenial Linux using dub"
+    - name: "dmd-latest D compiler on Xenial Linux using dub"
       os: linux
       dist: xenial
       d: dmd
       env:
-        - COVERAGE=true
+        - COVERAGE=false
         - BUILD_TOOL='dub'
     - name: "dmd-2.088.1 D compiler on Xenial Linux using dub"
       os: linux
@@ -48,7 +48,7 @@ jobs:
       env:
         - COVERAGE=true
         - BUILD_TOOL='dub'
-    - name: "dmd D compiler on Xenial Linux using meson"
+    - name: "dmd-latest D compiler on Xenial Linux using meson"
       os: linux
       dist: xenial
       d: dmd
@@ -69,15 +69,34 @@ jobs:
       env:
         - COVERAGE=false
         - BUILD_TOOL='dub'
-    - name: "dmd D compiler on macOS using dub"
+    - name: "dmd-latest D compiler on macOS using dub"
       os: osx
       osx_image: xcode11.2
       d: dmd
       env:
         - COVERAGE=false
         - BUILD_TOOL='dub'
+    - name: "dmd-2.088.1 D compiler on macOS using dub"
+      os: osx
+      osx_image: xcode11.2
+      d: dmd-2.088.1
+      env:
+        - COVERAGE=false
+        - BUILD_TOOL='dub'
   allow_failures:
     - d: dmd-nightly
+    - d: dmd
+      env: 
+        - COVERAGE=false
+        - BUILD_TOOL='dub'
+    - d: dmd
+      env: 
+        - COVERAGE=false
+        - BUILD_TOOL='meson'
+    - d: ldc
+      env: 
+        - COVERAGE=false
+        - BUILD_TOOL='dub'
 
 before_deploy:
   - |
