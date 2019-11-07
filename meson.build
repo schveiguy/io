@@ -40,10 +40,10 @@ endif
 
 lib_type = get_option('default_library')
 if lib_type == 'shared' 
-    mir_core_soname = 'lib@0@.so.@1@'.format(meson.project_name(), major_version)
+    libio_soname = 'lib@0@.so.@1@'.format(meson.project_name(), major_version)
     common_ldflags += ['-shared' ]
     if dc.get_id() == 'llvm'
-        common_ldflags += [ '-soname', mir_core_soname ]
+        common_ldflags += [ '-soname', libio_soname ]
     endif 
 endif
 
@@ -63,6 +63,16 @@ io_dep = declare_dependency(
     include_directories: inc_dir,
     dependencies: [],
 )
+
+if get_option('run_test')
+    io_test_exe = executable(meson.project_name() + '-test', 
+            sources, include_directories: inc_dir, 
+            d_unittest: true, 
+            link_args: ['-main'],
+            d_args: ['-cov'] 
+    )
+    test(meson.project_name() + '-test', io_test_exe)
+endif
 
 # Compat variables for pkgconfig
 pkg = import('pkgconfig')
