@@ -90,26 +90,8 @@ deploy:
 
 
 script:
-  - |
-    case "${BUILD_TOOL}" in
-    meson)
-      pip3 install --user --upgrade pip
-      pip install --user --upgrade meson
-      meson builddir
-      ninja -C builddir
-      ;;
-    dub)
-      dub test -c library
-      ;;
-    *)
-      echo 'Unknown build tool named: '"${BUILD_TOOL}"
-      exit 1
-      ;;
-    esac
-  - |
-    if "${COVERAGE}"; then
-      dub test -b unittest-cov -c library
-    fi
+  - ./travis.sh
+    
 
 branches:
   only:

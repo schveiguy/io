@@ -8,21 +8,22 @@ fi
 
 : ${CONFIG:=library} # env CONFIG=dip1000 ./travis.sh
 
-if [[ -n "${COVERAGE:-}" ]]; then
-    dub test -b unittest-cov -c $CONFIG
-else
-    dub test -c $CONFIG
-fi
+case "${BUILD_TOOL}" in
+    meson)
+      pip3 install --user --upgrade pip
+      pip install --user --upgrade meson
+      meson builddir
+      ninja -C builddir
+      ;;
+    dub)
+      dub test -c ${CONFIG}
+      ;;
+    *)
+      echo 'Unknown build tool named: '"${BUILD_TOOL}"
+      exit 1
+      ;;
+esac
 
-if [[ ! -z "${GH_TOKEN:-}" ]]; then
-    dub build -b ddox
-
-    # push docs to gh-pages branch
-    cd docs
-    git init
-    git config user.name 'Travis-CI'
-    git config user.email '<>'
-    git add .
-    git commit -m 'Deployed to Github Pages'
-    git push --force --quiet "https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}" master:gh-pages
+if "${COVERAGE}"; then
+    dub test -b unittest-cov -c ${CONFIG}
 fi
