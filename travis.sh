@@ -12,8 +12,8 @@ case "${BUILD_TOOL}" in
     meson)
       pip3 install --user --upgrade pip
       pip install --user --upgrade meson
-      meson builddir
-      ninja -C builddir
+      meson builddir -Drun_test=true
+      ninja -C builddir test
       ;;
     dub)
       dub test -c ${CONFIG}
