@@ -240,7 +240,7 @@ interface Driver
     auto d = atomicLoad!(MemoryOrder.raw)(_globalDriver);
     if (d is null)
     {
-        cas(&_globalDriver, null, *cast(shared(SyncDriver)*) &_syncDriver);
+        cas(&_globalDriver, null, *cast(shared(Driver)*) &_syncDriver);
         d = atomicLoad!(MemoryOrder.raw)(_globalDriver);
     }
     static if (__VERSION__ < 2077)
