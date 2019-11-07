@@ -1,25 +1,130 @@
 language: d
 addons:
   apt:
+    update: true
     packages:
-    - libevent-dev
-    - libssl-dev
-    - pkg-config
-    - zlib1g-dev
-matrix:
+      - libevent-dev
+      - libssl-dev
+      - pkg-config
+      - zlib1g-dev
+      - ninja-build
+      - python3
+      - python3-pip
+      - python3-setuptools
+#      - meson # is too old
+  homebrew:
+    update: true
+    packages:
+      - ninja
+      - python
+#      - meson # is too old
+jobs:
   include:
-    - d: dmd
-      env:
-        - COVERAGE=true
-        - { secure: O4OECnzSKN2Jf5su/wnxVQGx4iIVcE8DmZLT/WN4KDcHg+jQovwvxRizZEGDB9guX/3bZb321kIi4iXP8G/Z2D9rakdzFlG70Drf60w9kveg0QQEMdavAFKsjokNHuYBNhf7QaGZt8O4IvqMmckZ7NJQyiCY7bq9gV5eWz9QWUB2kMy9fHVS3nsR957ZvmDPqyVjcqCx1y9eUda6IeiD1XD/g7cBuOaN3Zg8ozhGTTr6dbFFdVZLqUbGf2tE/Mq1poqcys3qntClpe8iM2f9Ac2d7hCMjiE9HHT/Q5+ZpHh5dnMa1A8lbJT1lRCYokgxwrL7umjXOf7MA0v4SmtNlfU+GX6C7CjoGNghgDxACCsmKBKbYSICmZLxPFYJ/lmoqU8uzxXaXFFFBBL8xsmJznTKgM0TMTUoxJy06L71T37Bf5Yi3OxAisN9tBftffIHRv+UBoEn2+7I6WmKDkobGNIIj46mM0IKpzxUlF4je10yJlzPGm0PzSDm/ogH8JY3ednEvPFYBwlooWvBEAZpNbMl0tuezaAuYn8/qfpu5aTwvEe7tA0ugBVwBrH676DJQoAZFIji0k43pQfHc/2LIV+n5s5gkLYdFDuuUKbtijzqD4dDdn/pBB6gpzv2ZxBjOoIhCGwJoPMVpE/RLf+HJzdfHRRxdhvRbDon7vbnMz0= }
-      script: ./travis.sh
-      after_success: bash <(curl -s https://codecov.io/bash)
-    - os: osx
+    - name: "ldc-latest D compiler on Xenial Linux using dub"
+      os: linux
+      dist: xenial
+      d: ldc
+      env: 
+        - COVERAGE=false
+        - BUILD_TOOL='dub'
+    - name: "ldc-latest D compiler on Xenial Linux using meson"
+      os: linux
+      dist: xenial
+      d: ldc
+      env: 
+        - COVERAGE=false
+        - BUILD_TOOL='meson'
+    - name: "dmd-latest D compiler on Xenial Linux using dub"
+      os: linux
+      dist: xenial
       d: dmd
       env:
+        - COVERAGE=false
+        - BUILD_TOOL='dub'
+    - name: "dmd-2.088.1 D compiler on Xenial Linux using dub"
+      os: linux
+      dist: xenial
+      d: dmd-2.088.1
+      env:
         - COVERAGE=true
-      script: ./travis.sh
-      after_success: bash <(curl -s https://codecov.io/bash)
+        - BUILD_TOOL='dub'
+    - name: "dmd-latest D compiler on Xenial Linux using meson"
+      os: linux
+      dist: xenial
+      d: dmd
+      env:
+        - COVERAGE=false
+        - BUILD_TOOL='meson'
+    - name: "dmd-2.088.1 D compiler on Xenial Linux using meson"
+      os: linux
+      dist: xenial
+      d: dmd-2.088.1
+      env:
+        - COVERAGE=false
+        - BUILD_TOOL='meson'
+    - name: "dmd-nightly D compiler on Xenial Linux using dub"
+      os: linux
+      dist: xenial
+      d: dmd-nightly
+      env:
+        - COVERAGE=false
+        - BUILD_TOOL='dub'
+    - name: "dmd-latest D compiler on macOS using dub"
+      os: osx
+      osx_image: xcode11.2
+      d: dmd
+      env:
+        - COVERAGE=false
+        - BUILD_TOOL='dub'
+    - name: "dmd-2.088.1 D compiler on macOS using dub"
+      os: osx
+      osx_image: xcode11.2
+      d: dmd-2.088.1
+      env:
+        - COVERAGE=false
+        - BUILD_TOOL='dub'
+  allow_failures:
+    - d: dmd-nightly
+    - d: dmd
+      env: 
+        - COVERAGE=false
+        - BUILD_TOOL='dub'
+    - d: dmd
+      env: 
+        - COVERAGE=false
+        - BUILD_TOOL='meson'
+    - d: ldc
+      env: 
+        - COVERAGE=false
+        - BUILD_TOOL='dub'
+
+before_deploy:
+  - |
+    dub build -b ddox
+    # push docs to gh-pages branch
+    cd docs || exit 1
+    git init
+    git config user.name 'Travis-CI'
+    git config user.email '<>'
+    git add .
+    git commit -m 'Deployed to Github Pages'
+    git push --force --quiet "https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}" master:gh-pages
+
+deploy:
+  provider: pages
+  api_key:
+    secure: O4OECnzSKN2Jf5su/wnxVQGx4iIVcE8DmZLT/WN4KDcHg+jQovwvxRizZEGDB9guX/3bZb321kIi4iXP8G/Z2D9rakdzFlG70Drf60w9kveg0QQEMdavAFKsjokNHuYBNhf7QaGZt8O4IvqMmckZ7NJQyiCY7bq9gV5eWz9QWUB2kMy9fHVS3nsR957ZvmDPqyVjcqCx1y9eUda6IeiD1XD/g7cBuOaN3Zg8ozhGTTr6dbFFdVZLqUbGf2tE/Mq1poqcys3qntClpe8iM2f9Ac2d7hCMjiE9HHT/Q5+ZpHh5dnMa1A8lbJT1lRCYokgxwrL7umjXOf7MA0v4SmtNlfU+GX6C7CjoGNghgDxACCsmKBKbYSICmZLxPFYJ/lmoqU8uzxXaXFFFBBL8xsmJznTKgM0TMTUoxJy06L71T37Bf5Yi3OxAisN9tBftffIHRv+UBoEn2+7I6WmKDkobGNIIj46mM0IKpzxUlF4je10yJlzPGm0PzSDm/ogH8JY3ednEvPFYBwlooWvBEAZpNbMl0tuezaAuYn8/qfpu5aTwvEe7tA0ugBVwBrH676DJQoAZFIji0k43pQfHc/2LIV+n5s5gkLYdFDuuUKbtijzqD4dDdn/pBB6gpzv2ZxBjOoIhCGwJoPMVpE/RLf+HJzdfHRRxdhvRbDon7vbnMz0=
+  cleanup: true
+  keep_history: true
+  on:
+    branch: master
+    condition: $TRAVIS_OS_NAME = "linux"
+
+
+script:
+  - ./travis.sh
+    
+
 branches:
   only:
     - master
