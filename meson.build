@@ -1,5 +1,5 @@
 project('io', 'd', default_options: ['optimization=3'], version: '0.2.3', license: 'BSL-1.0' )
-common_project_arguments = ['-release'] #, '--d-debug'
+common_project_arguments = ['-release', '-dip1000'] #, '--d-debug'
 add_project_arguments(common_project_arguments, language: 'd')
 
 # semver
