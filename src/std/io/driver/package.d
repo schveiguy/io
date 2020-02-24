@@ -240,7 +240,9 @@ interface Driver
     auto d = atomicLoad!(MemoryOrder.raw)(_globalDriver);
     if (d is null)
     {
-        cas(&_globalDriver, null, *cast(shared(Driver)*) &_syncDriver);
+        // PHOBOS/COMPILER BUG: we need to insert unneccessary casts here
+        // see https://issues.dlang.org/show_bug.cgi?id=20359
+        cas(&_globalDriver, cast(shared(Driver))null, *cast(shared(Driver)*) &_syncDriver);
         d = atomicLoad!(MemoryOrder.raw)(_globalDriver);
     }
     static if (__VERSION__ < 2077)

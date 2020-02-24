@@ -85,18 +85,18 @@ jobs:
         - BUILD_TOOL='dub'
   allow_failures:
     - d: dmd-nightly
-    - d: dmd
-      env: 
-        - COVERAGE=false
-        - BUILD_TOOL='dub'
-    - d: dmd
-      env: 
-        - COVERAGE=false
-        - BUILD_TOOL='meson'
-    - d: ldc
-      env: 
-        - COVERAGE=false
-        - BUILD_TOOL='dub'
+#    - d: dmd
+#      env: 
+#        - COVERAGE=false
+#        - BUILD_TOOL='dub'
+#    - d: dmd
+#      env: 
+#        - COVERAGE=false
+#        - BUILD_TOOL='meson'
+#    - d: ldc
+#      env: 
+#        - COVERAGE=false
+#        - BUILD_TOOL='dub'
 
 before_deploy:
   - |
