@@ -8,7 +8,7 @@ fi
 
 : ${CONFIG:=library} # env CONFIG=dip1000 ./travis.sh
 
-case "${BUILD_TOOL}" in
+case "${BUILD_TOOL:-dub}" in
     meson)
       pip3 install --user --upgrade pip
       pip install --user --upgrade meson
