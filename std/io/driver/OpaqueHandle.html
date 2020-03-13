@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
-		<title>Enum member Driver.INVALID_SOCKET</title>
+		<title>Struct OpaqueHandle</title>
 		<link rel="stylesheet" href="../../../css/style.min.css"/>
 		<script type="text/javascript" src="../../../js/script.min.js"></script>
 	</head>
@@ -109,25 +109,13 @@ document.getElementById('symbolSearchPane').style.display = 'block';</script>
 		</nav>
 		<div id="main-contents">
 			<div>
-				<h1>Enum member Driver.INVALID_SOCKET</h1><p>value used for invalid/closed sockets
+				<h1>Struct OpaqueHandle</h1><p>All handles in std.io are based on this type. The implementation defines how it is used.
 </p>
 				<div class="prototype">
 					<code class="lang-d">
 						<div class="single-prototype">
-				<span class="kwd">interface</span> <a href="../../../std/io/driver/Driver.html"><span class="typ">Driver</span></a>
-				<br/>
-				<span class="pun">
-					{
-					<br/>
-				</span>
-				&nbsp;&nbsp;<span class="com">// ...</span>
-				<br/>
-				&nbsp;&nbsp;<span class="kwd">enum</span> <span class="pln">INVALID_SOCKET</span>
-				 <span class="pun">=</span> <span class="kwd">cast</span><span class="pun">(</span><span class="kwd">shared</span><span class="pun">(</span><span class="typ">void</span><span class="pun">*))</span><span class="lit">18446744073709551615LU</span><span class="pun">;</span>
-				<br/>
-				&nbsp;&nbsp;<span class="com">// ...</span>
-				<br/>
-				<span class="pun">}</span>
+				<span class="kwd">struct</span> <span class="typ">OpaqueHandle</span>
+				<span class="pun">;</span>
 						</div>
 					</code>
 				</div>

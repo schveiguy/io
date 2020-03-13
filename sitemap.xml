@@ -13,8 +13,6 @@
 <url><loc>http://127.0.0.1/std/io/driver/Driver.FILE.html</loc></url>
 <url><loc>http://127.0.0.1/std/io/driver/Driver.fileFromHandle.html</loc></url>
 <url><loc>http://127.0.0.1/std/io/driver/Driver.getSocketOption.html</loc></url>
-<url><loc>http://127.0.0.1/std/io/driver/Driver.INVALID_FILE.html</loc></url>
-<url><loc>http://127.0.0.1/std/io/driver/Driver.INVALID_SOCKET.html</loc></url>
 <url><loc>http://127.0.0.1/std/io/driver/Driver.listen.html</loc></url>
 <url><loc>http://127.0.0.1/std/io/driver/Driver.localAddr.html</loc></url>
 <url><loc>http://127.0.0.1/std/io/driver/Driver.read.html</loc></url>
@@ -209,8 +207,6 @@
 <url><loc>http://127.0.0.1/std/io/driver/Driver.fileFromHandle.html</loc></url>
 <url><loc>http://127.0.0.1/std/io/driver/Driver.fileFromHandle.html</loc></url>
 <url><loc>http://127.0.0.1/std/io/driver/Driver.getSocketOption.html</loc></url>
-<url><loc>http://127.0.0.1/std/io/driver/Driver.INVALID_FILE.html</loc></url>
-<url><loc>http://127.0.0.1/std/io/driver/Driver.INVALID_SOCKET.html</loc></url>
 <url><loc>http://127.0.0.1/std/io/driver/Driver.listen.html</loc></url>
 <url><loc>http://127.0.0.1/std/io/driver/Driver.localAddr.html</loc></url>
 <url><loc>http://127.0.0.1/std/io/driver/Driver.read.html</loc></url>
@@ -237,6 +233,7 @@
 <url><loc>http://127.0.0.1/std/io/driver/driver.html</loc></url>
 <url><loc>http://127.0.0.1/std/io/driver/globalDriver.html</loc></url>
 <url><loc>http://127.0.0.1/std/io/driver/globalDriver.html</loc></url>
+<url><loc>http://127.0.0.1/std/io/driver/OpaqueHandle.html</loc></url>
 <url><loc>http://127.0.0.1/std/io/exception.html</loc></url>
 <url><loc>http://127.0.0.1/std/io/exception/ErrnoException.html</loc></url>
 <url><loc>http://127.0.0.1/std/io/exception/ErrnoException.errno.html</loc></url>
