@@ -145,6 +145,7 @@ struct File
     */
     this(S)(S path, Mode mode = mode!"r") @trusted if (isStringLike!S)
     {
+        closeOnDestroy = true;
         version (Posix)
         {
             import std.internal.cstring : tempCString;
@@ -159,22 +160,26 @@ struct File
         }
     }
 
-    /// take ownership of an existing open file `handle`
+    /// Wrap an existing open file `handle`. If `takeOwnership` is set to true,
+    /// then the descriptor will be closed when the destructor runs.
     version (Posix)
-        this(int handle)
+        this(int handle, bool takeOwnership = false)
     {
+        closeOnDestroy = false;
         f = driver.fileFromHandle(handle);
     }
     else version (Windows)
-        this(HANDLE handle)
+        this(HANDLE handle, bool takeOwnership = false)
     {
+        closeOnDestroy = false;
         f = driver.fileFromHandle(handle);
     }
 
     ///
     ~this() scope
     {
-        close();
+        if(closeOnDestroy)
+            close();
     }
 
     // workaround Issue 18000
@@ -193,6 +198,7 @@ struct File
             return;
         driver.closeFile(f);
         f = Driver.FILE.INVALID;
+        closeOnDestroy = false;
     }
 
     /// return whether file is open
@@ -322,7 +328,7 @@ struct File
        Returns:
          resulting offset in file
     */
-    ulong seek(long offset, Seek whence)
+    ulong seek(long offset, Seek whence) scope
     {
         return driver.seek(f, offset, whence);
     }
@@ -353,8 +359,10 @@ struct File
     File move() return scope nothrow /*pure Issue 18590*/
     {
         auto f = this.f;
+        auto cod = closeOnDestroy;
         this.f = Driver.FILE.INVALID;
-        return File(f);
+        this.closeOnDestroy = false;
+        return File(f, cod);
     }
 
     /// not copyable
@@ -362,12 +370,16 @@ struct File
 
 private:
 
-    this(return scope Driver.FILE f) @trusted pure nothrow
+    this(return scope Driver.FILE f, bool cod) @trusted pure nothrow
     {
         this.f = f;
+        this.closeOnDestroy = cod;
     }
 
     Driver.FILE f = Driver.FILE.INVALID;
+    // close when the destructor is run. True normally unless one wraps an
+    // existing handle (e.g. stdout).
+    bool closeOnDestroy = false;
 }
 
 ///

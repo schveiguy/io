@@ -167,6 +167,8 @@ nothrow pure @safe @nogc unittest
     assert(s[] == "Hello String", s[]);
     auto s2 = s.clone;
     assert(s == s2);
+    // TODO: we need to enable this, the cloned string snould not be identical.
+    //assert(s.ptr != s2.ptr);
 }
 
 nothrow @safe @nogc unittest

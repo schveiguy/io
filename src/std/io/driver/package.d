@@ -70,9 +70,7 @@ interface Driver
        It is already null-terminated for usage with C APIs.
     */
     FILE createFile( /*in*/ const scope tchar[] path, Mode mode);
-    /**
-       Covert platform-specific file handle to `FILE`.
-     */
+    /// Convert platform-specific file handle to `FILE`.
     version (Posix)
         FILE fileFromHandle(int handle);
     else version (Windows)
@@ -103,9 +101,7 @@ interface Driver
     shared {
     /// create socket
     SOCKET createSocket(AddrFamily family, SocketType type, Protocol protocol);
-    /**
-       Covert platform-specific socket handle to `SOCKET`.
-     */
+    /// Covert platform-specific socket handle to `SOCKET`.
     version (Posix)
         SOCKET socketFromHandle(int handle);
     else version (Windows)
@@ -261,6 +257,73 @@ interface Driver
     import core.atomic;
 
     atomicStore!(MemoryOrder.raw)(_globalDriver, d);
+}
+
+// fetch standard handle, 0 = stdin, 1 = stdout, 2 = stderr.
+version(Windows)
+{
+    private HANDLE _getStandardHandle(int fd) @safe @nogc
+    {
+        pragma(inline, true);
+        import core.sys.windows.winbase : GetStdHandle, STD_INPUT_HANDLE,
+               STD_OUTPUT_HANDLE, STD_ERROR_HANDLE, INVALID_HANDLE_VALUE;
+        if (fd < 0 || fd > 2)
+            return INVALID_HANDLE_VALUE;
+        static immutable handles = [
+            STD_INPUT_HANDLE,
+            STD_OUTPUT_HANDLE,
+            STD_ERROR_HANDLE,
+        ];
+        return GetStdHandle(handles[fd]);
+    }
+}
+else version(Posix)
+{
+    private int _getStandardHandle(int fd) @safe @nogc
+    {
+        pragma(inline, true);
+        // simple sanity check
+        if (fd < 0 || fd > 2)
+            return -1;
+        return fd;
+    }
+}
+
+/**
+   Get standard handles for the process. The items returned by these functions
+   are OS handles, and the intention is that you convert them into an
+   appropriate IO (e.g. File or Socket) for use.
+ */
+auto stdin() @safe @nogc
+{
+    pragma(inline, true);
+    return _getStandardHandle(0);
+}
+/// ditto
+auto stdout() @safe @nogc
+{
+    pragma(inline, true);
+    return _getStandardHandle(1);
+}
+/// ditto
+auto stderr() @safe @nogc
+{
+    pragma(inline, true);
+    return _getStandardHandle(2);
+}
+
+///
+unittest {
+    import std.io;
+    import std.string : representation;
+    // use standard handle
+    {
+        auto processOut = File(stdout);
+        processOut.write("hello, world!\n".representation);
+    }
+    // note, opening files using OS handles does not close them on destruction.
+    auto newProcessOut = File(stdout);
+    newProcessOut.write("still there!\n".representation);
 }
 
 private:
