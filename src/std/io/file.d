@@ -408,6 +408,7 @@ private:
     }
 
     auto f = File("temp.txt", mode!"w");
+    scope(exit) remove("temp.txt");
     f = use(f.move);
     f = File("temp.txt", Mode.read);
     ubyte[4] buf;
@@ -417,7 +418,7 @@ private:
     f.read(a[], b[]);
     assert(a[] == [4, 5]);
     assert(b[] == [6, 7]);
-    remove("temp.txt");
+    //remove("temp.txt");
 }
 
 version (unittest) private void remove(in char[] path) @trusted @nogc

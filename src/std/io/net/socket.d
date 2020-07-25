@@ -560,7 +560,6 @@ struct Socket
         auto s = this.s;
         auto cod = this.closeOnDestroy;
         this.s = Driver.SOCKET.INVALID;
-        this.s = Driver.SOCKET.INVALID;
         return Socket(s, cod);
     }
 

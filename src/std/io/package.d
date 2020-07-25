@@ -205,16 +205,17 @@ IOObject!IO ioObject(IO)(IO io)
     /// takes and interface
     static ubyte[] consume(scope Input input, return ubyte[] buf) @safe
     {
+
         return buf[0 .. input.read(buf)];
     }
 
     ubyte[4] ping = ['p', 'i', 'n', 'g'];
 
-    File("temp.txt", mode!"w").write(ping[]);
+    File("UT_1.txt", mode!"w").write(ping[]);
     scope (exit)
-        remove("temp.txt");
+        remove("UT_1.txt");
 
-    auto file = ioObject(File("temp.txt"));
+    auto file = ioObject(File("UT_1.txt"));
     ubyte[4] buf;
     assert(consume(file, buf[]) == ping[]);
 

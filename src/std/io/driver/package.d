@@ -274,7 +274,7 @@ version(Windows)
             STD_OUTPUT_HANDLE,
             STD_ERROR_HANDLE,
         ];
-        return GetStdHandle(handles[fd]);
+        return () @trusted { return GetStdHandle(handles[fd]); }();
     }
 }
 else version(Posix)
