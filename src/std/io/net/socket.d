@@ -104,24 +104,29 @@ struct Socket
     this(ProtocolFamily family, SocketType type, Protocol protocol = Protocol.default_) @trusted
     {
         s = driver.createSocket(family, type, protocol);
+        closeOnDestroy = true;
     }
 
-    /// take ownership of an existing socket `handle`
+    /// Wrap an existing open socket `handle`. If `takeOwnership` is set to
+    /// true, then the handle will be closed when the destructor runs.
     version (Posix)
-        this(int handle)
+        this(int handle, bool takeOwnership = false)
     {
         s = driver.socketFromHandle(handle);
+        closeOnDestroy = takeOwnership;
     }
     else version (Windows)
-        this(SOCKET handle)
+        this(SOCKET handle, bool takeOwnership = false)
     {
         s = driver.socketFromHandle(handle);
+        closeOnDestroy = takeOwnership;
     }
 
     ///
     ~this()
     {
-        close();
+        if(closeOnDestroy)
+            close();
     }
 
     /// close the socket
@@ -131,6 +136,7 @@ struct Socket
             return;
         driver.closeSocket(s);
         s = Driver.SOCKET.INVALID;
+        closeOnDestroy = false;
     }
 
     /// return whether the socket is open
@@ -269,7 +275,7 @@ struct Socket
     Socket accept(ref SocketAddr remoteAddr) @trusted
     {
         socklen_t addrlen = remoteAddr.sizeof;
-        return Socket(driver.accept(s, cast(sockaddr*)&remoteAddr, addrlen));
+        return Socket(driver.accept(s, cast(sockaddr*)&remoteAddr, addrlen), true);
     }
 
     ///
@@ -552,8 +558,9 @@ struct Socket
     Socket move() return scope nothrow /*pure Issue 18590*/
     {
         auto s = this.s;
+        auto cod = this.closeOnDestroy;
         this.s = Driver.SOCKET.INVALID;
-        return Socket(s);
+        return Socket(s, cod);
     }
 
     /// not copyable
@@ -606,10 +613,14 @@ package(std.io.net):
 private:
     import std.typecons : Tuple;
 
-    this(return scope Driver.SOCKET s) @trusted pure nothrow
+    this(return scope Driver.SOCKET s, bool cod) @trusted pure nothrow
     {
         this.s = s;
+        this.closeOnDestroy = cod;
     }
 
     Driver.SOCKET s = Driver.SOCKET.INVALID;
+    // close when the destructor is run. True normally unless one wraps an
+    // existing handle (e.g. stdout).
+    bool closeOnDestroy = false;
 }

@@ -13,3 +13,4 @@ io-test-*
 *.o
 *.obj
 *.lst
+.*.swp
