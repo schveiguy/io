@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0"/>
-		<title>Driver.recvFrom - multiple declarations</title>
+		<title>Function stderr</title>
 		<link rel="stylesheet" href="../../../css/style.min.css"/>
 		<script type="text/javascript" src="../../../js/script.min.js"></script>
 	</head>
@@ -109,63 +109,33 @@ document.getElementById('symbolSearchPane').style.display = 'block';</script>
 		</nav>
 		<div id="main-contents">
 			<div>
-				<h1>Driver.recvFrom - multiple declarations</h1>
-				<nav class="page-nav">
-					<ul>
-						<li>
-							<a href="#0">
-								Function <code>Driver.recvFrom</code>
-							</a>
-						</li>
-						<li>
-							<a href="#1">
-								Function <code>Driver.recvFrom</code>
-							</a>
-						</li>
-					</ul>
-				</nav><h2 id="0">Function Driver.recvFrom</h2><p>read from socket into buffer, storing source <code class="lang-d"><a href="../../../std/io/driver/Driver.recvFrom.html#addr"><span class="pln">addr</span></a></code>
+				<h1>Function stderr</h1><p>Get standard handles for the process. The items returned by these functions
+   are OS handles, and the intention is that you convert them into an
+   appropriate IO (e.g. File or Socket) for use.
 </p>
 				<div class="prototype">
 					<code class="lang-d">
 						<div class="single-prototype">
-				<span class="kwd">abstract </span><span class="typ">ulong</span> <span class="pln">recvFrom</span>
-				<span class="pun">(</span>
-				<br/>
-				&nbsp;&nbsp;<span class="kwd">scope </span><a href="../../../std/io/driver/OpaqueHandle.html"><span class="typ">OpaqueHandle</span></a> <span class="pln">s</span><span class="pun">,</span>
-				<br/>
-				&nbsp;&nbsp;<span class="kwd">scope </span><span class="typ">ubyte</span><span class="pun">[]</span> <span class="pln">buf</span><span class="pun">,</span>
-				<br/>
-				&nbsp;&nbsp;<span class="kwd">scope </span><span class="pln">core<wbr/></span><span class="pun">.</span><span class="pln">sys<wbr/></span><span class="pun">.</span><span class="pln">posix<wbr/></span><span class="pun">.</span><span class="pln">sys<wbr/></span><span class="pun">.</span><span class="pln">socket<wbr/></span><span class="pun">.</span><span class="pln">sockaddr</span><span class="pun">*</span> <span class="pln">addr</span><span class="pun">,</span>
-				<br/>
-				&nbsp;&nbsp;<span class="kwd">ref </span><span class="typ">uint</span> <span class="pln">addrlen</span>
-				<br/>
-				<span class="pun">)</span><span class="pln"> </span><span class="kwd">@nogc shared</span><span class="pun">;</span>
+				<span class="typ">int</span> <span class="pln">stderr</span><span class="pun">(</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">@nogc @safe</span><span class="pun">;</span>
 						</div>
 					</code>
 				</div>
 				
-				<h2 id="1">Function Driver.recvFrom</h2><p>read from socket into multiple buffers, storing source <code class="lang-d"><a href="../../../std/io/driver/Driver.recvFrom.html#addr"><span class="pln">addr</span></a></code>
-</p>
-				<div class="prototype">
-					<code class="lang-d">
-						<div class="single-prototype">
-				<span class="kwd">abstract </span><span class="typ">ulong</span> <span class="pln">recvFrom</span>
-				<span class="pun">(</span>
-				<br/>
-				&nbsp;&nbsp;<span class="kwd">scope </span><a href="../../../std/io/driver/OpaqueHandle.html"><span class="typ">OpaqueHandle</span></a> <span class="pln">s</span><span class="pun">,</span>
-				<br/>
-				&nbsp;&nbsp;<span class="kwd">scope </span><span class="typ">ubyte</span><span class="pun">[]</span><span class="pun">[]</span> <span class="pln">bufs</span><span class="pun">,</span>
-				<br/>
-				&nbsp;&nbsp;<span class="kwd">scope </span><span class="pln">core<wbr/></span><span class="pun">.</span><span class="pln">sys<wbr/></span><span class="pun">.</span><span class="pln">posix<wbr/></span><span class="pun">.</span><span class="pln">sys<wbr/></span><span class="pun">.</span><span class="pln">socket<wbr/></span><span class="pun">.</span><span class="pln">sockaddr</span><span class="pun">*</span> <span class="pln">addr</span><span class="pun">,</span>
-				<br/>
-				&nbsp;&nbsp;<span class="kwd">ref </span><span class="typ">uint</span> <span class="pln">addrlen</span>
-				<br/>
-				<span class="pun">)</span><span class="pln"> </span><span class="kwd">@nogc shared</span><span class="pun">;</span>
-						</div>
-					</code>
-				</div>
-				
-				
+				<section><h2>Example</h2>
+
+<pre class="code"><code class="lang-d"><span class="kwd">import <a href="../../../std/io.html"></span><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">io</span></a><span class="pun">;
+</span><span class="kwd">import </span><span class="pln">std<wbr/></span><span class="pun">.</span><span class="typ">string </span><span class="pun">: </span><span class="pln">representation</span><span class="pun">;
+</span><span class="com">// use standard handle
+</span><span class="pun">{
+    </span><span class="kwd">auto </span><span class="pln">processOut </span><span class="pun">= </span><span class="typ">File</span><span class="pun">(<a href="../../../std/io/driver/stdout.html"></span><span class="pln">stdout</span></a><span class="pun">);
+    </span><span class="pln">processOut<wbr/></span><span class="pun">.</span><span class="pln">write</span><span class="pun">(</span><span class="str">"hello, world!\n"<wbr/></span><span class="pun">.</span><span class="pln">representation</span><span class="pun">);
+}
+</span><span class="com">// note, opening files using OS handles does not close them on destruction.
+</span><span class="kwd">auto </span><span class="pln">newProcessOut </span><span class="pun">= </span><span class="typ">File</span><span class="pun">(<a href="../../../std/io/driver/stdout.html"></span><span class="pln">stdout</span></a><span class="pun">);
+</span><span class="pln">newProcessOut<wbr/></span><span class="pun">.</span><span class="pln">write</span><span class="pun">(</span><span class="str">"still there!\n"<wbr/></span><span class="pun">.</span><span class="pln">representation</span><span class="pun">);
+</span></code></pre>
+</section>
+
 			</div>
 			<footer>
 				<div id="license-info">

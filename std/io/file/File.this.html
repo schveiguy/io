@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0"/>
 		<title>File.this - multiple declarations</title>
 		<link rel="stylesheet" href="../../../css/style.min.css"/>
 		<script type="text/javascript" src="../../../js/script.min.js"></script>
@@ -149,7 +149,8 @@ document.getElementById('symbolSearchPane').style.display = 'block';</script>
 <tr><td id="mode">mode</td><td> file open flags</td></tr>
 </table>
 </section>
-<h2 id="1">Function File.this</h2><p>take ownership of an existing open file <code class="lang-d"><a href="../../../std/io/file/File.this.html#handle"><span class="pln">handle</span></a></code>
+<h2 id="1">Function File.this</h2><p>Wrap an existing open file <code class="lang-d"><a href="../../../std/io/file/File.this.html#handle"><span class="pln">handle</span></a></code>. If <code class="lang-d"><a href="../../../std/io/file/File.this.html#takeOwnership"><span class="pln">takeOwnership</span></a></code> is set to true,
+then the descriptor will be closed when the destructor runs.
 </p>
 				<div class="prototype">
 					<code class="lang-d">
@@ -157,7 +158,9 @@ document.getElementById('symbolSearchPane').style.display = 'block';</script>
 				<span class="kwd">ref </span><span class="pln">this</span>
 				<span class="pun">(</span>
 				<br/>
-				&nbsp;&nbsp;<span class="typ">int</span> <span class="pln">handle</span>
+				&nbsp;&nbsp;<span class="typ">int</span> <span class="pln">handle</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<span class="typ">bool</span> <span class="pln">takeOwnership</span> <span class="pun">=</span> <span class="kwd">false</span>
 				<br/>
 				<span class="pun">)</span><span class="pln"> </span><span class="kwd">@nogc @safe</span><span class="pun">;</span>
 				<br/>
@@ -165,7 +168,9 @@ document.getElementById('symbolSearchPane').style.display = 'block';</script>
 				<span class="kwd">ref </span><span class="pln">this</span>
 				<span class="pun">(</span>
 				<br/>
-				&nbsp;&nbsp;<span class="typ">int</span> <span class="pln">handle</span>
+				&nbsp;&nbsp;<span class="typ">int</span> <span class="pln">handle</span><span class="pun">,</span>
+				<br/>
+				&nbsp;&nbsp;<span class="typ">bool</span> <span class="pln">takeOwnership</span> <span class="pun">=</span> <span class="kwd">false</span>
 				<br/>
 				<span class="pun">)</span><span class="pln"> </span><span class="kwd">@nogc @safe</span><span class="pun">;</span>
 						</div>

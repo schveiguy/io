@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0"/>
 		<title>Struct String</title>
 		<link rel="stylesheet" href="../../../../css/style.min.css"/>
 		<script type="text/javascript" src="../../../../js/script.min.js"></script>
@@ -222,6 +222,8 @@ document.getElementById('symbolSearchPane').style.display = 'block';</script>
 </span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">s</span><span class="pun">[] == </span><span class="str">"Hello String"</span><span class="pun">, </span><span class="pln">s</span><span class="pun">[]);
 </span><span class="kwd">auto </span><span class="pln">s2 </span><span class="pun">= </span><span class="pln">s<wbr/></span><span class="pun">.</span><span class="pln">clone</span><span class="pun">;
 </span><span class="kwd">assert</span><span class="pun">(</span><span class="pln">s </span><span class="pun">== </span><span class="pln">s2</span><span class="pun">);
+</span><span class="com">// TODO: we need to enable this, the cloned string snould not be identical.
+//assert(s.ptr != s2.ptr);
 </span></code></pre>
 </section>
 
