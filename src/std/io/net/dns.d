@@ -115,7 +115,7 @@ protected:
         import core.internal.string : signedToTempString;
 
         sink("(error=");
-        sink(signedToTempString(gaiError, 10));
+        sink(signedToTempString(gaiError));
         sink(")");
     }
 

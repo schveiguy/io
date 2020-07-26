@@ -50,7 +50,7 @@ struct TCP
         import core.internal.string : unsignedToTempString;
 
         auto tp = () @trusted{
-            return tempCString(unsignedToTempString(port, 10)[]);
+            return tempCString(unsignedToTempString(port)[]);
         }();
         auto sock = Socket.resolveBind(tempCString(hostname)[], tp[], SocketType.stream);
         sock.listen(backlog);
@@ -128,7 +128,7 @@ struct TCP
         import core.internal.string : unsignedToTempString;
 
         auto tp = () @trusted{
-            return tempCString(unsignedToTempString(port, 10)[]);
+            return tempCString(unsignedToTempString(port)[]);
         }();
         auto sock = Socket.resolveConnect(tempCString(hostname)[], tp[], SocketType.stream);
         return TCP(sock.move);
