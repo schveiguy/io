@@ -120,7 +120,7 @@ protected:
         import core.internal.string : signedToTempString;
 
         sink("(error=");
-        sink(signedToTempString(errno, 10));
+        sink(signedToTempString(errno));
         sink(")");
     }
 }

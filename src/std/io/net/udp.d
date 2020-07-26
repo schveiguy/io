@@ -44,7 +44,7 @@ struct UDP
         import core.internal.string : unsignedToTempString;
 
         auto tp = () @trusted{
-            return tempCString(unsignedToTempString(port, 10)[]);
+            return tempCString(unsignedToTempString(port)[]);
         }();
         auto sock = Socket.resolveBind(tempCString(hostname)[], tp[], SocketType.dgram);
         return UDP(sock.move);
@@ -154,7 +154,7 @@ struct UDP
         import core.internal.string : unsignedToTempString;
 
         auto tp = () @trusted{
-            return tempCString(unsignedToTempString(port, 10)[]);
+            return tempCString(unsignedToTempString(port)[]);
         }();
         auto sock = Socket.resolveConnect(tempCString(hostname)[], tp[], SocketType.dgram);
         return UDP(sock.move);

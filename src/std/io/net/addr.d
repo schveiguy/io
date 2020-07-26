@@ -348,7 +348,7 @@ struct SocketAddrIPv4
 
         ip.toString(r);
         r.put(":");
-        r.put(unsignedToTempString(port, 10)[]);
+        r.put(unsignedToTempString(port)[]);
     }
 
     ///
@@ -461,7 +461,7 @@ struct SocketAddrIPv6
         r.put("[");
         ip.toString(r);
         r.put("]:");
-        r.put(unsignedToTempString(port, 10)[]);
+        r.put(unsignedToTempString(port)[]);
     }
 
     ///
