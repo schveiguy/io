@@ -1,4 +1,4 @@
-project('io', 'd', default_options: ['optimization=3'], version: '0.3.1', license: 'BSL-1.0' )
+project('io', 'd', default_options: ['optimization=3'], version: '0.3.2', license: 'BSL-1.0' )
 common_project_arguments = ['-release'] #, '--d-debug'
 add_project_arguments(common_project_arguments, language: 'd')
 

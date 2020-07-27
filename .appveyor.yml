@@ -10,7 +10,7 @@ install:
   - ps: |
       #$latest = (Invoke-WebRequest "http://downloads.dlang.org/releases/LATEST").toString();
       #$url = "http://downloads.dlang.org/releases/2.x/$($latest)/dmd.$($latest).windows.7z";
-      $url = "http://downloads.dlang.org/releases/2.x/2.088.1/dmd.2.088.1.windows.7z"
+      $url = "http://downloads.dlang.org/releases/2.x/2.093.0/dmd.2.093.0.windows.7z"
       (New-Object System.Net.WebClient).DownloadFile($url, "C:\dmd.7z");
       7z x C:\dmd.7z -oC:\ > $null;
       $env:DC="dmd"

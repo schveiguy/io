@@ -418,7 +418,40 @@ private:
     f.read(a[], b[]);
     assert(a[] == [4, 5]);
     assert(b[] == [6, 7]);
-    //remove("temp.txt");
+}
+
+// test taking ownership
+unittest
+{
+    static import std.stdio; // need a way to open files without this library
+    auto f = std.stdio.File("UT_2.txt", "wb");
+    scope(exit) remove("UT_2.txt");
+
+    {
+        // take ownership of the file descriptor
+        version(Windows)
+            auto iof = File((() @trusted => f.windowsHandle)(), true);
+        else
+            auto iof = File(f.fileno, true);
+        ubyte[4] buf = [7, 8, 9, 10];
+        iof.write(buf[]);
+    }
+
+    // file descriptor should be closed
+    bool caught = false;
+    try
+    {
+        // make sure destructor runs here, and not in outer scope.
+        auto f2 = f;
+        f = std.stdio.File.init;
+        ubyte[4] buf = [11, 12, 13, 14];
+        () @trusted {f2.rawWrite(buf[]);} ();
+    }
+    catch (Exception e)
+    {
+        caught = true;
+    }
+    assert(caught);
 }
 
 version (unittest) private void remove(in char[] path) @trusted @nogc
