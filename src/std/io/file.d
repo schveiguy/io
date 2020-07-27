@@ -165,13 +165,13 @@ struct File
     version (Posix)
         this(int handle, bool takeOwnership = false)
     {
-        closeOnDestroy = false;
+        closeOnDestroy = takeOwnership;
         f = driver.fileFromHandle(handle);
     }
     else version (Windows)
         this(HANDLE handle, bool takeOwnership = false)
     {
-        closeOnDestroy = false;
+        closeOnDestroy = takeOwnership;
         f = driver.fileFromHandle(handle);
     }
 
