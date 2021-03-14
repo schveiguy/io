@@ -21,11 +21,14 @@ build: off
 
 test_script:
  - dub test -b unittest-cov --compiler=%DC%
-after_test:
-  - ps: |
-      $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
-      Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
-      bash codecov.sh
+
+# Currently disabled because codecov.sh fails with an exception
+# after_test:
+#   - ps: |
+#       $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
+#       Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
+#       bash codecov.sh
+
 branches:
   only:
     - master
