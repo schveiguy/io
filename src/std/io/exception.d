@@ -12,9 +12,9 @@ class IOException : Exception
         this.msg = msg.move;
     }
 
-    override void toString(scope void delegate(const scope char[]) @safe sink) const
+    override void toString(scope void delegate(in char[]) sink) const
     {
-        auto nothrowSink = (const scope char[] ch) {
+        auto nothrowSink = (in char[] ch) {
             scope (failure)
                 assert(0, "Throwable.toString sink should not throw.");
             sink(ch);
@@ -48,12 +48,41 @@ class IOException : Exception
 
 protected:
     // The IO error message (errno, gai)
-    void ioError(scope void delegate(const scope char[]) nothrow @safe sink) const nothrow @trusted
+    void ioError(scope void delegate(in char[]) nothrow sink) const nothrow
     {
     }
 
 private:
     String msg;
+}
+
+
+unittest
+{
+    import std.array : Appender;
+    Appender!(char[]) buffer;
+
+    void old(const scope char[] line) @safe
+    {
+        buffer.put(line);
+    }
+
+    void new_(in char[] line) @system
+    {
+        buffer.put(line);
+    }
+
+    scope e = new IOException(String("Hello, World"));
+    e.toString(&old);
+    assert(buffer[] == "std.io.exception.IOException: Hello, World");
+
+    buffer.clear();
+    e.toString(&new_);
+    assert(buffer[] == "std.io.exception.IOException: Hello, World");
+
+    buffer.clear();
+    e.toString(line => buffer.put(line));
+    assert(buffer[] == "std.io.exception.IOException: Hello, World");
 }
 
 /// exception used by most std.io functions
@@ -79,7 +108,7 @@ class ErrnoException : IOException
     }
 
 protected:
-    override void ioError(scope void delegate(const scope char[]) nothrow @safe sink) const nothrow @trusted
+    override void ioError(scope void delegate(in char[]) nothrow sink) const nothrow
     {
         if (!errno)
             return;

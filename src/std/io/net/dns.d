@@ -76,7 +76,7 @@ class DNSException : ErrnoException
     }
 
 protected:
-    override void ioError(scope void delegate(const scope char[]) nothrow @safe sink) const nothrow @trusted
+    override void ioError(scope void delegate(in char[]) nothrow sink) const nothrow
     {
         import core.stdc.string : strlen;
 
