@@ -47,7 +47,7 @@ struct TempIOVecs
         _ptr = null;
     }
 
-    @property inout(iovec*) ptr() inout return scope
+    @property inout(iovec*) ptr() inout return
     {
         return _ptr is useStack ? stack.ptr : _ptr;
     }
