@@ -108,13 +108,15 @@ nothrow pure @safe @nogc:
     }
 
     ///
-    bool opEquals(in ref String s) scope const
+    bool opEquals(scope const ref String s) scope const //REVIEW in String s doesn't work
+                                                        //Error: struct `std.io.internal.string.String` is not copyable because it has a disabled postblit
+                                                        //Is this a bug with the compiler? Is chooses value-param despite postblit being disabled
     {
         return this[] == s[];
     }
 
     ///
-    int opCmp(in ref String s) const
+    int opCmp(scope const ref String s) const
     {
         return __cmp(this[], s[]);
     }
