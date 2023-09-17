@@ -73,8 +73,14 @@ unittest
     }
 
     scope e = new IOException(String("Hello, World"));
-    e.toString(&old);
-    assert(buffer[] == "std.io.exception.IOException: Hello, World");
+    version(preview_in)
+        assert(!__traits(compiles, e.toString(&old)));
+    else
+    {
+        e.toString(&old);
+        assert(buffer[] == "std.io.exception.IOException: Hello, World");
+    }
+
 
     buffer.clear();
     e.toString(&new_);

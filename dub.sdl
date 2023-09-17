@@ -6,10 +6,13 @@ license "BSL-1.0 (Boost)"
 x:ddoxTool "scod"
 versions "WindowsXP" platform="windows"
 libs "Ws2_32" platform="windows"
-dflags "-preview=in"
 configuration "library" {
 }
 configuration "dip1000" {
        dflags "-dip1000"
        versions "DIP1000"
+}
+configuration "preview_in" {
+	dflags "-preview=in"
+	versions "preview_in"
 }
