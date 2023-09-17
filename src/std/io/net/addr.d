@@ -352,7 +352,7 @@ struct SocketAddrIPv4
     }
 
     ///
-    bool opEquals()(in SocketAddrIPv4 rhs) const @nogc //REVIEW "in" should be equivalent to "in auto ref" now, right?
+    bool opEquals()(in SocketAddrIPv4 rhs) const @nogc
     {
         assert(sa.sin_family == AddrFamily.IPv4);
         assert(rhs.sa.sin_family == AddrFamily.IPv4);
@@ -848,7 +848,7 @@ else version (Windows)
 private:
 
 // Won't actually fail with proper buffer size and typed addr, so it'll never set errno and is actually pure
-alias pure_inet_ntop = extern (System) const(char)* function(int,scope const(void)*, char*, socklen_t) pure nothrow @nogc; //REVIEW in void* = scope const void*?
+alias pure_inet_ntop = extern (System) const(char)* function(int,scope const(void)*, char*, socklen_t) pure nothrow @nogc;
 // Won't actually fail with proper addr family, so it'll never set errno and is actually pure
 alias pure_inet_pton = extern (System) int function(int, scope const(char)*, void*) pure nothrow @nogc;
 
