@@ -62,22 +62,14 @@ unittest
     import std.array : Appender;
     Appender!(char[]) buffer;
 
-    void old(const scope char[] line) @safe
-    {
-        buffer.put(line);
-    }
-
-    void new_(in char[] line) @system
+    void bufferSink(in char[] line) @system
     {
         buffer.put(line);
     }
 
     scope e = new IOException(String("Hello, World"));
-    e.toString(&old);
-    assert(buffer[] == "std.io.exception.IOException: Hello, World");
 
-    buffer.clear();
-    e.toString(&new_);
+    e.toString(&bufferSink);
     assert(buffer[] == "std.io.exception.IOException: Hello, World");
 
     buffer.clear();

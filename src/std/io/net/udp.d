@@ -98,7 +98,7 @@ struct UDP
        Params:
          addr = socket address to bind
     */
-    static UDP server(SocketAddr)(in auto ref SocketAddr addr)
+    static UDP server(SocketAddr)(in SocketAddr addr)
             if (isSocketAddr!SocketAddr)
     {
         auto res = UDP(addr.family);
@@ -216,7 +216,7 @@ struct UDP
        Params:
          addr = remote socket address to connect to
      */
-    static UDP client(SocketAddr)(in auto ref SocketAddr addr) @trusted
+    static UDP client(SocketAddr)(in SocketAddr addr) @trusted
             if (isSocketAddr!SocketAddr)
     {
         auto res = UDP(addr.family);

@@ -352,7 +352,7 @@ struct SocketAddrIPv4
     }
 
     ///
-    bool opEquals()(in auto ref SocketAddrIPv4 rhs) const @nogc
+    bool opEquals()(in SocketAddrIPv4 rhs) const @nogc
     {
         assert(sa.sin_family == AddrFamily.IPv4);
         assert(rhs.sa.sin_family == AddrFamily.IPv4);
@@ -465,7 +465,7 @@ struct SocketAddrIPv6
     }
 
     ///
-    bool opEquals()(in auto ref SocketAddrIPv6 rhs) const @nogc
+    bool opEquals()(in SocketAddrIPv6 rhs) const @nogc
     {
         assert(sa.sin6_family == AddrFamily.IPv6);
         assert(rhs.sa.sin6_family == AddrFamily.IPv6);
@@ -595,7 +595,7 @@ version (Posix) struct SocketAddrUnix
     }
 
     ///
-    bool opEquals()(in auto ref SocketAddrUnix rhs) const @nogc
+    bool opEquals()(in SocketAddrUnix rhs) const @nogc
     {
         assert(sa.sun_family == AddrFamily.UNIX);
         assert(rhs.sa.sun_family == AddrFamily.UNIX);
@@ -678,7 +678,7 @@ struct SocketAddr
     }
 
     /// Construct generic SocketAddr from specific type `SocketAddrX`.
-    this(SocketAddrX)(in auto ref SocketAddrX addr) pure nothrow @trusted @nogc
+    this(SocketAddrX)(in SocketAddrX addr) pure nothrow @trusted @nogc
             if (isSocketAddr!SocketAddrX)
     {
         import core.stdc.string : memcpy;
@@ -735,7 +735,7 @@ struct SocketAddr
     }
 
     ///
-    bool opEquals(SocketAddrX)(in auto ref SocketAddrX rhs) pure nothrow const @trusted @nogc
+    bool opEquals(SocketAddrX)(in SocketAddrX rhs) pure nothrow const @trusted @nogc
     {
         if (family != rhs.family)
             return false;
@@ -848,9 +848,9 @@ else version (Windows)
 private:
 
 // Won't actually fail with proper buffer size and typed addr, so it'll never set errno and is actually pure
-alias pure_inet_ntop = extern (System) const(char)* function(int, in void*, char*, socklen_t) pure nothrow @nogc;
+alias pure_inet_ntop = extern (System) const(char)* function(int,scope const(void)*, char*, socklen_t) pure nothrow @nogc;
 // Won't actually fail with proper addr family, so it'll never set errno and is actually pure
-alias pure_inet_pton = extern (System) int function(int, in char*, void*) pure nothrow @nogc;
+alias pure_inet_pton = extern (System) int function(int, scope const(char)*, void*) pure nothrow @nogc;
 
 version (Windows)
 {
@@ -858,7 +858,7 @@ version (Windows)
     extern (Windows) int inet_pton(int, in char*, void*) nothrow @nogc;
 }
 
-const(char)[] ipToString(in ref in_addr addr, return ref char[INET_ADDRSTRLEN] buf) pure nothrow @nogc @trusted
+const(char)[] ipToString(in in_addr addr, return ref char[INET_ADDRSTRLEN] buf) pure nothrow @nogc @trusted
 {
     import core.stdc.string : strlen;
 
@@ -869,7 +869,7 @@ const(char)[] ipToString(in ref in_addr addr, return ref char[INET_ADDRSTRLEN] b
     return p[0 .. strlen(p)];
 }
 
-const(char)[] ipToString(in ref in6_addr addr, return ref char[INET6_ADDRSTRLEN] buf) pure nothrow @nogc @trusted
+const(char)[] ipToString(in in6_addr addr, return ref char[INET6_ADDRSTRLEN] buf) pure nothrow @nogc @trusted
 {
     import core.stdc.string : strlen;
 
@@ -906,7 +906,7 @@ bool stringToIP(S)(S s, ref in6_addr addr) /*pure*/ nothrow @nogc @trusted
     return res == 1;
 }
 
-version (Posix) ubyte SUN_LEN(in ref sockaddr_un sun) pure nothrow @nogc @trusted
+version (Posix) ubyte SUN_LEN(in sockaddr_un sun) pure nothrow @nogc @trusted
 {
     static if (is(typeof(sun.sun_len)))
         return cast(ubyte)(sun.sun_path.offsetof + sun.sun_len);

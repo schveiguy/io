@@ -108,13 +108,13 @@ nothrow pure @safe @nogc:
     }
 
     ///
-    bool opEquals(in ref String s) scope const
+    bool opEquals(scope const ref String s) scope const
     {
         return this[] == s[];
     }
 
     ///
-    int opCmp(in ref String s) const
+    int opCmp(scope const ref String s) const
     {
         return __cmp(this[], s[]);
     }

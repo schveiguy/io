@@ -12,3 +12,6 @@ configuration "dip1000" {
        dflags "-dip1000"
        versions "DIP1000"
 }
+configuration "preview_in" {
+	dflags "-preview=in"
+}

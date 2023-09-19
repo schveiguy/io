@@ -88,7 +88,7 @@ struct TCP
          addr = socket address to bind
          backlog = maximum number of pending connections
     */
-    static TCPServer server(SocketAddr)(in auto ref SocketAddr addr, uint backlog = 128)
+    static TCPServer server(SocketAddr)(in SocketAddr addr, uint backlog = 128)
             if (isSocketAddr!SocketAddr)
     {
         auto sock = Socket(addr.family, SocketType.stream, Protocol.default_);
@@ -196,7 +196,7 @@ struct TCP
        Params:
          addr = remote socket address to connect to
      */
-    static TCP client(SocketAddr)(in auto ref SocketAddr addr) @trusted
+    static TCP client(SocketAddr)(in SocketAddr addr) @trusted
             if (isSocketAddr!SocketAddr)
     {
         auto sock = Socket(addr.family, SocketType.stream, Protocol.default_);

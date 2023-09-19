@@ -165,7 +165,7 @@ struct Socket
        See_also: http://pubs.opengroup.org/onlinepubs/9699919799/functions/bind.html
        Throws: `ErrnoException` if binding the socket fails
     */
-    void bind(SocketAddr)(in auto ref SocketAddr addr) @trusted
+    void bind(SocketAddr)(in SocketAddr addr) @trusted
             if (isSocketAddr!SocketAddr)
     {
         driver.bind(s, addr.cargs[]);
@@ -219,7 +219,7 @@ struct Socket
        Params:
          addr = socket address to connect to
     */
-    void connect(SocketAddr)(in auto ref SocketAddr addr) @trusted
+    void connect(SocketAddr)(in SocketAddr addr) @trusted
             if (isSocketAddr!SocketAddr)
     {
         driver.connect(s, addr.cargs[]);
