@@ -613,7 +613,7 @@ package(std.io.net):
 private:
     import std.typecons : Tuple;
 
-    this(return scope Driver.SOCKET s, bool cod) @trusted pure nothrow
+    this(scope Driver.SOCKET s, bool cod) @trusted pure nothrow
     {
         this.s = s;
         this.closeOnDestroy = cod;

@@ -20,7 +20,7 @@ struct TempIOVecs
 @trusted @nogc pure nothrow:
     enum iovec* useStack = () @trusted{ return cast(iovec*) size_t.max; }();
 
-    this(return scope inout(ubyte[])[] bufs)
+    this(return scope inout(ubyte[])[] bufs) scope
     {
         import core.exception : onOutOfMemoryError;
 
