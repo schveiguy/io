@@ -149,7 +149,7 @@ class IOObject(IO) : IOInterfaces!IO
 {
 @safe @nogc:
     /// construct class from `io`
-    this(IO io)
+    this(IO io) scope
     {
         this.io = io.move;
     }
