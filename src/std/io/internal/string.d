@@ -13,13 +13,13 @@ enum isStringLike(S) = (isInputRange!S && !isInfinite!S && isSomeChar!(ElementEn
 struct String
 {
 nothrow pure @safe @nogc:
-    this(const char[] s) @trusted
+    this(scope const(char)[] s) scope @trusted
     {
         ptr = s.ptr;
         len = cast(uint) s.length;
     }
 
-    this(S)(scope S s) if (isStringLike!S)
+    this(S)(scope S s) scope if (isStringLike!S)
     {
         this ~= s;
     }
@@ -102,7 +102,7 @@ nothrow pure @safe @nogc:
     }
 
     ///
-    String clone() scope
+    String clone() return scope //@trusted
     {
         return String(this[]);
     }
@@ -121,7 +121,7 @@ nothrow pure @safe @nogc:
 
 private:
 
-    this(const(char)* ptr, uint len, uint cap)
+    this(const(char)* ptr, uint len, uint cap) scope
     {
         this.ptr = ptr;
         this.len = len;
